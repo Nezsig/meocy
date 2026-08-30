@@ -596,6 +596,7 @@
                             <option value="restaurant">Restaurant Shoot</option>
                             <option value="model">Model Shoot</option>
                             <option value="outdoor">Outdoor Shoot</option>
+                            <option value="both">Indoor &amp; Outdoor Shoot</option>
                         </select>
                     </div>
 
@@ -623,7 +624,7 @@
                             <span class="it">Ora Preferita</span>
                             <span class="fr">Heure Préférée</span>
                         </label>
-                        <input type="time" name="Preferred Time">
+                        <input type="time" name="Preferred Time" step="900">
                     </div>
 
                     <div class="form-group full">
@@ -782,8 +783,8 @@
             const packageToShootType = {
                 basic: 'studio',
                 travel: 'shop',
-                outdoor: 'outdoor',
-                video: 'outdoor',
+                outdoor: 'both',
+                video: 'both',
                 custom: ''
             };
             const packageValue = document.getElementById('packageSelect').value;

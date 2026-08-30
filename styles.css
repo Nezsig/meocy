@@ -927,6 +927,31 @@
             min-height: 120px;
         }
 
+        input[type="date"],
+        input[type="time"] {
+            font-weight: 600;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator,
+        input[type="time"]::-webkit-calendar-picker-indicator {
+            cursor: pointer;
+            padding: 6px;
+            margin-right: -6px;
+            border-radius: 8px;
+            opacity: 0.55;
+            transition: opacity 0.25s var(--ease), background 0.25s var(--ease);
+        }
+
+        input[type="date"]:hover::-webkit-calendar-picker-indicator,
+        input[type="time"]:hover::-webkit-calendar-picker-indicator,
+        input[type="date"]:focus::-webkit-calendar-picker-indicator,
+        input[type="time"]:focus::-webkit-calendar-picker-indicator {
+            opacity: 1;
+            background: var(--accent-soft);
+        }
+
         .form-note {
             font-size: 0.85em;
             color: var(--text-light);
