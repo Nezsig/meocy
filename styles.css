@@ -485,35 +485,47 @@
             gap: 10px;
         }
 
-        .work-item.dark {
-            background: linear-gradient(155deg, #1c1c1c 0%, #0a0a0a 75%);
-            border-color: transparent;
-        }
-
-        .work-item.dark .work-item-icon {
-            background: rgba(122, 204, 0, 0.18);
-        }
-
-        .work-item.dark .work-item-category {
-            background: rgba(122, 204, 0, 0.18);
-        }
-
-        .work-item.dark .work-item-title {
-            color: var(--text-on-dark);
-        }
-
-        .work-item.dark .work-item-desc-inline {
-            color: var(--text-on-dark-dim);
-        }
-
         .work-item.accent {
-            background: linear-gradient(155deg, rgba(122, 204, 0, 0.16) 0%, rgba(122, 204, 0, 0.04) 100%);
+            background: linear-gradient(155deg, rgba(122, 204, 0, 0.22) 0%, rgba(122, 204, 0, 0.06) 100%);
             border-color: rgba(122, 204, 0, 0.25);
         }
 
         .work-item.accent .work-item-icon {
             background: var(--accent);
             color: var(--dark);
+        }
+
+        .work-item.c-rose {
+            background: linear-gradient(155deg, #fbdfe4 0%, #fcecee 100%);
+            border-color: rgba(219, 39, 119, 0.12);
+        }
+
+        .work-item.c-blue {
+            background: linear-gradient(155deg, #d7ecfd 0%, #eaf5fd 100%);
+            border-color: rgba(37, 99, 235, 0.12);
+        }
+
+        .work-item.c-peach {
+            background: linear-gradient(155deg, #fce3cd 0%, #fdf0e3 100%);
+            border-color: rgba(234, 88, 12, 0.12);
+        }
+
+        .work-item.c-lavender {
+            background: linear-gradient(155deg, #e6dcfb 0%, #f2ecfc 100%);
+            border-color: rgba(124, 58, 237, 0.12);
+        }
+
+        .work-item.c-teal {
+            background: linear-gradient(155deg, #cdf1e6 0%, #e6f8f2 100%);
+            border-color: rgba(13, 148, 136, 0.12);
+        }
+
+        .work-item.c-rose .work-item-icon,
+        .work-item.c-blue .work-item-icon,
+        .work-item.c-peach .work-item-icon,
+        .work-item.c-lavender .work-item-icon,
+        .work-item.c-teal .work-item-icon {
+            background: rgba(255, 255, 255, 0.6);
         }
 
         /* ---------- Work Modal ---------- */
