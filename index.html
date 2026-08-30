@@ -546,7 +546,7 @@
                             <span class="it">Nome / Nome Brand</span>
                             <span class="fr">Nom / Nom de Marque</span>
                         </label>
-                        <input type="text" required placeholder="">
+                        <input type="text" name="Name" required placeholder="">
                     </div>
 
                     <div class="form-group">
@@ -555,7 +555,7 @@
                             <span class="it">Email</span>
                             <span class="fr">Email</span>
                         </label>
-                        <input type="email" required placeholder="">
+                        <input type="email" name="Email" required placeholder="">
                     </div>
 
                     <div class="form-group">
@@ -564,7 +564,7 @@
                             <span class="it">Numero di Telefono</span>
                             <span class="fr">Numéro de Téléphone</span>
                         </label>
-                        <input type="tel" required placeholder="">
+                        <input type="tel" name="Phone" required placeholder="">
                     </div>
 
                     <div class="form-group">
@@ -573,12 +573,13 @@
                             <span class="it">Seleziona Pacchetto</span>
                             <span class="fr">Sélectionnez le Forfait</span>
                         </label>
-                        <select required>
+                        <select id="packageSelect" name="Package" required onchange="autoSelectShootType()">
                             <option value="">Choose package</option>
                             <option value="basic">Basic (Studio) - €150</option>
                             <option value="travel">Travel/Shop/Products - €300</option>
                             <option value="outdoor">Shop and Outdoor - €500+</option>
                             <option value="video">Content Sprint - €1000</option>
+                            <option value="custom">Not Sure / Custom Quote</option>
                         </select>
                     </div>
 
@@ -588,7 +589,7 @@
                             <span class="it">Tipo di Shooting</span>
                             <span class="fr">Type de Shooting</span>
                         </label>
-                        <select required>
+                        <select id="shootTypeSelect" name="Shoot Type" required>
                             <option value="">Select type</option>
                             <option value="studio">Studio Shoot</option>
                             <option value="shop">Shop Shoot</option>
@@ -598,13 +599,31 @@
                         </select>
                     </div>
 
+                    <div class="form-group full">
+                        <label>
+                            <span class="en">Location</span>
+                            <span class="it">Location</span>
+                            <span class="fr">Lieu</span>
+                        </label>
+                        <input type="text" name="Location" placeholder="Your shop/restaurant address, or leave blank if sending products to the studio">
+                    </div>
+
                     <div class="form-group">
                         <label>
                             <span class="en">Preferred Date</span>
                             <span class="it">Data Preferita</span>
                             <span class="fr">Date Préférée</span>
                         </label>
-                        <input type="date" required>
+                        <input type="date" name="Preferred Date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <span class="en">Preferred Time</span>
+                            <span class="it">Ora Preferita</span>
+                            <span class="fr">Heure Préférée</span>
+                        </label>
+                        <input type="time" name="Preferred Time">
                     </div>
 
                     <div class="form-group full">
@@ -613,7 +632,7 @@
                             <span class="it">Richieste Speciali</span>
                             <span class="fr">Demandes Spéciales</span>
                         </label>
-                        <textarea placeholder=""></textarea>
+                        <textarea name="Special Requests" placeholder=""></textarea>
                     </div>
                 </div>
 
@@ -758,6 +777,21 @@
             const savedLang = localStorage.getItem('language') || 'en';
             setLanguage(savedLang);
         });
+
+        function autoSelectShootType() {
+            const packageToShootType = {
+                basic: 'studio',
+                travel: 'shop',
+                outdoor: 'outdoor',
+                video: 'outdoor',
+                custom: ''
+            };
+            const packageValue = document.getElementById('packageSelect').value;
+            const shootType = document.getElementById('shootTypeSelect');
+            if (packageValue in packageToShootType) {
+                shootType.value = packageToShootType[packageValue];
+            }
+        }
 
         function handleBooking(event) {
             event.preventDefault();
