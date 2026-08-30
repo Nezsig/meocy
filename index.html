@@ -1,0 +1,2130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEOCY — Photography Studio, Milan &amp; Paris</title>
+    <meta name="description" content="MEOCY is a professional photography studio in Milan and Paris. Product, fashion, restaurant and model shoots — in studio or on location.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="MEOCY — Photography Studio, Milan &amp; Paris">
+    <meta property="og:description" content="Product, fashion, restaurant and model photography — shot in studio or on location across Milan and Paris.">
+    <meta property="og:url" content="https://meocy.com">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="MEOCY — Photography Studio, Milan &amp; Paris">
+    <meta name="twitter:description" content="Product, fashion, restaurant and model photography — shot in studio or on location across Milan and Paris.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230a0a0a'/%3E%3Crect x='30' y='30' width='40' height='40' rx='10' fill='%237acc00'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #ffffff;
+            --dark: #0a0a0a;
+            --text-dark: #0a0a0a;
+            --text-light: #68686c;
+            --text-on-dark: #ffffff;
+            --text-on-dark-dim: rgba(255, 255, 255, 0.6);
+            --accent: #7acc00;
+            --accent-soft: rgba(122, 204, 0, 0.12);
+            --bg-light: #f6f6f4;
+            --border: #eaeaea;
+            --r-sm: 16px;
+            --r-md: 24px;
+            --r-lg: 32px;
+            --r-pill: 100px;
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-soft: 0 20px 50px -20px rgba(0, 0, 0, 0.15);
+            --shadow-lift: 0 30px 70px -25px rgba(0, 0, 0, 0.22);
+            --shadow-accent: 0 20px 45px -15px rgba(122, 204, 0, 0.45);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* ---------- Nav ---------- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            padding: 18px 50px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .nav-left {
+            font-size: 1.4em;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .language-switcher {
+            display: flex;
+            gap: 4px;
+            padding: 6px;
+            background: var(--bg-light);
+            border-radius: var(--r-pill);
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.8em;
+            padding: 7px 13px;
+            border-radius: var(--r-pill);
+            color: var(--text-light);
+            transition: all 0.3s var(--ease);
+        }
+
+        .lang-btn.active {
+            color: var(--dark);
+            background: var(--bg);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .book-btn {
+            background: var(--dark);
+            color: var(--bg);
+            padding: 13px 28px;
+            border: none;
+            border-radius: var(--r-pill);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s var(--ease);
+        }
+
+        .book-btn:hover {
+            background: var(--accent);
+            color: var(--dark);
+            transform: scale(1.05);
+            box-shadow: var(--shadow-accent);
+        }
+
+        /* ---------- Hero ---------- */
+        .hero {
+            margin-top: 80px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 50px;
+            background: linear-gradient(180deg, var(--bg) 0%, var(--bg-light) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before,
+        .hero::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .hero::before {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(122, 204, 0, 0.28), transparent 70%);
+            top: -120px;
+            right: -100px;
+        }
+
+        .hero::after {
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, rgba(122, 204, 0, 0.16), transparent 70%);
+            bottom: -80px;
+            left: -120px;
+        }
+
+        .hero > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 9px 20px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: var(--r-pill);
+            font-size: 0.85em;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeUp 0.7s var(--ease) forwards;
+        }
+
+        .hero-tag span.dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            margin-right: 8px;
+        }
+
+        .hero h1 {
+            font-size: 5em;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            letter-spacing: -2px;
+            max-width: 1000px;
+            opacity: 0;
+            animation: fadeUp 0.8s var(--ease) 0.1s forwards;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25em;
+            color: var(--text-light);
+            margin-bottom: 50px;
+            max-width: 700px;
+            font-weight: 400;
+            line-height: 1.7;
+            opacity: 0;
+            animation: fadeUp 0.8s var(--ease) 0.22s forwards;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 100px;
+            opacity: 0;
+            animation: fadeUp 0.8s var(--ease) 0.34s forwards;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .cta-primary {
+            background: var(--dark);
+            color: var(--bg);
+            padding: 17px 40px;
+            border-radius: var(--r-pill);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1em;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s var(--ease);
+        }
+
+        .cta-primary:hover {
+            background: var(--accent);
+            color: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-accent);
+        }
+
+        .cta-secondary {
+            background: rgba(255, 255, 255, 0.6);
+            color: var(--text-dark);
+            padding: 15px 38px;
+            border: 2px solid var(--text-dark);
+            border-radius: var(--r-pill);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.4s var(--ease);
+        }
+
+        .cta-secondary:hover {
+            background: var(--text-dark);
+            color: var(--bg);
+            transform: translateY(-3px);
+        }
+
+        /* ---------- Reveal on scroll ---------- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section {
+            padding: 100px 50px;
+        }
+
+        section h2 {
+            font-size: 3.2em;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: -1px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section-eyebrow {
+            display: block;
+            text-align: center;
+            font-size: 0.85em;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .section-sub {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 1.1em;
+            max-width: 650px;
+            margin: 0 auto 60px;
+        }
+
+        /* ---------- Stats (dark) ---------- */
+        .stats {
+            background: var(--dark);
+            background-image: radial-gradient(circle at 15% 30%, rgba(122, 204, 0, 0.12), transparent 55%),
+                               radial-gradient(circle at 85% 70%, rgba(122, 204, 0, 0.08), transparent 55%);
+            padding: 90px 50px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3.2em;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: -1px;
+        }
+
+        .stat-label {
+            color: var(--text-on-dark-dim);
+            font-size: 0.95em;
+            font-weight: 500;
+            margin-top: 8px;
+        }
+
+        /* ---------- About ---------- */
+        .about {
+            background: var(--bg);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .about p {
+            font-size: 1.1em;
+            color: var(--text-light);
+            margin-bottom: 25px;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        /* ---------- Work / Gallery ---------- */
+        .work {
+            background: var(--bg-light);
+        }
+
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .work-item {
+            aspect-ratio: 4 / 5;
+            border-radius: var(--r-lg);
+            background: var(--bg);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 30px;
+            cursor: pointer;
+            transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease), border-color 0.4s var(--ease);
+        }
+
+        .work-item:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lift);
+            border-color: transparent;
+        }
+
+        .work-item-icon {
+            width: 76px;
+            height: 76px;
+            border-radius: var(--r-md);
+            background: var(--accent-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2em;
+            margin: 0 auto 20px;
+            transition: transform 0.5s var(--ease);
+        }
+
+        .work-item:hover .work-item-icon {
+            transform: scale(1.08) rotate(-4deg);
+        }
+
+        .work-item-label {
+            position: relative;
+            z-index: 1;
+        }
+
+        .work-item-category {
+            display: inline-block;
+            color: var(--accent);
+            background: var(--accent-soft);
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            padding: 6px 14px;
+            border-radius: var(--r-pill);
+            margin-bottom: 14px;
+        }
+
+        .work-item-title {
+            color: var(--text-dark);
+            font-size: 1.3em;
+            font-weight: 700;
+            display: block;
+        }
+
+        .work-item-desc-inline {
+            color: var(--text-light);
+            font-size: 0.88em;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+
+        .work-item-hint {
+            color: var(--accent);
+            font-size: 0.85em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            opacity: 0.9;
+            margin-top: 22px;
+            transition: gap 0.3s var(--ease);
+        }
+
+        .work-item:hover .work-item-hint {
+            gap: 10px;
+        }
+
+        .work-item.dark {
+            background: linear-gradient(155deg, #1c1c1c 0%, #0a0a0a 75%);
+            border-color: transparent;
+        }
+
+        .work-item.dark .work-item-icon {
+            background: rgba(122, 204, 0, 0.18);
+        }
+
+        .work-item.dark .work-item-category {
+            background: rgba(122, 204, 0, 0.18);
+        }
+
+        .work-item.dark .work-item-title {
+            color: var(--text-on-dark);
+        }
+
+        .work-item.dark .work-item-desc-inline {
+            color: var(--text-on-dark-dim);
+        }
+
+        .work-item.accent {
+            background: linear-gradient(155deg, rgba(122, 204, 0, 0.16) 0%, rgba(122, 204, 0, 0.04) 100%);
+            border-color: rgba(122, 204, 0, 0.25);
+        }
+
+        .work-item.accent .work-item-icon {
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        /* ---------- Work Modal ---------- */
+        .work-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 10, 10, 0.65);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s var(--ease);
+        }
+
+        .work-modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .work-modal {
+            background: var(--bg);
+            border-radius: var(--r-lg);
+            padding: 50px;
+            max-width: 460px;
+            width: 100%;
+            position: relative;
+            box-shadow: var(--shadow-lift);
+            transform: scale(0.92) translateY(20px);
+            transition: transform 0.45s var(--ease);
+        }
+
+        .work-modal-overlay.open .work-modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .work-modal-close {
+            position: absolute;
+            top: 22px;
+            right: 22px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--bg-light);
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .work-modal-close:hover {
+            background: var(--accent-soft);
+        }
+
+        .work-modal-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: var(--r-md);
+            background: var(--accent-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            margin-bottom: 22px;
+        }
+
+        .work-modal h3 {
+            font-size: 1.6em;
+            font-weight: 800;
+            margin-bottom: 14px;
+            letter-spacing: -0.5px;
+        }
+
+        .work-modal-desc {
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 22px;
+        }
+
+        .work-modal-best {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+        }
+
+        .work-modal-best span {
+            color: var(--accent);
+        }
+
+        /* ---------- Packages ---------- */
+        .packages {
+            background: var(--bg);
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .package-card {
+            background: #ececea;
+            padding: 45px 40px;
+            border-radius: var(--r-lg);
+            border: 1px solid var(--border);
+            position: relative;
+            transition: all 0.4s var(--ease);
+        }
+
+        .package-card:hover {
+            border-color: transparent;
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lift);
+        }
+
+        .package-card.ring {
+            border-color: transparent;
+            box-shadow: 0 0 0 1.5px var(--accent);
+        }
+
+        .package-card.ring:hover {
+            box-shadow: 0 0 0 1.5px var(--accent), var(--shadow-lift);
+        }
+
+        .package-card--accent {
+            background: linear-gradient(150deg, rgba(122, 204, 0, 0.16) 0%, rgba(122, 204, 0, 0.05) 100%);
+        }
+
+        .package-card--dark {
+            background: linear-gradient(155deg, #1c1c1c 0%, #0a0a0a 75%);
+            border-color: transparent;
+        }
+
+        .package-card--dark .package-name,
+        .package-card--dark .package-price {
+            color: var(--text-on-dark);
+        }
+
+        .package-card--dark .package-info {
+            color: var(--text-on-dark-dim);
+            border-bottom-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .package-card--dark .package-features li {
+            color: var(--text-on-dark);
+        }
+
+        .package-name {
+            font-size: 1.5em;
+            font-weight: 800;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .package-subname {
+            font-size: 0.8em;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .package-price {
+            font-size: 2.5em;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 25px;
+        }
+
+        .package-info {
+            font-size: 0.95em;
+            color: var(--text-light);
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .package-features {
+            list-style: none;
+            margin: 25px 0;
+        }
+
+        .package-features li {
+            padding: 10px 0 10px 34px;
+            position: relative;
+            font-size: 0.95em;
+        }
+
+        .package-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: var(--dark);
+            font-size: 0.7em;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        /* ---------- Features ---------- */
+        .features {
+            background: var(--bg);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 50px;
+        }
+
+        .feature {
+            text-align: center;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--r-md);
+            background: var(--accent-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6em;
+            margin: 0 auto 20px;
+            transition: transform 0.4s var(--ease);
+        }
+
+        .feature:hover .feature-icon {
+            transform: scale(1.08) rotate(-4deg);
+        }
+
+        .feature h3 {
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .feature p {
+            font-size: 0.95em;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* ---------- FAQ ---------- */
+        .faq {
+            background: var(--bg-light);
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--bg);
+            border-radius: var(--r-md);
+            margin-bottom: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px -8px rgba(0, 0, 0, 0.06);
+            transition: box-shadow 0.3s var(--ease);
+        }
+
+        .faq-item.open {
+            box-shadow: var(--shadow-soft);
+        }
+
+        .faq-question {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            padding: 24px 28px;
+            font-size: 1.05em;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            color: var(--text-dark);
+        }
+
+        .faq-icon {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--accent-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: var(--accent);
+            transition: transform 0.4s var(--ease);
+        }
+
+        .faq-item.open .faq-icon {
+            transform: rotate(45deg);
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s var(--ease);
+        }
+
+        .faq-answer-inner {
+            padding: 0 28px 24px;
+            color: var(--text-light);
+            font-size: 0.98em;
+            line-height: 1.7;
+        }
+
+        /* ---------- Privacy ---------- */
+        .privacy {
+            background: var(--bg-light);
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .privacy-body {
+            background: var(--bg);
+            border-radius: var(--r-lg);
+            padding: 50px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .privacy-updated {
+            color: var(--text-light);
+            font-size: 0.85em;
+            margin-bottom: 30px;
+        }
+
+        .privacy-body h4 {
+            font-size: 1.05em;
+            font-weight: 700;
+            margin: 28px 0 10px;
+        }
+
+        .privacy-body h4:first-of-type {
+            margin-top: 0;
+        }
+
+        .privacy-body p {
+            color: var(--text-light);
+            font-size: 0.95em;
+            line-height: 1.7;
+        }
+
+        /* ---------- Booking ---------- */
+        .booking {
+            background: var(--bg);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .form-container {
+            background: var(--bg-light);
+            padding: 50px;
+            border-radius: var(--r-lg);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            grid-column: span 1;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        input,
+        select,
+        textarea {
+            padding: 13px 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--r-sm);
+            font-family: inherit;
+            font-size: 0.95em;
+            background: var(--bg);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-soft);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-note {
+            font-size: 0.85em;
+            color: var(--text-light);
+            margin-top: 14px;
+            text-align: center;
+        }
+
+        .submit-btn {
+            background: var(--dark);
+            color: var(--bg);
+            padding: 17px 50px;
+            border: none;
+            border-radius: var(--r-pill);
+            font-weight: 700;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.4s var(--ease);
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background: var(--accent);
+            color: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-accent);
+        }
+
+        /* ---------- Footer ---------- */
+        footer {
+            background: var(--dark);
+            color: var(--bg);
+            padding: 70px 50px 40px;
+            margin: 0 20px 24px;
+            border-radius: var(--r-lg);
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-chips {
+            padding-top: 4px;
+        }
+
+        .footer-wordmark {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .footer-wordmark-dot {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            background: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .footer-wordmark-text {
+            font-size: 1.7em;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--bg);
+        }
+
+        .footer-chips {
+            display: flex;
+            gap: 10px;
+        }
+
+        .footer-chip {
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.78em;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            padding: 9px 15px;
+            border-radius: 10px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 10px;
+        }
+
+        .footer-social a {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s var(--ease), transform 0.3s var(--ease), color 0.3s var(--ease);
+        }
+
+        .footer-social a:hover {
+            background: var(--accent);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+
+        .footer-social svg {
+            width: 17px;
+            height: 17px;
+        }
+
+        .footer-subtitle {
+            max-width: 420px;
+            margin: 10px 0 0 48px;
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .footer-divider {
+            max-width: 1200px;
+            margin: 28px auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-contact-row {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 40px;
+        }
+
+        .footer-contact-icon {
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        .footer-contact-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .footer-contact-value {
+            font-weight: 700;
+            color: var(--bg);
+            font-size: 1.05em;
+            margin-bottom: 5px;
+        }
+
+        .footer-contact-value a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .footer-contact-label {
+            font-size: 0.72em;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .footer-bottom-row {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .footer-info-block {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .footer-icon-box {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.6);
+            flex-shrink: 0;
+        }
+
+        .footer-icon-box svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .footer-info-title {
+            font-weight: 700;
+            color: var(--bg);
+            margin-bottom: 4px;
+            font-size: 0.98em;
+        }
+
+        .footer-info-sub {
+            font-size: 0.85em;
+            color: rgba(255, 255, 255, 0.45);
+            margin-top: 2px;
+        }
+
+        .footer-bottom-right {
+            text-align: right;
+        }
+
+        .footer-nav-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-nav-list a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: color 0.3s;
+        }
+
+        .footer-nav-list a:hover {
+            color: var(--accent);
+        }
+
+        .en { display: block; }
+        .it { display: none; }
+        .fr { display: none; }
+
+        body.italian .en { display: none; }
+        body.italian .it { display: block; }
+        body.italian .fr { display: none; }
+
+        body.french .en { display: none; }
+        body.french .it { display: none; }
+        body.french .fr { display: block; }
+
+        @media (max-width: 1024px) {
+            section { padding: 80px 30px; }
+            nav { padding: 15px 30px; }
+            section h2 { font-size: 2.4em; }
+            .hero h1 { font-size: 3.5em; }
+            .work-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-cta { flex-direction: column; }
+            .cta-primary, .cta-secondary { width: 100%; }
+            .form-grid { grid-template-columns: 1fr; }
+            .form-group.full { grid-column: 1; }
+            .hero h1 { font-size: 2.4em; }
+            section h2 { font-size: 1.8em; }
+            .work-grid { grid-template-columns: 1fr 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            footer { margin: 0 12px 16px; padding: 50px 30px 30px; }
+            .footer-bottom-right { text-align: left; }
+        }
+
+        @media (max-width: 480px) {
+            .work-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-left">MEOCY</div>
+        <div class="nav-right">
+            <ul class="nav-links">
+                <li><a href="#about" class="en">About</a><a href="#about" class="it">Chi Siamo</a><a href="#about" class="fr">À Propos</a></li>
+                <li><a href="#work" class="en">Work</a><a href="#work" class="it">Lavori</a><a href="#work" class="fr">Travaux</a></li>
+                <li><a href="#packages" class="en">Packages</a><a href="#packages" class="it">Pacchetti</a><a href="#packages" class="fr">Forfaits</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#booking" class="en">Booking</a><a href="#booking" class="it">Prenota</a><a href="#booking" class="fr">Réserver</a></li>
+            </ul>
+            <div class="language-switcher">
+                <button class="lang-btn active" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" onclick="setLanguage('it')">IT</button>
+                <button class="lang-btn" onclick="setLanguage('fr')">FR</button>
+            </div>
+            <button class="book-btn" onclick="document.getElementById('booking').scrollIntoView()">
+                <span class="en">Book Now</span>
+                <span class="it">Prenota Ora</span>
+                <span class="fr">Réserver</span>
+            </button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-tag">
+            <span class="dot"></span>
+            <span class="en">Studios in Milan &amp; Paris</span>
+            <span class="it">Studi a Milano e Parigi</span>
+            <span class="fr">Studios à Milan et Paris</span>
+        </div>
+        <h1>
+            <span class="en">Photography That Sells Your Brand</span>
+            <span class="it">Fotografia Che Vende il Tuo Brand</span>
+            <span class="fr">Une Photographie Qui Vend Votre Marque</span>
+        </h1>
+        <p class="hero-subtitle">
+            <span class="en">Product, fashion, restaurant and model photography — shot in studio or on location across Milan and Paris.</span>
+            <span class="it">Fotografia di prodotto, moda, ristoranti e modelli — realizzata in studio o on location tra Milano e Parigi.</span>
+            <span class="fr">Photographie de produits, mode, restaurants et mannequins — réalisée en studio ou en extérieur entre Milan et Paris.</span>
+        </p>
+        <div class="hero-cta">
+            <button class="cta-primary" onclick="document.getElementById('booking').scrollIntoView()">
+                <span class="en">Book a Shoot</span>
+                <span class="it">Prenota uno Shooting</span>
+                <span class="fr">Réserver un Shooting</span>
+            </button>
+            <button class="cta-secondary" onclick="document.getElementById('work').scrollIntoView()">
+                <span class="en">See Our Work</span>
+                <span class="it">Vedi i Nostri Lavori</span>
+                <span class="fr">Voir Nos Travaux</span>
+            </button>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="reveal">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">
+                    <span class="en">Shoots Completed</span>
+                    <span class="it">Shooting Completati</span>
+                    <span class="fr">Shootings Réalisés</span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="stat-number">150+</div>
+                <div class="stat-label">
+                    <span class="en">Happy Clients</span>
+                    <span class="it">Clienti Soddisfatti</span>
+                    <span class="fr">Clients Satisfaits</span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="stat-number">2</div>
+                <div class="stat-label">
+                    <span class="en">Studio Cities — Milan &amp; Paris</span>
+                    <span class="it">Città con Studio — Milano e Parigi</span>
+                    <span class="fr">Villes avec Studio — Milan et Paris</span>
+                </div>
+            </div>
+            <div class="reveal">
+                <div class="stat-number">2-3</div>
+                <div class="stat-label">
+                    <span class="en">Weeks Average Delivery</span>
+                    <span class="it">Settimane di Consegna Media</span>
+                    <span class="fr">Semaines de Livraison Moyenne</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about reveal" id="about">
+        <span class="section-eyebrow">
+            <span class="en">About Us</span>
+            <span class="it">Chi Siamo</span>
+            <span class="fr">À Propos</span>
+        </span>
+        <h2>
+            <span class="en">Two Studios. One Standard of Quality.</span>
+            <span class="it">Due Studi. Uno Standard di Qualità.</span>
+            <span class="fr">Deux Studios. Une Seule Exigence de Qualité.</span>
+        </h2>
+        <p>
+            <span class="en">We are not just content creators — we operate professional studios in Milan and Paris with comprehensive equipment and expertise. Whether you run a clothing brand, sell physical products, own a restaurant, or need a model shoot, you can send your items to our studio for controlled, branded photography — or we come to you: your shop, your restaurant, outdoor locations, anywhere your brand needs the best visual content, created professionally.</span>
+            <span class="it">Non siamo solo creatori di contenuti — gestiamo studi professionali a Milano e a Parigi, con attrezzature complete e competenza. Che tu abbia un brand di abbigliamento, venda prodotti fisici, gestisca un ristorante o abbia bisogno di uno shooting con modelli, puoi inviare i tuoi articoli al nostro studio per una fotografia controllata e in linea con il tuo brand — oppure veniamo noi da te: nel tuo negozio, nel tuo ristorante, in location esterne, ovunque il tuo brand abbia bisogno dei migliori contenuti visivi, realizzati in modo professionale.</span>
+            <span class="fr">Nous ne sommes pas de simples créateurs de contenu — nous gérons des studios professionnels à Milan et à Paris, avec un équipement complet et une réelle expertise. Que vous ayez une marque de vêtements, que vous vendiez des produits physiques, que vous dirigiez un restaurant ou que vous ayez besoin d'un shooting avec des mannequins, vous pouvez envoyer vos articles à notre studio pour une photographie contrôlée et fidèle à votre image — ou nous venons à vous : dans votre boutique, votre restaurant, en extérieur, partout où votre marque a besoin du meilleur contenu visuel, réalisé de façon professionnelle.</span>
+        </p>
+    </section>
+
+    <section class="work" id="work">
+        <span class="section-eyebrow">
+            <span class="en">Portfolio</span>
+            <span class="it">Portfolio</span>
+            <span class="fr">Portfolio</span>
+        </span>
+        <h2>
+            <span class="en">Our Work</span>
+            <span class="it">I Nostri Lavori</span>
+            <span class="fr">Nos Travaux</span>
+        </h2>
+        <p class="section-sub">
+            <span class="en">A sample of the fashion, product, restaurant and model shoots we've produced in Milan and Paris.</span>
+            <span class="it">Una selezione degli shooting di moda, prodotto, ristorazione e modelli realizzati a Milano e Parigi.</span>
+            <span class="fr">Un aperçu des shootings mode, produit, restauration et mannequins réalisés à Milan et à Paris.</span>
+        </p>
+        <div class="work-grid">
+            <div class="work-item dark reveal" data-work="fashion">
+                <div class="work-item-icon">👗</div>
+                <div class="work-item-label">
+                    <span class="work-item-category">01</span>
+                    <span class="work-item-title en">Fashion Campaign</span>
+                    <span class="work-item-title it">Campagna Moda</span>
+                    <span class="work-item-title fr">Campagne Mode</span>
+                    <p class="work-item-desc-inline">
+                        <span class="en">Lookbooks &amp; seasonal campaigns</span>
+                        <span class="it">Lookbook e campagne stagionali</span>
+                        <span class="fr">Lookbooks et campagnes saisonnières</span>
+                    </p>
+                </div>
+                <span class="work-item-hint"><span class="en">View Details</span><span class="it">Vedi Dettagli</span><span class="fr">Voir les Détails</span> →</span>
+            </div>
+            <div class="work-item reveal" data-work="product">
+                <div class="work-item-icon">📦</div>
+                <div class="work-item-label">
+                    <span class="work-item-category">02</span>
+                    <span class="work-item-title en">Product Photography</span>
+                    <span class="work-item-title it">Fotografia di Prodotto</span>
+                    <span class="work-item-title fr">Photographie Produit</span>
+                    <p class="work-item-desc-inline">
+                        <span class="en">Clean shots for catalogs &amp; ads</span>
+                        <span class="it">Scatti puliti per cataloghi e ADV</span>
+                        <span class="fr">Prises de vue nettes pour catalogues et pubs</span>
+                    </p>
+                </div>
+                <span class="work-item-hint"><span class="en">View Details</span><span class="it">Vedi Dettagli</span><span class="fr">Voir les Détails</span> →</span>
+            </div>
+            <div class="work-item accent reveal" data-work="restaurant">
+                <div class="work-item-icon">🍽️</div>
+                <div class="work-item-label">
+                    <span class="work-item-category">03</span>
+                    <span class="work-item-title en">Restaurant &amp; Food</span>
+                    <span class="work-item-title it">Ristorazione &amp; Food</span>
+                    <span class="work-item-title fr">Restaurant &amp; Food</span>
+                    <p class="work-item-desc-inline">
+                        <span class="en">Food &amp; interiors that sell</span>
+                        <span class="it">Food e ambienti che vendono</span>
+                        <span class="fr">Food et intérieurs qui vendent</span>
+                    </p>
+                </div>
+                <span class="work-item-hint"><span class="en">View Details</span><span class="it">Vedi Dettagli</span><span class="fr">Voir les Détails</span> →</span>
+            </div>
+            <div class="work-item reveal" data-work="model">
+                <div class="work-item-icon">👤</div>
+                <div class="work-item-label">
+                    <span class="work-item-category">04</span>
+                    <span class="work-item-title en">Model Portfolio</span>
+                    <span class="work-item-title it">Portfolio Modelli</span>
+                    <span class="work-item-title fr">Portfolio Mannequin</span>
+                    <p class="work-item-desc-inline">
+                        <span class="en">Agency-ready portfolios</span>
+                        <span class="it">Portfolio pronti per le agenzie</span>
+                        <span class="fr">Portfolios prêts pour les agences</span>
+                    </p>
+                </div>
+                <span class="work-item-hint"><span class="en">View Details</span><span class="it">Vedi Dettagli</span><span class="fr">Voir les Détails</span> →</span>
+            </div>
+            <div class="work-item dark reveal" data-work="studio">
+                <div class="work-item-icon">💡</div>
+                <div class="work-item-label">
+                    <span class="work-item-category">05</span>
+                    <span class="work-item-title en">Studio Session</span>
+                    <span class="work-item-title it">Sessione Studio</span>
+                    <span class="work-item-title fr">Session Studio</span>
+                    <p class="work-item-desc-inline">
+                        <span class="en">Full control, every time</span>
+                        <span class="it">Controllo totale, sempre</span>
+                        <span class="fr">Contrôle total, à chaque fois</span>
+                    </p>
+                </div>
+                <span class="work-item-hint"><span class="en">View Details</span><span class="it">Vedi Dettagli</span><span class="fr">Voir les Détails</span> →</span>
+            </div>
+            <div class="work-item reveal" data-work="location">
+                <div class="work-item-icon">📍</div>
+                <div class="work-item-label">
+                    <span class="work-item-category">06</span>
+                    <span class="work-item-title en">On-Location Shoot</span>
+                    <span class="work-item-title it">Shooting On Location</span>
+                    <span class="work-item-title fr">Shooting en Extérieur</span>
+                    <p class="work-item-desc-inline">
+                        <span class="en">We bring the studio to you</span>
+                        <span class="it">Portiamo lo studio da te</span>
+                        <span class="fr">Nous apportons le studio chez vous</span>
+                    </p>
+                </div>
+                <span class="work-item-hint"><span class="en">View Details</span><span class="it">Vedi Dettagli</span><span class="fr">Voir les Détails</span> →</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="work-modal-overlay" id="workModalOverlay">
+        <div class="work-modal">
+            <button class="work-modal-close" id="workModalClose" aria-label="Close">✕</button>
+            <div class="work-modal-icon" id="workModalIcon"></div>
+            <span class="section-eyebrow" id="workModalEyebrow" style="text-align:left; margin-bottom:8px;"></span>
+            <h3 id="workModalTitle"></h3>
+            <p class="work-modal-desc" id="workModalDesc"></p>
+            <p class="work-modal-best" id="workModalBest"></p>
+            <button class="cta-primary" id="workModalCta" style="width:100%;">
+                <span class="en">Book This Shoot</span>
+                <span class="it">Prenota Questo Shooting</span>
+                <span class="fr">Réserver ce Shooting</span>
+            </button>
+        </div>
+    </div>
+
+    <section class="packages reveal" id="packages">
+        <span class="section-eyebrow">
+            <span class="en">Pricing</span>
+            <span class="it">Prezzi</span>
+            <span class="fr">Tarifs</span>
+        </span>
+        <h2>
+            <span class="en">Packages &amp; Pricing</span>
+            <span class="it">Pacchetti e Prezzi</span>
+            <span class="fr">Forfaits et Tarification</span>
+        </h2>
+        <div class="packages-grid">
+            <div class="package-card">
+                <div class="package-name">
+                    <span class="en">Basic</span>
+                    <span class="it">Base</span>
+                    <span class="fr">Base</span>
+                </div>
+                <div class="package-subname">
+                    <span class="en">Studio Shoots</span>
+                    <span class="it">Shooting in Studio</span>
+                    <span class="fr">Shooting en Studio</span>
+                </div>
+                <div class="package-price">€150</div>
+                <div class="package-info">
+                    <span class="en"><strong>Studio Products | Delivery:</strong> 2 weeks</span>
+                    <span class="it"><strong>Prodotti Studio | Consegna:</strong> 2 settimane</span>
+                    <span class="fr"><strong>Produits Studio | Livraison:</strong> 2 semaines</span>
+                </div>
+                <ul class="package-features">
+                    <li><span class="en">Product shoots only — no client visit required</span><span class="it">Solo shooting di prodotto — nessuna visita del cliente richiesta</span><span class="fr">Shooting produit uniquement — aucune visite du client requise</span></li>
+                    <li><span class="en">15 photos included</span><span class="it">15 foto incluse</span><span class="fr">15 photos incluses</span></li>
+                    <li><span class="en">All raw photos</span><span class="it">Tutte le foto grezze</span><span class="fr">Toutes les photos brutes</span></li>
+                    <li><span class="en">Selected photos fully edited</span><span class="it">Foto selezionate completamente modificate</span><span class="fr">Photos sélectionnées entièrement éditées</span></li>
+                    <li><span class="en">Delivery via private online gallery</span><span class="it">Consegna tramite galleria online privata</span><span class="fr">Livraison via une galerie en ligne privée</span></li>
+                    <li><span class="en">Additional photo: €10 each</span><span class="it">Foto aggiuntiva: €10 cadauna</span><span class="fr">Photo supplémentaire: €10 chacune</span></li>
+                </ul>
+            </div>
+
+            <div class="package-card package-card--dark">
+                <div class="package-name">
+                    <span class="en">Travel / Shop / Products</span>
+                    <span class="it">Negozio/Prodotti</span>
+                    <span class="fr">Boutique/Produits</span>
+                </div>
+                <div class="package-subname">
+                    <span class="en">We Come to You</span>
+                    <span class="it">Veniamo Noi da Te</span>
+                    <span class="fr">Nous Venons à Vous</span>
+                </div>
+                <div class="package-price">€300</div>
+                <div class="package-info">
+                    <span class="en"><strong>Duration:</strong> 4 hours | <strong>Delivery:</strong> 2 weeks</span>
+                    <span class="it"><strong>Durata:</strong> 4 ore | <strong>Consegna:</strong> 2 settimane</span>
+                    <span class="fr"><strong>Durée:</strong> 4 heures | <strong>Livraison:</strong> 2 semaines</span>
+                </div>
+                <ul class="package-features">
+                    <li><span class="en">At your shop — indoors only</span><span class="it">Nel tuo negozio — solo interni</span><span class="fr">Dans votre boutique — intérieur uniquement</span></li>
+                    <li><span class="en">Raw &amp; edited photos</span><span class="it">Foto grezze e modificate</span><span class="fr">Photos brutes et éditées</span></li>
+                    <li><span class="en">30-second social video</span><span class="it">Video social da 30 secondi</span><span class="fr">Vidéo sociale 30 secondes</span></li>
+                    <li><span class="en">Behind-the-scenes (optional)</span><span class="it">Dietro le quinte (opzionale)</span><span class="fr">Coulisses (optionnel)</span></li>
+                    <li><span class="en">Up to 10 outfits or products</span><span class="it">Fino a 10 outfit o prodotti</span><span class="fr">Jusqu'à 10 tenues ou produits</span></li>
+                </ul>
+            </div>
+
+            <div class="package-card package-card--accent ring">
+                <div class="package-name">
+                    <span class="en">Shop and Outdoor</span>
+                    <span class="it">Negozio e Outdoor</span>
+                    <span class="fr">Boutique et Extérieur</span>
+                </div>
+                <div class="package-subname">
+                    <span class="en">Not a Studio Shoot</span>
+                    <span class="it">Non in Studio</span>
+                    <span class="fr">Pas en Studio</span>
+                </div>
+                <div class="package-price">€500+</div>
+                <div class="package-info">
+                    <span class="en"><strong>Duration:</strong> 6 hours | <strong>Delivery:</strong> 2 weeks</span>
+                    <span class="it"><strong>Durata:</strong> 6 ore | <strong>Consegna:</strong> 2 settimane</span>
+                    <span class="fr"><strong>Durée:</strong> 6 heures | <strong>Livraison:</strong> 2 semaines</span>
+                </div>
+                <ul class="package-features">
+                    <li><span class="en">On-location — your shop and outdoor combined</span><span class="it">On location — negozio ed esterno combinati</span><span class="fr">En extérieur — boutique et extérieur combinés</span></li>
+                    <li><span class="en">50 photos included</span><span class="it">50 foto incluse</span><span class="fr">50 photos incluses</span></li>
+                    <li><span class="en">Additional photo: €10 each</span><span class="it">Foto aggiuntiva: €10 cadauna</span><span class="fr">Photo supplémentaire : €10 chacune</span></li>
+                    <li><span class="en">Up to 25 outfits or products</span><span class="it">Fino a 25 outfit o prodotti</span><span class="fr">Jusqu'à 25 tenues ou produits</span></li>
+                    <li><span class="en">Premium editing included</span><span class="it">Editing premium incluso</span><span class="fr">Édition premium incluse</span></li>
+                    <li><span class="en">Behind-the-scenes included</span><span class="it">Dietro le quinte incluso</span><span class="fr">Coulisses incluses</span></li>
+                    <li><span class="en">No videos included — add €100 per 20-second video</span><span class="it">Video non inclusi — aggiungi €100 per video da 20 secondi</span><span class="fr">Vidéos non incluses — ajoutez €100 par vidéo de 20 secondes</span></li>
+                </ul>
+            </div>
+
+            <div class="package-card package-card--dark ring">
+                <div class="package-name">
+                    <span class="en">Content Sprint</span>
+                    <span class="it">Content Sprint</span>
+                    <span class="fr">Content Sprint</span>
+                </div>
+                <div class="package-subname">
+                    <span class="en">Indoor &amp; Outdoor</span>
+                    <span class="it">Interno e Outdoor</span>
+                    <span class="fr">Intérieur et Extérieur</span>
+                </div>
+                <div class="package-price">€1000</div>
+                <div class="package-info">
+                    <span class="en"><strong>Duration:</strong> 8 hours | <strong>Delivery:</strong> 3 weeks</span>
+                    <span class="it"><strong>Durata:</strong> 8 ore | <strong>Consegna:</strong> 3 settimane</span>
+                    <span class="fr"><strong>Durée:</strong> 8 heures | <strong>Livraison:</strong> 3 semaines</span>
+                </div>
+                <ul class="package-features">
+                    <li><span class="en">Shoots both inside and outdoor</span><span class="it">Riprese sia interne che outdoor</span><span class="fr">Tournage en intérieur et en extérieur</span></li>
+                    <li><span class="en">15 videos, around 20 seconds each</span><span class="it">15 video, di circa 20 secondi ciascuno</span><span class="fr">15 vidéos, d'environ 20 secondes chacune</span></li>
+                    <li><span class="en">50 photos included</span><span class="it">50 foto incluse</span><span class="fr">50 photos incluses</span></li>
+                    <li><span class="en">Professional color grading</span><span class="it">Color grading professionale</span><span class="fr">Étalonnage des couleurs professionnel</span></li>
+                    <li><span class="en">No-copyright, royalty-free audio</span><span class="it">Audio royalty-free, senza copyright</span><span class="fr">Audio libre de droits, sans copyright</span></li>
+                    <li><span class="en">Instagram Reels + TikTok optimized</span><span class="it">Ottimizzato Instagram Reels + TikTok</span><span class="fr">Optimisé Instagram Reels + TikTok</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="features reveal">
+        <span class="section-eyebrow">
+            <span class="en">Why MEOCY</span>
+            <span class="it">Perché MEOCY</span>
+            <span class="fr">Pourquoi MEOCY</span>
+        </span>
+        <h2>
+            <span class="en">What You Get</span>
+            <span class="it">Cosa Ricevi</span>
+            <span class="fr">Ce que vous obtenez</span>
+        </h2>
+        <div class="features-grid">
+            <div class="feature">
+                <div class="feature-icon">📸</div>
+                <h3><span class="en">High-Resolution Photos</span><span class="it">Foto ad Alta Risoluzione</span><span class="fr">Photos Haute Résolution</span></h3>
+                <p>
+                    <span class="en">All deliverables optimized for Instagram, TikTok, and websites</span>
+                    <span class="it">Tutti i file ottimizzati per Instagram, TikTok e siti web</span>
+                    <span class="fr">Tous les fichiers optimisés pour Instagram, TikTok et sites web</span>
+                </p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🎬</div>
+                <h3><span class="en">Professional Videos</span><span class="it">Video Professionali</span><span class="fr">Vidéos Professionnelles</span></h3>
+                <p>
+                    <span class="en">30-second social videos ready for instant sharing</span>
+                    <span class="it">Video social da 30 secondi pronti per condividere</span>
+                    <span class="fr">Vidéos sociales 30 secondes prêtes à partager</span>
+                </p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🌍</div>
+                <h3><span class="en">Two Cities, Any Location</span><span class="it">Due Città, Ogni Location</span><span class="fr">Deux Villes, Tous les Lieux</span></h3>
+                <p>
+                    <span class="en">Studios in Milan &amp; Paris, plus on-location shoots anywhere you need</span>
+                    <span class="it">Studi a Milano e Parigi, oltre a shooting on location ovunque tu voglia</span>
+                    <span class="fr">Studios à Milan et Paris, ainsi que des shootings en extérieur partout où vous en avez besoin</span>
+                </p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">💬</div>
+                <h3><span class="en">Languages Supported</span><span class="it">Lingue Supportate</span><span class="fr">Langues Supportées</span></h3>
+                <p>
+                    <span class="en">Service available in English, Italian, and French</span>
+                    <span class="it">Servizio disponibile in inglese, italiano e francese</span>
+                    <span class="fr">Service disponible en anglais, italien et français</span>
+                </p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <h3><span class="en">Fast Delivery</span><span class="it">Consegna Veloce</span><span class="fr">Livraison Rapide</span></h3>
+                <p>
+                    <span class="en">2-3 weeks turnaround on all projects</span>
+                    <span class="it">Consegna in 2-3 settimane su tutti i progetti</span>
+                    <span class="fr">Livraison en 2-3 semaines sur tous les projets</span>
+                </p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✨</div>
+                <h3><span class="en">Professional Quality</span><span class="it">Qualità Professionale</span><span class="fr">Qualité Professionnelle</span></h3>
+                <p>
+                    <span class="en">Cinematic aesthetics and premium editing included</span>
+                    <span class="it">Estetica cinematografica e editing premium inclusi</span>
+                    <span class="fr">Esthétique cinématographique et édition premium incluses</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq reveal" id="faq">
+        <span class="section-eyebrow">FAQ</span>
+        <h2>
+            <span class="en">Frequently Asked Questions</span>
+            <span class="it">Domande Frequenti</span>
+            <span class="fr">Questions Fréquentes</span>
+        </h2>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span><span class="en">Do you only shoot in studio, or also on location?</span><span class="it">Fate shooting solo in studio o anche on location?</span><span class="fr">Faites-vous uniquement des shootings en studio, ou aussi en extérieur ?</span></span>
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer"><div class="faq-answer-inner">
+                <span class="en">Both. You can send your products to our Milan or Paris studio, or we travel to your shop, restaurant, or an outdoor location.</span>
+                <span class="it">Entrambi. Puoi inviare i tuoi prodotti al nostro studio di Milano o Parigi, oppure veniamo noi nel tuo negozio, ristorante o in una location esterna.</span>
+                <span class="fr">Les deux. Vous pouvez envoyer vos produits à notre studio de Milan ou de Paris, ou nous nous déplaçons dans votre boutique, votre restaurant, ou en extérieur.</span>
+            </div></div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span><span class="en">Which cities do you operate in?</span><span class="it">In quali città operate?</span><span class="fr">Dans quelles villes intervenez-vous ?</span></span>
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer"><div class="faq-answer-inner">
+                <span class="en">We have studios in Milan and Paris, and travel further for on-location shoots — just ask us.</span>
+                <span class="it">Abbiamo studi a Milano e Parigi, e ci spostiamo anche più lontano per shooting on location — chiedici pure.</span>
+                <span class="fr">Nous avons des studios à Milan et à Paris, et nous nous déplaçons plus loin pour des shootings en extérieur — demandez-nous.</span>
+            </div></div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span><span class="en">How long does delivery take?</span><span class="it">Quanto tempo richiede la consegna?</span><span class="fr">Combien de temps prend la livraison ?</span></span>
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer"><div class="faq-answer-inner">
+                <span class="en">2-3 weeks depending on the package, as listed above.</span>
+                <span class="it">2-3 settimane a seconda del pacchetto, come indicato sopra.</span>
+                <span class="fr">2 à 3 semaines selon le forfait, comme indiqué ci-dessus.</span>
+            </div></div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span><span class="en">Do I get the raw, unedited photos?</span><span class="it">Ricevo anche le foto grezze non modificate?</span><span class="fr">Est-ce que je reçois les photos brutes non éditées ?</span></span>
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer"><div class="faq-answer-inner">
+                <span class="en">Yes — all packages include the raw files plus a set of fully edited, ready-to-use photos.</span>
+                <span class="it">Sì — tutti i pacchetti includono i file grezzi oltre a una selezione di foto completamente modificate e pronte all'uso.</span>
+                <span class="fr">Oui — tous les forfaits incluent les fichiers bruts ainsi qu'une sélection de photos entièrement éditées et prêtes à l'emploi.</span>
+            </div></div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span><span class="en">Do you also shoot video?</span><span class="it">Realizzate anche video?</span><span class="fr">Réalisez-vous aussi des vidéos ?</span></span>
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer"><div class="faq-answer-inner">
+                <span class="en">Yes — our Content Sprint package includes 15 videos of around 20 seconds each, optimized for Instagram Reels and TikTok.</span>
+                <span class="it">Sì — il nostro pacchetto Content Sprint include 15 video di circa 20 secondi ciascuno, ottimizzati per Instagram Reels e TikTok.</span>
+                <span class="fr">Oui — notre forfait Content Sprint inclut 15 vidéos d'environ 20 secondes chacune, optimisées pour Instagram Reels et TikTok.</span>
+            </div></div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span><span class="en">How does payment work?</span><span class="it">Come funziona il pagamento?</span><span class="fr">Comment fonctionne le paiement ?</span></span>
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer"><div class="faq-answer-inner">
+                <span class="en">There's no online payment — once your booking request is confirmed, we arrange payment directly with you (bank transfer or invoice).</span>
+                <span class="it">Non ci sono pagamenti online — una volta confermata la richiesta di prenotazione, concordiamo il pagamento direttamente con te (bonifico o fattura).</span>
+                <span class="fr">Il n'y a pas de paiement en ligne — une fois votre demande de réservation confirmée, nous organisons le paiement directement avec vous (virement ou facture).</span>
+            </div></div>
+        </div>
+    </section>
+
+    <section class="booking reveal" id="booking">
+        <span class="section-eyebrow">
+            <span class="en">Get Started</span>
+            <span class="it">Inizia Ora</span>
+            <span class="fr">Commencer</span>
+        </span>
+        <h2>
+            <span class="en">Book Your Shoot</span>
+            <span class="it">Prenota il Tuo Shooting</span>
+            <span class="fr">Réservez Votre Shooting</span>
+        </h2>
+        <div class="form-container">
+            <form id="bookingForm" onsubmit="handleBooking(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>
+                            <span class="en">Name / Brand Name</span>
+                            <span class="it">Nome / Nome Brand</span>
+                            <span class="fr">Nom / Nom de Marque</span>
+                        </label>
+                        <input type="text" required placeholder="">
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <span class="en">Email</span>
+                            <span class="it">Email</span>
+                            <span class="fr">Email</span>
+                        </label>
+                        <input type="email" required placeholder="">
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <span class="en">Phone Number</span>
+                            <span class="it">Numero di Telefono</span>
+                            <span class="fr">Numéro de Téléphone</span>
+                        </label>
+                        <input type="tel" required placeholder="">
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <span class="en">Select Package</span>
+                            <span class="it">Seleziona Pacchetto</span>
+                            <span class="fr">Sélectionnez le Forfait</span>
+                        </label>
+                        <select required>
+                            <option value="">Choose package</option>
+                            <option value="basic">Basic (Studio) - €150</option>
+                            <option value="travel">Travel/Shop/Products - €300</option>
+                            <option value="outdoor">Shop and Outdoor - €500+</option>
+                            <option value="video">Content Sprint - €1000</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <span class="en">Shoot Type</span>
+                            <span class="it">Tipo di Shooting</span>
+                            <span class="fr">Type de Shooting</span>
+                        </label>
+                        <select required>
+                            <option value="">Select type</option>
+                            <option value="studio">Studio Shoot</option>
+                            <option value="shop">Shop Shoot</option>
+                            <option value="restaurant">Restaurant Shoot</option>
+                            <option value="model">Model Shoot</option>
+                            <option value="outdoor">Outdoor Shoot</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <span class="en">Preferred Date</span>
+                            <span class="it">Data Preferita</span>
+                            <span class="fr">Date Préférée</span>
+                        </label>
+                        <input type="date" required>
+                    </div>
+
+                    <div class="form-group full">
+                        <label>
+                            <span class="en">Special Requests</span>
+                            <span class="it">Richieste Speciali</span>
+                            <span class="fr">Demandes Spéciales</span>
+                        </label>
+                        <textarea placeholder=""></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <span class="en">Confirm Booking Request</span>
+                    <span class="it">Conferma Richiesta di Prenotazione</span>
+                    <span class="fr">Confirmer la Demande de Réservation</span>
+                </button>
+                <p class="form-note">
+                    <span class="en">No online payment required — we'll confirm details and payment with you directly.</span>
+                    <span class="it">Nessun pagamento online richiesto — confermeremo i dettagli e il pagamento direttamente con te.</span>
+                    <span class="fr">Aucun paiement en ligne requis — nous confirmerons les détails et le paiement directement avec vous.</span>
+                </p>
+                <p class="form-note">
+                    <span class="en">Your details are used only to respond to this request. See our <a href="#privacy" style="color: var(--accent);">Privacy Policy</a>.</span>
+                    <span class="it">I tuoi dati sono usati solo per rispondere a questa richiesta. Leggi la nostra <a href="#privacy" style="color: var(--accent);">Privacy Policy</a>.</span>
+                    <span class="fr">Vos informations sont utilisées uniquement pour répondre à cette demande. Consultez notre <a href="#privacy" style="color: var(--accent);">Politique de Confidentialité</a>.</span>
+                </p>
+            </form>
+        </div>
+    </section>
+
+    <section class="privacy reveal" id="privacy">
+        <span class="section-eyebrow">
+            <span class="en">Legal</span>
+            <span class="it">Legale</span>
+            <span class="fr">Mentions Légales</span>
+        </span>
+        <h2>
+            <span class="en">Privacy Policy</span>
+            <span class="it">Privacy Policy</span>
+            <span class="fr">Politique de Confidentialité</span>
+        </h2>
+        <div class="privacy-body">
+            <p class="privacy-updated">
+                <span class="en">Last updated: August 2026</span>
+                <span class="it">Ultimo aggiornamento: agosto 2026</span>
+                <span class="fr">Dernière mise à jour : août 2026</span>
+            </p>
+
+            <h4><span class="en">Who we are</span><span class="it">Chi siamo</span><span class="fr">Qui nous sommes</span></h4>
+            <p><span class="en">MEOCY is a photography studio operating in Milan, Italy and Paris, France. For any question about this policy or your data, contact us at hello@meocy.com.</span><span class="it">MEOCY è uno studio fotografico che opera a Milano, Italia e Parigi, Francia. Per qualsiasi domanda su questa policy o sui tuoi dati, contattaci a hello@meocy.com.</span><span class="fr">MEOCY est un studio photographique opérant à Milan, Italie et Paris, France. Pour toute question sur cette politique ou vos données, contactez-nous à hello@meocy.com.</span></p>
+
+            <h4><span class="en">What we collect</span><span class="it">Cosa raccogliamo</span><span class="fr">Ce que nous collectons</span></h4>
+            <p><span class="en">When you submit the booking form, we collect your name, email address, phone number, selected package, shoot type, preferred date, and any special requests you write.</span><span class="it">Quando invii il modulo di prenotazione, raccogliamo il tuo nome, indirizzo email, numero di telefono, pacchetto selezionato, tipo di shooting, data preferita ed eventuali richieste speciali.</span><span class="fr">Lorsque vous soumettez le formulaire de réservation, nous collectons votre nom, adresse email, numéro de téléphone, forfait sélectionné, type de shooting, date préférée et toute demande spéciale.</span></p>
+
+            <h4><span class="en">How we use it</span><span class="it">Come lo utilizziamo</span><span class="fr">Comment nous l'utilisons</span></h4>
+            <p><span class="en">We use this information only to respond to your booking request and coordinate your shoot. We do not sell or share your information with third parties for marketing purposes.</span><span class="it">Utilizziamo queste informazioni solo per rispondere alla tua richiesta di prenotazione e coordinare il tuo shooting. Non vendiamo né condividiamo i tuoi dati con terzi per scopi di marketing.</span><span class="fr">Nous utilisons ces informations uniquement pour répondre à votre demande de réservation et coordonner votre shooting. Nous ne vendons ni ne partageons vos données avec des tiers à des fins marketing.</span></p>
+
+            <h4><span class="en">Payment</span><span class="it">Pagamento</span><span class="fr">Paiement</span></h4>
+            <p><span class="en">We do not collect any payment or card information through this website. Payment is arranged directly with you after your booking is confirmed.</span><span class="it">Non raccogliamo alcuna informazione di pagamento o di carta tramite questo sito. Il pagamento viene concordato direttamente con te dopo la conferma della prenotazione.</span><span class="fr">Nous ne collectons aucune information de paiement ou de carte via ce site. Le paiement est organisé directement avec vous après confirmation de votre réservation.</span></p>
+
+            <h4><span class="en">Cookies &amp; storage</span><span class="it">Cookie e archiviazione</span><span class="fr">Cookies et stockage</span></h4>
+            <p><span class="en">This website uses your browser's local storage only to remember your language preference (English/Italian/French). We do not use tracking cookies or analytics.</span><span class="it">Questo sito utilizza l'archiviazione locale del tuo browser solo per ricordare la lingua preferita (inglese/italiano/francese). Non utilizziamo cookie di tracciamento o analytics.</span><span class="fr">Ce site utilise le stockage local de votre navigateur uniquement pour mémoriser votre préférence de langue (anglais/italien/français). Nous n'utilisons pas de cookies de suivi ni d'analytics.</span></p>
+
+            <h4><span class="en">Your rights</span><span class="it">I tuoi diritti</span><span class="fr">Vos droits</span></h4>
+            <p><span class="en">Under GDPR, you have the right to access, correct, or request deletion of your personal data at any time. To exercise these rights, contact us at hello@meocy.com.</span><span class="it">Ai sensi del GDPR, hai il diritto di accedere, correggere o richiedere la cancellazione dei tuoi dati personali in qualsiasi momento. Per esercitare questi diritti, contattaci a hello@meocy.com.</span><span class="fr">Conformément au RGPD, vous avez le droit d'accéder, de corriger ou de demander la suppression de vos données personnelles à tout moment. Pour exercer ces droits, contactez-nous à hello@meocy.com.</span></p>
+
+            <h4><span class="en">Data retention</span><span class="it">Conservazione dei dati</span><span class="fr">Conservation des données</span></h4>
+            <p><span class="en">We retain booking information only as long as necessary to coordinate and complete your shoot, and delete it on request.</span><span class="it">Conserviamo le informazioni di prenotazione solo per il tempo necessario a coordinare e completare il tuo shooting, e le cancelliamo su richiesta.</span><span class="fr">Nous conservons les informations de réservation uniquement le temps nécessaire pour coordonner et réaliser votre shooting, et les supprimons sur demande.</span></p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-top">
+            <div>
+                <div class="footer-wordmark">
+                    <span class="footer-wordmark-dot"></span>
+                    <span class="footer-wordmark-text">MEOCY.STUDIO</span>
+                </div>
+                <p class="footer-subtitle">
+                    <span class="en">Professional photography studio — Milan &amp; Paris. Product, fashion, restaurant and model shoots.</span>
+                    <span class="it">Studio fotografico professionale — Milano e Parigi. Shooting di prodotto, moda, ristoranti e modelli.</span>
+                    <span class="fr">Studio photographique professionnel — Milan et Paris. Shootings produit, mode, restaurant et mannequin.</span>
+                </p>
+            </div>
+            <div class="footer-chips">
+                <span class="footer-chip">MI</span>
+                <span class="footer-chip">PA</span>
+                <div class="footer-social">
+                    <a href="https://instagram.com/chamila.eu" target="_blank" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-divider"></div>
+
+        <div class="footer-contact-row">
+            <div>
+                <div class="footer-contact-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+                </div>
+                <div class="footer-contact-value"><a href="mailto:hello@meocy.com">hello@meocy.com</a></div>
+                <div class="footer-contact-label">EMAIL</div>
+            </div>
+            <div>
+                <div class="footer-contact-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+                </div>
+                <div class="footer-contact-value"><a href="tel:+379105100">+379 105 1000</a></div>
+                <div class="footer-contact-label"><span class="en">PHONE</span><span class="it">TELEFONO</span><span class="fr">TÉLÉPHONE</span></div>
+            </div>
+            <div>
+                <div class="footer-contact-label" style="margin-bottom: 14px;"><span class="en">NAVIGATION</span><span class="it">NAVIGAZIONE</span><span class="fr">NAVIGATION</span></div>
+                <div class="footer-nav-list">
+                    <a href="#about"><span class="en">About</span><span class="it">Chi Siamo</span><span class="fr">À Propos</span></a>
+                    <a href="#work"><span class="en">Work</span><span class="it">Lavori</span><span class="fr">Travaux</span></a>
+                    <a href="#packages"><span class="en">Packages</span><span class="it">Pacchetti</span><span class="fr">Forfaits</span></a>
+                    <a href="#faq">FAQ</a>
+                    <a href="#booking"><span class="en">Book Now</span><span class="it">Prenota Ora</span><span class="fr">Réserver Maintenant</span></a>
+                </div>
+            </div>
+            <div>
+                <div class="footer-contact-label" style="margin-bottom: 14px;"><span class="en">SERVICES</span><span class="it">SERVIZI</span><span class="fr">SERVICES</span></div>
+                <div class="footer-nav-list">
+                    <a href="#work"><span class="en">Fashion</span><span class="it">Moda</span><span class="fr">Mode</span></a>
+                    <a href="#work"><span class="en">Product</span><span class="it">Prodotto</span><span class="fr">Produit</span></a>
+                    <a href="#work"><span class="en">Restaurant</span><span class="it">Ristorazione</span><span class="fr">Restaurant</span></a>
+                    <a href="#work"><span class="en">Model</span><span class="it">Modelli</span><span class="fr">Mannequin</span></a>
+                    <a href="#work"><span class="en">On-Location</span><span class="it">On Location</span><span class="fr">En Extérieur</span></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-divider"></div>
+
+        <div class="footer-bottom-row">
+            <div class="footer-info-block">
+                <div class="footer-icon-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                </div>
+                <div>
+                    <div class="footer-info-title"><span class="en">Studios</span><span class="it">Studi</span><span class="fr">Studios</span></div>
+                    <div class="footer-info-sub">Viale Renato Serra 14, 20148 Milano, Italy</div>
+                    <div class="footer-info-sub"><span class="en">Paris, France</span><span class="it">Parigi, Francia</span><span class="fr">Paris, France</span></div>
+                </div>
+            </div>
+            <div class="footer-bottom-right footer-info-block">
+                <div>
+                    <div class="footer-info-title">MEOCY</div>
+                    <div class="footer-info-sub"><span class="en">Milan &amp; Paris · CET</span><span class="it">Milano e Parigi · CET</span><span class="fr">Milan et Paris · CET</span></div>
+                </div>
+                <div class="footer-icon-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13.5" r="3.5"/></svg>
+                </div>
+            </div>
+        </div>
+
+        <div style="max-width: 1200px; margin: 24px auto 0;">
+            <a href="#privacy" style="color: rgba(255,255,255,0.4); font-size: 0.82em; text-decoration: none;">
+                <span class="en">Privacy Policy</span><span class="it">Privacy Policy</span><span class="fr">Politique de Confidentialité</span>
+            </a>
+        </div>
+
+    </footer>
+
+    <script>
+        function setLanguage(lang) {
+            const buttons = document.querySelectorAll('.lang-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.body.classList.remove('italian', 'french');
+
+            if (lang === 'en') {
+                document.documentElement.lang = 'en';
+                buttons[0].classList.add('active');
+            } else if (lang === 'it') {
+                document.body.classList.add('italian');
+                document.documentElement.lang = 'it';
+                buttons[1].classList.add('active');
+            } else if (lang === 'fr') {
+                document.body.classList.add('french');
+                document.documentElement.lang = 'fr';
+                buttons[2].classList.add('active');
+            }
+
+            localStorage.setItem('language', lang);
+        }
+
+        window.addEventListener('load', () => {
+            const savedLang = localStorage.getItem('language') || 'en';
+            setLanguage(savedLang);
+        });
+
+        function handleBooking(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const message = `New booking request!\n\n${Array.from(formData).map(([k, v]) => `${k}: ${v}`).join('\n')}`;
+
+            window.location.href = `mailto:hello@meocy.com?subject=Booking Request&body=${encodeURIComponent(message)}`;
+        }
+
+        // Work modal
+        const workDetails = {
+            fashion: {
+                icon: '👗',
+                en: { eyebrow: 'Fashion Campaign', title: 'Fashion Campaign', desc: "Full-look apparel photography that captures fit, fabric and movement — shot in studio or on location, ready for lookbooks and e-commerce.", best: 'Best for: clothing brands, lookbooks, seasonal drops' },
+                it: { eyebrow: 'Campagna Moda', title: 'Campagna Moda', desc: "Fotografia di abbigliamento a figura intera che cattura vestibilità, tessuto e movimento — in studio o on location, pronta per lookbook ed e-commerce.", best: 'Ideale per: brand di abbigliamento, lookbook, collezioni stagionali' },
+                fr: { eyebrow: 'Campagne Mode', title: 'Campagne Mode', desc: "Une photographie de mode qui capture la coupe, le tissu et le mouvement — en studio ou en extérieur, prête pour les lookbooks et l'e-commerce.", best: "Idéal pour : marques de vêtements, lookbooks, nouvelles collections" }
+            },
+            product: {
+                icon: '📦',
+                en: { eyebrow: 'Product Photography', title: 'Product Photography', desc: "Clean, controlled product shots on seamless backgrounds or styled sets — consistent lighting and color, built for catalogs and ad creative.", best: 'Best for: e-commerce catalogs, packaging, ad creative' },
+                it: { eyebrow: 'Fotografia di Prodotto', title: 'Fotografia di Prodotto', desc: "Scatti di prodotto puliti e controllati su sfondi neutri o set stilizzati — luce e colore costanti, pensati per cataloghi e creatività pubblicitaria.", best: 'Ideale per: cataloghi e-commerce, packaging, creatività per ADV' },
+                fr: { eyebrow: 'Photographie Produit', title: 'Photographie Produit', desc: "Des prises de vue produit propres et maîtrisées sur fond neutre ou décor stylisé — lumière et couleurs constantes, pensées pour les catalogues et les publicités.", best: 'Idéal pour : catalogues e-commerce, packaging, publicités' }
+            },
+            restaurant: {
+                icon: '🍽️',
+                en: { eyebrow: 'Restaurant & Food', title: 'Restaurant & Food', desc: "Appetizing food and interior photography shot on-site — natural light and styling that make your menu and space impossible to scroll past.", best: 'Best for: menus, delivery apps, social media, ambience shots' },
+                it: { eyebrow: 'Ristorazione & Food', title: 'Ristorazione & Food', desc: "Fotografia di cibo e ambienti realizzata sul posto — luce naturale e styling che rendono il tuo menu e il tuo spazio irresistibili.", best: 'Ideale per: menu, app di delivery, social media, foto d\'ambiente' },
+                fr: { eyebrow: 'Restaurant & Food', title: 'Restaurant & Food', desc: "Une photographie culinaire et d'intérieur réalisée sur place — lumière naturelle et mise en scène qui rendent votre carte et votre lieu irrésistibles.", best: 'Idéal pour : cartes, applications de livraison, réseaux sociaux, ambiance' }
+            },
+            model: {
+                icon: '👤',
+                en: { eyebrow: 'Model Portfolio', title: 'Model Portfolio', desc: "Professional portfolio shoots for models and agencies — studio lighting, multiple looks per session, retouched to a polished, agency-ready finish.", best: 'Best for: new faces, agency portfolios, comp cards' },
+                it: { eyebrow: 'Portfolio Modelli', title: 'Portfolio Modelli', desc: "Shooting portfolio professionali per modelli e agenzie — illuminazione da studio, più look per sessione, ritocco rifinito e pronto per le agenzie.", best: 'Ideale per: nuovi volti, portfolio per agenzie, comp card' },
+                fr: { eyebrow: 'Portfolio Mannequin', title: 'Portfolio Mannequin', desc: "Des shootings portfolio professionnels pour mannequins et agences — éclairage studio, plusieurs looks par session, retouche soignée et prête pour les agences.", best: 'Idéal pour : nouveaux visages, portfolios d\'agence, comp cards' }
+            },
+            studio: {
+                icon: '💡',
+                en: { eyebrow: 'Studio Session', title: 'Studio Session', desc: "Full control over light, background and styling in our Milan or Paris studio — the most consistent option when every shot needs to match.", best: 'Best for: catalogs, brand consistency, multi-product sessions' },
+                it: { eyebrow: 'Sessione Studio', title: 'Sessione Studio', desc: "Controllo totale su luce, sfondo e styling nel nostro studio di Milano o Parigi — l'opzione più coerente quando ogni scatto deve essere uniforme.", best: 'Ideale per: cataloghi, coerenza di brand, sessioni multi-prodotto' },
+                fr: { eyebrow: 'Session Studio', title: 'Session Studio', desc: "Un contrôle total de la lumière, du fond et du style dans notre studio de Milan ou de Paris — l'option la plus cohérente quand chaque photo doit correspondre.", best: 'Idéal pour : catalogues, cohérence de marque, sessions multi-produits' }
+            },
+            location: {
+                icon: '📍',
+                en: { eyebrow: 'On-Location Shoot', title: 'On-Location Shoot', desc: "We bring the full setup to your shop, restaurant or chosen location — no need to move products, close early, or disrupt your day.", best: 'Best for: shops, restaurants, outdoor and lifestyle content' },
+                it: { eyebrow: 'Shooting On Location', title: 'Shooting On Location', desc: "Portiamo l'intera attrezzatura nel tuo negozio, ristorante o location scelta — senza bisogno di spostare i prodotti o interrompere la tua giornata.", best: 'Ideale per: negozi, ristoranti, contenuti outdoor e lifestyle' },
+                fr: { eyebrow: 'Shooting en Extérieur', title: 'Shooting en Extérieur', desc: "Nous apportons tout notre matériel dans votre boutique, restaurant ou lieu choisi — sans besoin de déplacer vos produits ni de perturber votre journée.", best: 'Idéal pour : boutiques, restaurants, contenu extérieur et lifestyle' }
+            }
+        };
+
+        function currentLang() {
+            if (document.body.classList.contains('italian')) return 'it';
+            if (document.body.classList.contains('french')) return 'fr';
+            return 'en';
+        }
+
+        const workModalOverlay = document.getElementById('workModalOverlay');
+        const workModalIcon = document.getElementById('workModalIcon');
+        const workModalEyebrow = document.getElementById('workModalEyebrow');
+        const workModalTitle = document.getElementById('workModalTitle');
+        const workModalDesc = document.getElementById('workModalDesc');
+        const workModalBest = document.getElementById('workModalBest');
+
+        function openWorkModal(key) {
+            const data = workDetails[key];
+            if (!data) return;
+            const lang = data[currentLang()];
+            workModalIcon.textContent = data.icon;
+            workModalEyebrow.textContent = lang.eyebrow;
+            workModalTitle.textContent = lang.title;
+            workModalDesc.textContent = lang.desc;
+            workModalBest.innerHTML = '<span>' + lang.best.split(':')[0] + ':</span>' + lang.best.split(':').slice(1).join(':');
+            workModalOverlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeWorkModal() {
+            workModalOverlay.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        document.querySelectorAll('.work-item').forEach(item => {
+            item.addEventListener('click', () => openWorkModal(item.dataset.work));
+        });
+
+        document.getElementById('workModalClose').addEventListener('click', closeWorkModal);
+        workModalOverlay.addEventListener('click', (e) => {
+            if (e.target === workModalOverlay) closeWorkModal();
+        });
+        document.getElementById('workModalCta').addEventListener('click', () => {
+            closeWorkModal();
+            document.getElementById('booking').scrollIntoView();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeWorkModal();
+        });
+
+        // Scroll reveal animations
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // FAQ accordion
+        document.querySelectorAll('.faq-question').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.closest('.faq-item');
+                const answer = item.querySelector('.faq-answer');
+                const isOpen = item.classList.contains('open');
+
+                if (isOpen) {
+                    item.classList.remove('open');
+                    answer.style.maxHeight = null;
+                } else {
+                    item.classList.add('open');
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
