@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEOCY Booking Confirmation</title>
+</head>
+<body style="margin:0; padding:0; background-color:#f6f6f4; font-family: Arial, Helvetica, sans-serif;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f6f6f4; padding: 32px 16px;">
+  <tr>
+    <td align="center">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px; width:100%; background-color:#ffffff; border-radius:16px; overflow:hidden;">
+
+        <!-- Header -->
+        <tr>
+          <td style="background-color:#0a0a0a; padding: 32px 40px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td style="width:16px; height:16px; background-color:#7acc00; border-radius:4px; padding:0;"></td>
+                <td style="padding-left:10px; font-family: Arial, Helvetica, sans-serif; font-size:20px; font-weight:bold; color:#ffffff; letter-spacing:-0.5px;">MEOCY.STUDIO</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Body -->
+        <tr>
+          <td style="padding: 40px;">
+            <p style="margin:0 0 4px; font-family: Arial, Helvetica, sans-serif; font-size:13px; font-weight:bold; letter-spacing:1px; text-transform:uppercase; color:#7acc00;">Booking Request Received</p>
+            <h1 style="margin:0 0 20px; font-family: Arial, Helvetica, sans-serif; font-size:26px; font-weight:bold; color:#0a0a0a;">Hi {{name}}, thanks for booking!</h1>
+
+            <p style="margin:0 0 24px; font-family: Arial, Helvetica, sans-serif; font-size:15px; line-height:24px; color:#444444;">
+              We've received your shoot request and we're excited to work with you. Our team will review the details below and confirm your booking within 24 hours.
+            </p>
+
+            <!-- Summary box -->
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f6f6f4; border-radius:12px; margin-bottom:24px;">
+              <tr>
+                <td style="padding: 24px 28px;">
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                      <td style="padding: 6px 0; font-family: Arial, Helvetica, sans-serif; font-size:13px; color:#888888;">Package</td>
+                      <td align="right" style="padding: 6px 0; font-family: Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; color:#0a0a0a;">{{package}}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 6px 0; font-family: Arial, Helvetica, sans-serif; font-size:13px; color:#888888;">Shoot type</td>
+                      <td align="right" style="padding: 6px 0; font-family: Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; color:#0a0a0a;">{{shoot_type}}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 6px 0; font-family: Arial, Helvetica, sans-serif; font-size:13px; color:#888888;">Preferred date</td>
+                      <td align="right" style="padding: 6px 0; font-family: Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; color:#0a0a0a;">{{date}}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 6px 0; font-family: Arial, Helvetica, sans-serif; font-size:13px; color:#888888;">Studio</td>
+                      <td align="right" style="padding: 6px 0; font-family: Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; color:#0a0a0a;">{{studio_city}}</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+
+            <p style="margin:0 0 4px; font-family: Arial, Helvetica, sans-serif; font-size:15px; font-weight:bold; color:#0a0a0a;">What happens next</p>
+            <p style="margin:0 0 24px; font-family: Arial, Helvetica, sans-serif; font-size:15px; line-height:24px; color:#444444;">
+              We'll reply within 24 hours to confirm availability and lock in your date. There's no online payment — we'll arrange that directly with you once everything is confirmed.
+            </p>
+
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td style="background-color:#0a0a0a; border-radius:100px;">
+                  <a href="mailto:hello@meocy.com" style="display:inline-block; padding:14px 32px; font-family: Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; color:#ffffff; text-decoration:none;">Reply to This Email</a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Footer -->
+        <tr>
+          <td style="background-color:#0a0a0a; padding: 28px 40px;">
+            <p style="margin:0 0 6px; font-family: Arial, Helvetica, sans-serif; font-size:13px; color:#ffffff; font-weight:bold;">MEOCY</p>
+            <p style="margin:0 0 4px; font-family: Arial, Helvetica, sans-serif; font-size:12px; color:#999999;">Viale Renato Serra 14, 20148 Milano, Italy &middot; Paris, France</p>
+            <p style="margin:0; font-family: Arial, Helvetica, sans-serif; font-size:12px; color:#999999;">hello@meocy.com &middot; +39 379 105 1000</p>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
