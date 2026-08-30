@@ -380,7 +380,7 @@
         .work-item {
             aspect-ratio: 4 / 5;
             border-radius: var(--r-lg);
-            background: var(--bg);
+            background: linear-gradient(160deg, #ffffff 0%, #f6f6f4 100%);
             border: 1px solid var(--border);
             position: relative;
             overflow: hidden;
@@ -391,11 +391,19 @@
             text-align: center;
             padding: 30px;
             cursor: pointer;
+            transform: rotate(var(--tilt, 0deg));
             transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease), border-color 0.4s var(--ease);
         }
 
+        .work-grid .work-item:nth-child(6n+1) { --tilt: -0.6deg; }
+        .work-grid .work-item:nth-child(6n+2) { --tilt: 0.5deg; }
+        .work-grid .work-item:nth-child(6n+3) { --tilt: -0.4deg; }
+        .work-grid .work-item:nth-child(6n+4) { --tilt: 0.6deg; }
+        .work-grid .work-item:nth-child(6n+5) { --tilt: -0.5deg; }
+        .work-grid .work-item:nth-child(6n+6) { --tilt: 0.4deg; }
+
         .work-item:hover {
-            transform: translateY(-8px);
+            transform: rotate(0deg) translateY(-8px);
             box-shadow: var(--shadow-lift);
             border-color: transparent;
         }
@@ -423,15 +431,27 @@
         }
 
         .work-item-category {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             color: var(--accent);
-            background: var(--accent-soft);
+            background: var(--bg);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
             font-size: 0.75em;
             font-weight: 700;
             letter-spacing: 0.5px;
-            padding: 6px 14px;
+            padding: 7px 14px 7px 10px;
             border-radius: var(--r-pill);
             margin-bottom: 14px;
+        }
+
+        .work-item-category::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex-shrink: 0;
         }
 
         .work-item-title {
