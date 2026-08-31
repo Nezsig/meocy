@@ -174,18 +174,26 @@
 
         .hero-tag {
             display: inline-flex;
-            align-items: center;
-            padding: 9px 20px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 5px;
+            padding: 13px 22px;
             border: 1px solid var(--border);
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(10px);
-            border-radius: var(--r-pill);
-            font-size: 0.85em;
-            font-weight: 700;
-            color: var(--text-light);
+            border-radius: 18px;
             margin-bottom: 30px;
             opacity: 0;
             animation: fadeUp 0.7s var(--ease) forwards;
+        }
+
+        .hero-tag-primary {
+            display: flex;
+            align-items: center;
+            font-size: 0.95em;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--text-dark);
         }
 
         .hero-tag span.dot {
@@ -195,6 +203,28 @@
             border-radius: 50%;
             background: var(--accent);
             margin-right: 8px;
+        }
+
+        .hero-tag-secondary {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding-left: 16px;
+            font-size: 0.78em;
+            font-weight: 500;
+            color: #6f8fb8;
+        }
+
+        .hero-tag-secondary svg {
+            width: 11px;
+            height: 11px;
+            opacity: 0.85;
+            flex-shrink: 0;
+        }
+
+        .hero-tag-secondary .soon-badge {
+            font-weight: 700;
+            color: var(--text-light);
         }
 
         .hero h1 {
@@ -1069,6 +1099,12 @@
             letter-spacing: 0.5px;
             padding: 9px 15px;
             border-radius: 10px;
+        }
+
+        .footer-chip-soon {
+            background: transparent;
+            border: 1px dashed rgba(255, 255, 255, 0.25);
+            color: rgba(255, 255, 255, 0.4);
         }
 
         .footer-social {
