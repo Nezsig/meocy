@@ -788,6 +788,55 @@
             line-height: 1;
         }
 
+        /* ---------- Equipment ---------- */
+        .equipment {
+            background: var(--bg-light);
+        }
+
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 22px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .equipment-card {
+            background: var(--bg);
+            border-radius: var(--r-md);
+            padding: 26px;
+            transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+        }
+
+        .equipment-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .equipment-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--accent-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+            margin-bottom: 16px;
+        }
+
+        .equipment-name {
+            font-weight: 700;
+            font-size: 1em;
+            margin-bottom: 8px;
+        }
+
+        .equipment-list {
+            color: var(--text-light);
+            font-size: 0.88em;
+            line-height: 1.6;
+        }
+
         /* ---------- Features ---------- */
         .features {
             background: var(--bg);
