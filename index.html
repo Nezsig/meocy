@@ -500,7 +500,28 @@
                             <span class="it">Data Preferita</span>
                             <span class="fr">Date Préférée</span>
                         </label>
-                        <input type="date" name="Preferred Date" required>
+                        <div class="date-picker" id="datePicker">
+                            <button type="button" class="date-picker-trigger" id="dateTrigger">
+                                <span id="dateTriggerText" class="date-picker-placeholder">
+                                    <span class="en">Select a date</span>
+                                    <span class="it">Seleziona una data</span>
+                                    <span class="fr">Sélectionnez une date</span>
+                                </span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+                            </button>
+                            <input type="hidden" name="Preferred Date" id="dateHiddenInput" required>
+                            <div class="date-picker-popup" id="datePopup">
+                                <div class="date-picker-header">
+                                    <button type="button" class="date-picker-nav" id="datePrevMonth" aria-label="Previous month">‹</button>
+                                    <span id="dateMonthLabel"></span>
+                                    <button type="button" class="date-picker-nav" id="dateNextMonth" aria-label="Next month">›</button>
+                                </div>
+                                <div class="date-picker-weekdays">
+                                    <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+                                </div>
+                                <div class="date-picker-days" id="dateDaysGrid"></div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group">
@@ -509,7 +530,21 @@
                             <span class="it">Ora Preferita</span>
                             <span class="fr">Heure Préférée</span>
                         </label>
-                        <input type="time" name="Preferred Time" step="900">
+                        <select name="Preferred Time">
+                            <option value="">--:--</option>
+                            <option>08:00</option><option>08:15</option><option>08:30</option><option>08:45</option>
+                            <option>09:00</option><option>09:15</option><option>09:30</option><option>09:45</option>
+                            <option>10:00</option><option>10:15</option><option>10:30</option><option>10:45</option>
+                            <option>11:00</option><option>11:15</option><option>11:30</option><option>11:45</option>
+                            <option>12:00</option><option>12:15</option><option>12:30</option><option>12:45</option>
+                            <option>13:00</option><option>13:15</option><option>13:30</option><option>13:45</option>
+                            <option>14:00</option><option>14:15</option><option>14:30</option><option>14:45</option>
+                            <option>15:00</option><option>15:15</option><option>15:30</option><option>15:45</option>
+                            <option>16:00</option><option>16:15</option><option>16:30</option><option>16:45</option>
+                            <option>17:00</option><option>17:15</option><option>17:30</option><option>17:45</option>
+                            <option>18:00</option><option>18:15</option><option>18:30</option><option>18:45</option>
+                            <option>19:00</option>
+                        </select>
                     </div>
 
                     <div class="form-group full">
@@ -678,6 +713,131 @@
 
             window.location.href = `mailto:hello@meocy.com?subject=Booking Request&body=${encodeURIComponent(message)}`;
         }
+
+        // Custom date picker
+        (function () {
+            const trigger = document.getElementById('dateTrigger');
+            const triggerText = document.getElementById('dateTriggerText');
+            const hiddenInput = document.getElementById('dateHiddenInput');
+            const popup = document.getElementById('datePopup');
+            const monthLabel = document.getElementById('dateMonthLabel');
+            const daysGrid = document.getElementById('dateDaysGrid');
+            const prevBtn = document.getElementById('datePrevMonth');
+            const nextBtn = document.getElementById('dateNextMonth');
+
+            if (!trigger) return;
+
+            const monthNames = {
+                en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                it: ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'],
+                fr: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
+            };
+
+            function pickerLang() {
+                if (document.body.classList.contains('italian')) return 'it';
+                if (document.body.classList.contains('french')) return 'fr';
+                return 'en';
+            }
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            let viewYear = today.getFullYear();
+            let viewMonth = today.getMonth();
+            let selectedDate = null;
+
+            function sameDay(a, b) {
+                return a && b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+            }
+
+            function renderCalendar() {
+                const lang = pickerLang();
+                monthLabel.textContent = `${monthNames[lang][viewMonth]} ${viewYear}`;
+
+                const isCurrentMonth = viewYear === today.getFullYear() && viewMonth === today.getMonth();
+                prevBtn.disabled = isCurrentMonth;
+
+                const firstOfMonth = new Date(viewYear, viewMonth, 1);
+                const startOffset = (firstOfMonth.getDay() + 6) % 7; // Monday = 0
+                const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+
+                daysGrid.innerHTML = '';
+
+                for (let i = 0; i < startOffset; i++) {
+                    const empty = document.createElement('span');
+                    empty.className = 'date-picker-day date-picker-day-empty';
+                    daysGrid.appendChild(empty);
+                }
+
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const cellDate = new Date(viewYear, viewMonth, day);
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'date-picker-day';
+                    btn.textContent = day;
+
+                    if (cellDate < today) {
+                        btn.disabled = true;
+                    }
+                    if (sameDay(cellDate, today)) {
+                        btn.classList.add('today');
+                    }
+                    if (sameDay(cellDate, selectedDate)) {
+                        btn.classList.add('selected');
+                    }
+
+                    btn.addEventListener('click', () => {
+                        selectedDate = cellDate;
+                        const formatted = `${String(day).padStart(2, '0')} ${monthNames[lang][viewMonth]} ${viewYear}`;
+                        hiddenInput.value = formatted;
+                        triggerText.textContent = formatted;
+                        triggerText.classList.remove('date-picker-placeholder');
+                        closePopup();
+                    });
+
+                    daysGrid.appendChild(btn);
+                }
+            }
+
+            function openPopup() {
+                renderCalendar();
+                popup.classList.add('open');
+                trigger.classList.add('open');
+            }
+
+            function closePopup() {
+                popup.classList.remove('open');
+                trigger.classList.remove('open');
+            }
+
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (popup.classList.contains('open')) {
+                    closePopup();
+                } else {
+                    openPopup();
+                }
+            });
+
+            prevBtn.addEventListener('click', () => {
+                viewMonth--;
+                if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+                renderCalendar();
+            });
+
+            nextBtn.addEventListener('click', () => {
+                viewMonth++;
+                if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+                renderCalendar();
+            });
+
+            popup.addEventListener('click', (e) => e.stopPropagation());
+
+            document.addEventListener('click', () => closePopup());
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closePopup();
+            });
+        })();
 
         // Scroll reveal animations
         const revealObserver = new IntersectionObserver((entries) => {
