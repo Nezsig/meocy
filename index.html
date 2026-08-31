@@ -365,9 +365,41 @@
                 </div>
             </div>
 
+            <div class="sub-calc-row">
+                <div class="sub-calc-control">
+                    <label><span class="en">Shoot Days</span><span class="it">Giorni di Shooting</span><span class="fr">Jours de Shooting</span></label>
+                    <div class="sub-stepper">
+                        <button type="button" class="sub-step-btn" data-target="days" data-dir="-1" aria-label="Decrease days">−</button>
+                        <span class="sub-step-value" id="subDaysValue">1</span>
+                        <button type="button" class="sub-step-btn" data-target="days" data-dir="1" aria-label="Increase days">+</button>
+                    </div>
+                    <span class="sub-calc-note"><span class="en">1 day included, max 3</span><span class="it">1 giorno incluso, max 3</span><span class="fr">1 jour inclus, max 3</span></span>
+                </div>
+                <div class="sub-calc-control">
+                    <label><span class="en">Outfits / Products</span><span class="it">Outfit / Prodotti</span><span class="fr">Tenues / Produits</span></label>
+                    <div class="sub-stepper">
+                        <button type="button" class="sub-step-btn" data-target="outfits" data-dir="-1" aria-label="Decrease outfits">−</button>
+                        <span class="sub-step-value" id="subOutfitsValue">0</span>
+                        <button type="button" class="sub-step-btn" data-target="outfits" data-dir="1" aria-label="Increase outfits">+</button>
+                    </div>
+                    <span class="sub-calc-note"><span class="en">Optional, ~4 photos each</span><span class="it">Opzionale, ~4 foto ciascuno</span><span class="fr">Optionnel, ~4 photos chacune</span></span>
+                </div>
+            </div>
+
+            <label class="sub-toggle-row" for="subVoiceToggle">
+                <span class="sub-toggle">
+                    <input type="checkbox" id="subVoiceToggle">
+                    <span class="sub-toggle-slider"></span>
+                </span>
+                <span class="sub-toggle-text">
+                    <strong><span class="en">Add Voice-Over</span><span class="it">Aggiungi Voce Fuori Campo</span><span class="fr">Ajouter une Voix Off</span></strong>
+                    <span><span class="en">+€50 per video</span><span class="it">+€50 per video</span><span class="fr">+€50 par vidéo</span></span>
+                </span>
+            </label>
+
             <div class="sub-breakdown">
                 <div class="sub-breakdown-row">
-                    <span><span class="en">Base fee</span><span class="it">Quota base</span><span class="fr">Frais de base</span></span>
+                    <span><span class="en">Base fee (4-hour shoot, 1 day)</span><span class="it">Quota base (shooting di 4 ore, 1 giorno)</span><span class="fr">Frais de base (shooting de 4 heures, 1 jour)</span></span>
                     <span>€300</span>
                 </div>
                 <div class="sub-breakdown-row">
@@ -377,6 +409,18 @@
                 <div class="sub-breakdown-row">
                     <span id="subVideosLabel">1 video × €100</span>
                     <span id="subVideosLine">€100</span>
+                </div>
+                <div class="sub-breakdown-row" id="subDaysRow" style="display: none;">
+                    <span id="subDaysLabel"></span>
+                    <span id="subDaysLine"></span>
+                </div>
+                <div class="sub-breakdown-row" id="subOutfitsRow" style="display: none;">
+                    <span id="subOutfitsLabel"></span>
+                    <span id="subOutfitsLine"></span>
+                </div>
+                <div class="sub-breakdown-row" id="subVoiceRow" style="display: none;">
+                    <span id="subVoiceLabel"></span>
+                    <span id="subVoiceLine"></span>
                 </div>
             </div>
 
@@ -838,21 +882,51 @@
             const BASE_FEE = 300;
             const PHOTO_RATE = 10;
             const VIDEO_RATE = 100;
+            const DAY_RATE = 100;
+            const OUTFIT_RATE = 25;
+            const VOICE_RATE = 50;
+
             const PHOTO_MIN = 20, PHOTO_MAX = 200, PHOTO_STEP = 5;
             const VIDEO_MIN = 1, VIDEO_MAX = 20, VIDEO_STEP = 1;
+            const DAYS_MIN = 1, DAYS_MAX = 3, DAYS_STEP = 1;
+            const OUTFITS_MIN = 0, OUTFITS_MAX = 50, OUTFITS_STEP = 1;
 
             let photos = PHOTO_MIN;
             let videos = VIDEO_MIN;
+            let days = DAYS_MIN;
+            let outfits = OUTFITS_MIN;
 
             const videosValueEl = document.getElementById('subVideosValue');
+            const daysValueEl = document.getElementById('subDaysValue');
+            const outfitsValueEl = document.getElementById('subOutfitsValue');
+            const voiceToggleEl = document.getElementById('subVoiceToggle');
+
             const photosLabelEl = document.getElementById('subPhotosLabel');
             const videosLabelEl = document.getElementById('subVideosLabel');
             const photosLineEl = document.getElementById('subPhotosLine');
             const videosLineEl = document.getElementById('subVideosLine');
+
+            const daysRowEl = document.getElementById('subDaysRow');
+            const daysLabelEl = document.getElementById('subDaysLabel');
+            const daysLineEl = document.getElementById('subDaysLine');
+
+            const outfitsRowEl = document.getElementById('subOutfitsRow');
+            const outfitsLabelEl = document.getElementById('subOutfitsLabel');
+            const outfitsLineEl = document.getElementById('subOutfitsLine');
+
+            const voiceRowEl = document.getElementById('subVoiceRow');
+            const voiceLabelEl = document.getElementById('subVoiceLabel');
+            const voiceLineEl = document.getElementById('subVoiceLine');
+
             const totalEl = document.getElementById('subTotalValue');
 
             const photoWord = { en: 'photos', it: 'foto', fr: 'photos' };
             const videoWord = { en: 'video', it: 'video', fr: 'vidéo' };
+            const extraDayWord = { en: 'extra day', it: 'giorno extra', fr: 'jour supplémentaire' };
+            const extraDaysWord = { en: 'extra days', it: 'giorni extra', fr: 'jours supplémentaires' };
+            const outfitWord = { en: 'outfit', it: 'outfit', fr: 'tenue' };
+            const outfitsWord = { en: 'outfits', it: 'outfit', fr: 'tenues' };
+            const voiceWord = { en: 'Voice-over', it: 'Voce fuori campo', fr: 'Voix off' };
 
             function subLang() {
                 if (document.body.classList.contains('italian')) return 'it';
@@ -862,13 +936,49 @@
 
             function render() {
                 const lang = subLang();
+                const extraDays = Math.max(0, days - 1);
+                const voiceOn = voiceToggleEl.checked;
+
                 photosValueEl.textContent = photos;
                 videosValueEl.textContent = videos;
+                daysValueEl.textContent = days;
+                outfitsValueEl.textContent = outfits;
+
                 photosLabelEl.textContent = `${photos} ${photoWord[lang]} × €${PHOTO_RATE}`;
                 videosLabelEl.textContent = `${videos} ${videoWord[lang]} × €${VIDEO_RATE}`;
                 photosLineEl.textContent = `€${photos * PHOTO_RATE}`;
                 videosLineEl.textContent = `€${videos * VIDEO_RATE}`;
-                const total = BASE_FEE + photos * PHOTO_RATE + videos * VIDEO_RATE;
+
+                if (extraDays > 0) {
+                    daysRowEl.style.display = '';
+                    daysLabelEl.textContent = `${extraDays} ${extraDays === 1 ? extraDayWord[lang] : extraDaysWord[lang]} × €${DAY_RATE}`;
+                    daysLineEl.textContent = `€${extraDays * DAY_RATE}`;
+                } else {
+                    daysRowEl.style.display = 'none';
+                }
+
+                if (outfits > 0) {
+                    outfitsRowEl.style.display = '';
+                    outfitsLabelEl.textContent = `${outfits} ${outfits === 1 ? outfitWord[lang] : outfitsWord[lang]} × €${OUTFIT_RATE}`;
+                    outfitsLineEl.textContent = `€${outfits * OUTFIT_RATE}`;
+                } else {
+                    outfitsRowEl.style.display = 'none';
+                }
+
+                if (voiceOn) {
+                    voiceRowEl.style.display = '';
+                    voiceLabelEl.textContent = `${voiceWord[lang]} × ${videos} × €${VOICE_RATE}`;
+                    voiceLineEl.textContent = `€${videos * VOICE_RATE}`;
+                } else {
+                    voiceRowEl.style.display = 'none';
+                }
+
+                const total = BASE_FEE
+                    + photos * PHOTO_RATE
+                    + videos * VIDEO_RATE
+                    + extraDays * DAY_RATE
+                    + outfits * OUTFIT_RATE
+                    + (voiceOn ? videos * VOICE_RATE : 0);
                 totalEl.textContent = `€${total}`;
             }
 
@@ -878,22 +988,38 @@
                     const dir = parseInt(btn.dataset.dir, 10);
                     if (target === 'photos') {
                         photos = Math.min(PHOTO_MAX, Math.max(PHOTO_MIN, photos + dir * PHOTO_STEP));
-                    } else {
+                    } else if (target === 'videos') {
                         videos = Math.min(VIDEO_MAX, Math.max(VIDEO_MIN, videos + dir * VIDEO_STEP));
+                    } else if (target === 'days') {
+                        days = Math.min(DAYS_MAX, Math.max(DAYS_MIN, days + dir * DAYS_STEP));
+                    } else if (target === 'outfits') {
+                        outfits = Math.min(OUTFITS_MAX, Math.max(OUTFITS_MIN, outfits + dir * OUTFITS_STEP));
                     }
                     render();
                 });
             });
 
+            voiceToggleEl.addEventListener('change', render);
+
             const subCta = document.getElementById('subCta');
             if (subCta) {
                 subCta.addEventListener('click', () => {
-                    const total = BASE_FEE + photos * PHOTO_RATE + videos * VIDEO_RATE;
+                    const extraDays = Math.max(0, days - 1);
+                    const voiceOn = voiceToggleEl.checked;
+                    const total = BASE_FEE
+                        + photos * PHOTO_RATE
+                        + videos * VIDEO_RATE
+                        + extraDays * DAY_RATE
+                        + outfits * OUTFIT_RATE
+                        + (voiceOn ? videos * VOICE_RATE : 0);
                     const packageSelect = document.getElementById('packageSelect');
                     if (packageSelect) packageSelect.value = 'subscription';
                     const textarea = document.querySelector('textarea[name="Special Requests"]');
                     if (textarea && !textarea.value) {
-                        textarea.value = `Monthly Subscription inquiry: ${photos} photos/month, ${videos} video(s)/month — estimated €${total}/month.`;
+                        const parts = [`${photos} photos/month`, `${videos} video(s)/month`, `${days} shoot day(s)`];
+                        if (outfits > 0) parts.push(`${outfits} outfits/products`);
+                        if (voiceOn) parts.push('voice-over add-on');
+                        textarea.value = `Monthly Subscription inquiry: ${parts.join(', ')} — estimated €${total}/month.`;
                     }
                     document.getElementById('booking').scrollIntoView();
                 });
