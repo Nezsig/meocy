@@ -24,7 +24,7 @@
         <div class="nav-right">
             <ul class="nav-links">
                 <li><a href="#about" class="en">About</a><a href="#about" class="it">Chi Siamo</a><a href="#about" class="fr">À Propos</a></li>
-                <li><a href="#work" class="en">Work</a><a href="#work" class="it">Lavori</a><a href="#work" class="fr">Travaux</a></li>
+                <li><a href="work.html" class="en">Work</a><a href="work.html" class="it">Lavori</a><a href="work.html" class="fr">Travaux</a></li>
                 <li><a href="#packages" class="en">Packages</a><a href="#packages" class="it">Pacchetti</a><a href="#packages" class="fr">Forfaits</a></li>
                 <li><a href="#faq">FAQ</a></li>
                 <li><a href="#booking" class="en">Booking</a><a href="#booking" class="it">Prenota</a><a href="#booking" class="fr">Réserver</a></li>
@@ -74,7 +74,7 @@
                 <span class="it">Prenota uno Shooting</span>
                 <span class="fr">Réserver un Shooting</span>
             </button>
-            <button class="cta-secondary" onclick="document.getElementById('work').scrollIntoView()">
+            <button class="cta-secondary" onclick="window.location.href='work.html'">
                 <span class="en">See Our Work</span>
                 <span class="it">Vedi i Nostri Lavori</span>
                 <span class="fr">Voir Nos Travaux</span>
@@ -137,131 +137,6 @@
         </p>
     </section>
 
-    <section class="work" id="work">
-        <span class="section-eyebrow">
-            <span class="en">Portfolio</span>
-            <span class="it">Portfolio</span>
-            <span class="fr">Portfolio</span>
-        </span>
-        <h2>
-            <span class="en">Our Work</span>
-            <span class="it">I Nostri Lavori</span>
-            <span class="fr">Nos Travaux</span>
-        </h2>
-        <p class="section-sub">
-            <span class="en">A sample of the fashion, product, restaurant and model shoots we've produced in Milan.</span>
-            <span class="it">Una selezione degli shooting di moda, prodotto, ristorazione e modelli realizzati a Milano.</span>
-            <span class="fr">Un aperçu des shootings mode, produit, restauration et mannequins réalisés à Milan.</span>
-        </p>
-        <div class="work-grid">
-            <div class="work-item c-rose reveal" data-work="fashion">
-                <div class="work-item-icon">👗</div>
-                <div class="work-item-label">
-                    <span class="work-item-category">01</span>
-                    <span class="work-item-title en">Fashion Campaign</span>
-                    <span class="work-item-title it">Campagna Moda</span>
-                    <span class="work-item-title fr">Campagne Mode</span>
-                    <p class="work-item-desc-inline">
-                        <span class="en">Lookbooks &amp; seasonal campaigns</span>
-                        <span class="it">Lookbook e campagne stagionali</span>
-                        <span class="fr">Lookbooks et campagnes saisonnières</span>
-                    </p>
-                </div>
-                <span class="work-item-hint"><span class="en">View Details</span><span class="it">Vedi Dettagli</span><span class="fr">Voir les Détails</span> →</span>
-            </div>
-            <div class="work-item c-blue reveal" data-work="product">
-                <div class="work-item-icon">📦</div>
-                <div class="work-item-label">
-                    <span class="work-item-category">02</span>
-                    <span class="work-item-title en">Product Photography</span>
-                    <span class="work-item-title it">Fotografia di Prodotto</span>
-                    <span class="work-item-title fr">Photographie Produit</span>
-                    <p class="work-item-desc-inline">
-                        <span class="en">Clean shots for catalogs &amp; ads</span>
-                        <span class="it">Scatti puliti per cataloghi e ADV</span>
-                        <span class="fr">Prises de vue nettes pour catalogues et pubs</span>
-                    </p>
-                </div>
-                <span class="work-item-hint"><span class="en">View Details</span><span class="it">Vedi Dettagli</span><span class="fr">Voir les Détails</span> →</span>
-            </div>
-            <div class="work-item c-peach reveal" data-work="restaurant">
-                <div class="work-item-icon">🍽️</div>
-                <div class="work-item-label">
-                    <span class="work-item-category">03</span>
-                    <span class="work-item-title en">Restaurant &amp; Food</span>
-                    <span class="work-item-title it">Ristorazione &amp; Food</span>
-                    <span class="work-item-title fr">Restaurant &amp; Food</span>
-                    <p class="work-item-desc-inline">
-                        <span class="en">Food &amp; interiors that sell</span>
-                        <span class="it">Food e ambienti che vendono</span>
-                        <span class="fr">Food et intérieurs qui vendent</span>
-                    </p>
-                </div>
-                <span class="work-item-hint"><span class="en">View Details</span><span class="it">Vedi Dettagli</span><span class="fr">Voir les Détails</span> →</span>
-            </div>
-            <div class="work-item c-lavender reveal" data-work="model">
-                <div class="work-item-icon">👤</div>
-                <div class="work-item-label">
-                    <span class="work-item-category">04</span>
-                    <span class="work-item-title en">Model Portfolio</span>
-                    <span class="work-item-title it">Portfolio Modelli</span>
-                    <span class="work-item-title fr">Portfolio Mannequin</span>
-                    <p class="work-item-desc-inline">
-                        <span class="en">Agency-ready portfolios</span>
-                        <span class="it">Portfolio pronti per le agenzie</span>
-                        <span class="fr">Portfolios prêts pour les agences</span>
-                    </p>
-                </div>
-                <span class="work-item-hint"><span class="en">View Details</span><span class="it">Vedi Dettagli</span><span class="fr">Voir les Détails</span> →</span>
-            </div>
-            <div class="work-item accent reveal" data-work="studio">
-                <div class="work-item-icon">💡</div>
-                <div class="work-item-label">
-                    <span class="work-item-category">05</span>
-                    <span class="work-item-title en">Studio Session</span>
-                    <span class="work-item-title it">Sessione Studio</span>
-                    <span class="work-item-title fr">Session Studio</span>
-                    <p class="work-item-desc-inline">
-                        <span class="en">Full control, every time</span>
-                        <span class="it">Controllo totale, sempre</span>
-                        <span class="fr">Contrôle total, à chaque fois</span>
-                    </p>
-                </div>
-                <span class="work-item-hint"><span class="en">View Details</span><span class="it">Vedi Dettagli</span><span class="fr">Voir les Détails</span> →</span>
-            </div>
-            <div class="work-item c-teal reveal" data-work="location">
-                <div class="work-item-icon">📍</div>
-                <div class="work-item-label">
-                    <span class="work-item-category">06</span>
-                    <span class="work-item-title en">On-Location Shoot</span>
-                    <span class="work-item-title it">Shooting On Location</span>
-                    <span class="work-item-title fr">Shooting en Extérieur</span>
-                    <p class="work-item-desc-inline">
-                        <span class="en">We bring the studio to you</span>
-                        <span class="it">Portiamo lo studio da te</span>
-                        <span class="fr">Nous apportons le studio chez vous</span>
-                    </p>
-                </div>
-                <span class="work-item-hint"><span class="en">View Details</span><span class="it">Vedi Dettagli</span><span class="fr">Voir les Détails</span> →</span>
-            </div>
-        </div>
-    </section>
-
-    <div class="work-modal-overlay" id="workModalOverlay">
-        <div class="work-modal">
-            <button class="work-modal-close" id="workModalClose" aria-label="Close">✕</button>
-            <div class="work-modal-icon" id="workModalIcon"></div>
-            <span class="section-eyebrow" id="workModalEyebrow" style="text-align:left; margin-bottom:8px;"></span>
-            <h3 id="workModalTitle"></h3>
-            <p class="work-modal-desc" id="workModalDesc"></p>
-            <p class="work-modal-best" id="workModalBest"></p>
-            <button class="cta-primary" id="workModalCta" style="width:100%;">
-                <span class="en">Book This Shoot</span>
-                <span class="it">Prenota Questo Shooting</span>
-                <span class="fr">Réserver ce Shooting</span>
-            </button>
-        </div>
-    </div>
 
     <section class="packages reveal" id="packages">
         <span class="section-eyebrow">
@@ -710,7 +585,7 @@
                 <div class="footer-contact-label" style="margin-bottom: 14px;"><span class="en">NAVIGATION</span><span class="it">NAVIGAZIONE</span><span class="fr">NAVIGATION</span></div>
                 <div class="footer-nav-list">
                     <a href="#about"><span class="en">About</span><span class="it">Chi Siamo</span><span class="fr">À Propos</span></a>
-                    <a href="#work"><span class="en">Work</span><span class="it">Lavori</span><span class="fr">Travaux</span></a>
+                    <a href="work.html"><span class="en">Work</span><span class="it">Lavori</span><span class="fr">Travaux</span></a>
                     <a href="#packages"><span class="en">Packages</span><span class="it">Pacchetti</span><span class="fr">Forfaits</span></a>
                     <a href="#faq">FAQ</a>
                     <a href="#booking"><span class="en">Book Now</span><span class="it">Prenota Ora</span><span class="fr">Réserver Maintenant</span></a>
@@ -719,11 +594,11 @@
             <div>
                 <div class="footer-contact-label" style="margin-bottom: 14px;"><span class="en">SERVICES</span><span class="it">SERVIZI</span><span class="fr">SERVICES</span></div>
                 <div class="footer-nav-list">
-                    <a href="#work"><span class="en">Fashion</span><span class="it">Moda</span><span class="fr">Mode</span></a>
-                    <a href="#work"><span class="en">Product</span><span class="it">Prodotto</span><span class="fr">Produit</span></a>
-                    <a href="#work"><span class="en">Restaurant</span><span class="it">Ristorazione</span><span class="fr">Restaurant</span></a>
-                    <a href="#work"><span class="en">Model</span><span class="it">Modelli</span><span class="fr">Mannequin</span></a>
-                    <a href="#work"><span class="en">On-Location</span><span class="it">On Location</span><span class="fr">En Extérieur</span></a>
+                    <a href="work.html"><span class="en">Fashion</span><span class="it">Moda</span><span class="fr">Mode</span></a>
+                    <a href="work.html"><span class="en">Product</span><span class="it">Prodotto</span><span class="fr">Produit</span></a>
+                    <a href="work.html"><span class="en">Restaurant</span><span class="it">Ristorazione</span><span class="fr">Restaurant</span></a>
+                    <a href="work.html"><span class="en">Model</span><span class="it">Modelli</span><span class="fr">Mannequin</span></a>
+                    <a href="work.html"><span class="en">On-Location</span><span class="it">On Location</span><span class="fr">En Extérieur</span></a>
                 </div>
             </div>
         </div>
@@ -752,9 +627,12 @@
             </div>
         </div>
 
-        <div style="max-width: 1200px; margin: 24px auto 0;">
+        <div style="max-width: 1200px; margin: 24px auto 0; display: flex; gap: 20px;">
             <a href="privacy.html" style="color: rgba(255,255,255,0.4); font-size: 0.82em; text-decoration: none;">
                 <span class="en">Privacy Policy</span><span class="it">Privacy Policy</span><span class="fr">Politique de Confidentialité</span>
+            </a>
+            <a href="terms.html" style="color: rgba(255,255,255,0.4); font-size: 0.82em; text-decoration: none;">
+                <span class="en">Terms of Service</span><span class="it">Termini di Servizio</span><span class="fr">Conditions d'Utilisation</span>
             </a>
         </div>
 
@@ -810,93 +688,6 @@
 
             window.location.href = `mailto:hello@meocy.com?subject=Booking Request&body=${encodeURIComponent(message)}`;
         }
-
-        // Work modal
-        const workDetails = {
-            fashion: {
-                icon: '👗',
-                en: { eyebrow: 'Fashion Campaign', title: 'Fashion Campaign', desc: "Full-look apparel photography that captures fit, fabric and movement — shot in studio or on location, ready for lookbooks and e-commerce.", best: 'Best for: clothing brands, lookbooks, seasonal drops' },
-                it: { eyebrow: 'Campagna Moda', title: 'Campagna Moda', desc: "Fotografia di abbigliamento a figura intera che cattura vestibilità, tessuto e movimento — in studio o on location, pronta per lookbook ed e-commerce.", best: 'Ideale per: brand di abbigliamento, lookbook, collezioni stagionali' },
-                fr: { eyebrow: 'Campagne Mode', title: 'Campagne Mode', desc: "Une photographie de mode qui capture la coupe, le tissu et le mouvement — en studio ou en extérieur, prête pour les lookbooks et l'e-commerce.", best: "Idéal pour : marques de vêtements, lookbooks, nouvelles collections" }
-            },
-            product: {
-                icon: '📦',
-                en: { eyebrow: 'Product Photography', title: 'Product Photography', desc: "Clean, controlled product shots on seamless backgrounds or styled sets — consistent lighting and color, built for catalogs and ad creative.", best: 'Best for: e-commerce catalogs, packaging, ad creative' },
-                it: { eyebrow: 'Fotografia di Prodotto', title: 'Fotografia di Prodotto', desc: "Scatti di prodotto puliti e controllati su sfondi neutri o set stilizzati — luce e colore costanti, pensati per cataloghi e creatività pubblicitaria.", best: 'Ideale per: cataloghi e-commerce, packaging, creatività per ADV' },
-                fr: { eyebrow: 'Photographie Produit', title: 'Photographie Produit', desc: "Des prises de vue produit propres et maîtrisées sur fond neutre ou décor stylisé — lumière et couleurs constantes, pensées pour les catalogues et les publicités.", best: 'Idéal pour : catalogues e-commerce, packaging, publicités' }
-            },
-            restaurant: {
-                icon: '🍽️',
-                en: { eyebrow: 'Restaurant & Food', title: 'Restaurant & Food', desc: "Appetizing food and interior photography shot on-site — natural light and styling that make your menu and space impossible to scroll past.", best: 'Best for: menus, delivery apps, social media, ambience shots' },
-                it: { eyebrow: 'Ristorazione & Food', title: 'Ristorazione & Food', desc: "Fotografia di cibo e ambienti realizzata sul posto — luce naturale e styling che rendono il tuo menu e il tuo spazio irresistibili.", best: 'Ideale per: menu, app di delivery, social media, foto d\'ambiente' },
-                fr: { eyebrow: 'Restaurant & Food', title: 'Restaurant & Food', desc: "Une photographie culinaire et d'intérieur réalisée sur place — lumière naturelle et mise en scène qui rendent votre carte et votre lieu irrésistibles.", best: 'Idéal pour : cartes, applications de livraison, réseaux sociaux, ambiance' }
-            },
-            model: {
-                icon: '👤',
-                en: { eyebrow: 'Model Portfolio', title: 'Model Portfolio', desc: "Professional portfolio shoots for models and agencies — studio lighting, multiple looks per session, retouched to a polished, agency-ready finish.", best: 'Best for: new faces, agency portfolios, comp cards' },
-                it: { eyebrow: 'Portfolio Modelli', title: 'Portfolio Modelli', desc: "Shooting portfolio professionali per modelli e agenzie — illuminazione da studio, più look per sessione, ritocco rifinito e pronto per le agenzie.", best: 'Ideale per: nuovi volti, portfolio per agenzie, comp card' },
-                fr: { eyebrow: 'Portfolio Mannequin', title: 'Portfolio Mannequin', desc: "Des shootings portfolio professionnels pour mannequins et agences — éclairage studio, plusieurs looks par session, retouche soignée et prête pour les agences.", best: 'Idéal pour : nouveaux visages, portfolios d\'agence, comp cards' }
-            },
-            studio: {
-                icon: '💡',
-                en: { eyebrow: 'Studio Session', title: 'Studio Session', desc: "Full control over light, background and styling in our Milan studio — the most consistent option when every shot needs to match.", best: 'Best for: catalogs, brand consistency, multi-product sessions' },
-                it: { eyebrow: 'Sessione Studio', title: 'Sessione Studio', desc: "Controllo totale su luce, sfondo e styling nel nostro studio di Milano — l'opzione più coerente quando ogni scatto deve essere uniforme.", best: 'Ideale per: cataloghi, coerenza di brand, sessioni multi-prodotto' },
-                fr: { eyebrow: 'Session Studio', title: 'Session Studio', desc: "Un contrôle total de la lumière, du fond et du style dans notre studio de Milan — l'option la plus cohérente quand chaque photo doit correspondre.", best: 'Idéal pour : catalogues, cohérence de marque, sessions multi-produits' }
-            },
-            location: {
-                icon: '📍',
-                en: { eyebrow: 'On-Location Shoot', title: 'On-Location Shoot', desc: "We bring the full setup to your shop, restaurant or chosen location — no need to move products, close early, or disrupt your day.", best: 'Best for: shops, restaurants, outdoor and lifestyle content' },
-                it: { eyebrow: 'Shooting On Location', title: 'Shooting On Location', desc: "Portiamo l'intera attrezzatura nel tuo negozio, ristorante o location scelta — senza bisogno di spostare i prodotti o interrompere la tua giornata.", best: 'Ideale per: negozi, ristoranti, contenuti outdoor e lifestyle' },
-                fr: { eyebrow: 'Shooting en Extérieur', title: 'Shooting en Extérieur', desc: "Nous apportons tout notre matériel dans votre boutique, restaurant ou lieu choisi — sans besoin de déplacer vos produits ni de perturber votre journée.", best: 'Idéal pour : boutiques, restaurants, contenu extérieur et lifestyle' }
-            }
-        };
-
-        function currentLang() {
-            if (document.body.classList.contains('italian')) return 'it';
-            if (document.body.classList.contains('french')) return 'fr';
-            return 'en';
-        }
-
-        const workModalOverlay = document.getElementById('workModalOverlay');
-        const workModalIcon = document.getElementById('workModalIcon');
-        const workModalEyebrow = document.getElementById('workModalEyebrow');
-        const workModalTitle = document.getElementById('workModalTitle');
-        const workModalDesc = document.getElementById('workModalDesc');
-        const workModalBest = document.getElementById('workModalBest');
-
-        function openWorkModal(key) {
-            const data = workDetails[key];
-            if (!data) return;
-            const lang = data[currentLang()];
-            workModalIcon.textContent = data.icon;
-            workModalEyebrow.textContent = lang.eyebrow;
-            workModalTitle.textContent = lang.title;
-            workModalDesc.textContent = lang.desc;
-            workModalBest.innerHTML = '<span>' + lang.best.split(':')[0] + ':</span>' + lang.best.split(':').slice(1).join(':');
-            workModalOverlay.classList.add('open');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeWorkModal() {
-            workModalOverlay.classList.remove('open');
-            document.body.style.overflow = '';
-        }
-
-        document.querySelectorAll('.work-item').forEach(item => {
-            item.addEventListener('click', () => openWorkModal(item.dataset.work));
-        });
-
-        document.getElementById('workModalClose').addEventListener('click', closeWorkModal);
-        workModalOverlay.addEventListener('click', (e) => {
-            if (e.target === workModalOverlay) closeWorkModal();
-        });
-        document.getElementById('workModalCta').addEventListener('click', () => {
-            closeWorkModal();
-            document.getElementById('booking').scrollIntoView();
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeWorkModal();
-        });
 
         // Scroll reveal animations
         const revealObserver = new IntersectionObserver((entries) => {
