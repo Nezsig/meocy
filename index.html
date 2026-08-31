@@ -326,6 +326,78 @@
         </div>
     </section>
 
+    <section class="subscription reveal" id="subscription">
+        <span class="section-eyebrow">
+            <span class="en">Retainer</span>
+            <span class="it">Abbonamento</span>
+            <span class="fr">Abonnement</span>
+        </span>
+        <h2>
+            <span class="en">Monthly Subscription</span>
+            <span class="it">Abbonamento Mensile</span>
+            <span class="fr">Abonnement Mensuel</span>
+        </h2>
+        <p class="section-sub">
+            <span class="en">Ongoing content for your brand — a fixed monthly base, plus exactly what you need. Adjust below to see your price.</span>
+            <span class="it">Contenuti continuativi per il tuo brand — una base fissa mensile, più esattamente ciò di cui hai bisogno. Regola qui sotto per vedere il prezzo.</span>
+            <span class="fr">Du contenu continu pour votre marque — une base mensuelle fixe, plus exactement ce dont vous avez besoin. Ajustez ci-dessous pour voir votre prix.</span>
+        </p>
+
+        <div class="sub-calculator">
+            <div class="sub-calc-row">
+                <div class="sub-calc-control">
+                    <label><span class="en">Photos / month</span><span class="it">Foto / mese</span><span class="fr">Photos / mois</span></label>
+                    <div class="sub-stepper">
+                        <button type="button" class="sub-step-btn" data-target="photos" data-dir="-1" aria-label="Decrease photos">−</button>
+                        <span class="sub-step-value" id="subPhotosValue">20</span>
+                        <button type="button" class="sub-step-btn" data-target="photos" data-dir="1" aria-label="Increase photos">+</button>
+                    </div>
+                    <span class="sub-calc-note"><span class="en">Minimum 20</span><span class="it">Minimo 20</span><span class="fr">Minimum 20</span></span>
+                </div>
+                <div class="sub-calc-control">
+                    <label><span class="en">Videos / month</span><span class="it">Video / mese</span><span class="fr">Vidéos / mois</span></label>
+                    <div class="sub-stepper">
+                        <button type="button" class="sub-step-btn" data-target="videos" data-dir="-1" aria-label="Decrease videos">−</button>
+                        <span class="sub-step-value" id="subVideosValue">1</span>
+                        <button type="button" class="sub-step-btn" data-target="videos" data-dir="1" aria-label="Increase videos">+</button>
+                    </div>
+                    <span class="sub-calc-note"><span class="en">Minimum 1</span><span class="it">Minimo 1</span><span class="fr">Minimum 1</span></span>
+                </div>
+            </div>
+
+            <div class="sub-breakdown">
+                <div class="sub-breakdown-row">
+                    <span><span class="en">Base fee</span><span class="it">Quota base</span><span class="fr">Frais de base</span></span>
+                    <span>€300</span>
+                </div>
+                <div class="sub-breakdown-row">
+                    <span id="subPhotosLabel">20 photos × €10</span>
+                    <span id="subPhotosLine">€200</span>
+                </div>
+                <div class="sub-breakdown-row">
+                    <span id="subVideosLabel">1 video × €100</span>
+                    <span id="subVideosLine">€100</span>
+                </div>
+            </div>
+
+            <div class="sub-total">
+                <span><span class="en">Total / month</span><span class="it">Totale / mese</span><span class="fr">Total / mois</span></span>
+                <span id="subTotalValue">€600</span>
+            </div>
+
+            <button class="cta-primary sub-cta" id="subCta">
+                <span class="en">Start This Subscription</span>
+                <span class="it">Inizia Questo Abbonamento</span>
+                <span class="fr">Démarrer cet Abonnement</span>
+            </button>
+            <p class="form-note">
+                <span class="en">No online payment — this sends an inquiry, we'll confirm details with you directly.</span>
+                <span class="it">Nessun pagamento online — questo invia una richiesta, confermeremo i dettagli direttamente con te.</span>
+                <span class="fr">Aucun paiement en ligne — ceci envoie une demande, nous confirmerons les détails directement avec vous.</span>
+            </p>
+        </div>
+    </section>
+
     <section class="features reveal">
         <span class="section-eyebrow">
             <span class="en">Why MEOCY</span>
@@ -529,6 +601,7 @@
                             <option value="travel">Silver (Travel/Shop/Products) - €300</option>
                             <option value="outdoor">Gold (Shop and Outdoor) - €500+</option>
                             <option value="video">Platinum (Content Sprint) - €1000</option>
+                            <option value="subscription">Monthly Subscription (custom)</option>
                             <option value="custom">Not Sure / Custom Quote</option>
                         </select>
                     </div>
@@ -749,6 +822,7 @@
             }
 
             localStorage.setItem('language', lang);
+            if (typeof window.renderSubCalc === 'function') window.renderSubCalc();
         }
 
         window.addEventListener('load', () => {
@@ -756,12 +830,86 @@
             setLanguage(savedLang);
         });
 
+        // Subscription calculator
+        (function () {
+            const photosValueEl = document.getElementById('subPhotosValue');
+            if (!photosValueEl) return;
+
+            const BASE_FEE = 300;
+            const PHOTO_RATE = 10;
+            const VIDEO_RATE = 100;
+            const PHOTO_MIN = 20, PHOTO_MAX = 200, PHOTO_STEP = 5;
+            const VIDEO_MIN = 1, VIDEO_MAX = 20, VIDEO_STEP = 1;
+
+            let photos = PHOTO_MIN;
+            let videos = VIDEO_MIN;
+
+            const videosValueEl = document.getElementById('subVideosValue');
+            const photosLabelEl = document.getElementById('subPhotosLabel');
+            const videosLabelEl = document.getElementById('subVideosLabel');
+            const photosLineEl = document.getElementById('subPhotosLine');
+            const videosLineEl = document.getElementById('subVideosLine');
+            const totalEl = document.getElementById('subTotalValue');
+
+            const photoWord = { en: 'photos', it: 'foto', fr: 'photos' };
+            const videoWord = { en: 'video', it: 'video', fr: 'vidéo' };
+
+            function subLang() {
+                if (document.body.classList.contains('italian')) return 'it';
+                if (document.body.classList.contains('french')) return 'fr';
+                return 'en';
+            }
+
+            function render() {
+                const lang = subLang();
+                photosValueEl.textContent = photos;
+                videosValueEl.textContent = videos;
+                photosLabelEl.textContent = `${photos} ${photoWord[lang]} × €${PHOTO_RATE}`;
+                videosLabelEl.textContent = `${videos} ${videoWord[lang]} × €${VIDEO_RATE}`;
+                photosLineEl.textContent = `€${photos * PHOTO_RATE}`;
+                videosLineEl.textContent = `€${videos * VIDEO_RATE}`;
+                const total = BASE_FEE + photos * PHOTO_RATE + videos * VIDEO_RATE;
+                totalEl.textContent = `€${total}`;
+            }
+
+            document.querySelectorAll('.sub-step-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const target = btn.dataset.target;
+                    const dir = parseInt(btn.dataset.dir, 10);
+                    if (target === 'photos') {
+                        photos = Math.min(PHOTO_MAX, Math.max(PHOTO_MIN, photos + dir * PHOTO_STEP));
+                    } else {
+                        videos = Math.min(VIDEO_MAX, Math.max(VIDEO_MIN, videos + dir * VIDEO_STEP));
+                    }
+                    render();
+                });
+            });
+
+            const subCta = document.getElementById('subCta');
+            if (subCta) {
+                subCta.addEventListener('click', () => {
+                    const total = BASE_FEE + photos * PHOTO_RATE + videos * VIDEO_RATE;
+                    const packageSelect = document.getElementById('packageSelect');
+                    if (packageSelect) packageSelect.value = 'subscription';
+                    const textarea = document.querySelector('textarea[name="Special Requests"]');
+                    if (textarea && !textarea.value) {
+                        textarea.value = `Monthly Subscription inquiry: ${photos} photos/month, ${videos} video(s)/month — estimated €${total}/month.`;
+                    }
+                    document.getElementById('booking').scrollIntoView();
+                });
+            }
+
+            window.renderSubCalc = render;
+            render();
+        })();
+
         function autoSelectShootType() {
             const packageToShootType = {
                 basic: 'studio',
                 travel: 'shop',
                 outdoor: 'both',
                 video: 'both',
+                subscription: '',
                 custom: ''
             };
             const packageValue = document.getElementById('packageSelect').value;
