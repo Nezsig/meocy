@@ -362,6 +362,7 @@
                         <button type="button" class="sub-step-btn" data-target="videos" data-dir="1" aria-label="Increase videos">+</button>
                     </div>
                     <span class="sub-calc-note"><span class="en">Minimum 1</span><span class="it">Minimo 1</span><span class="fr">Minimum 1</span></span>
+                    <span class="sub-calc-note" id="subVideosVoiceNote" style="display: none;"><span class="en">Includes voice-over</span><span class="it">Include voce fuori campo</span><span class="fr">Inclut la voix off</span></span>
                 </div>
             </div>
 
@@ -393,7 +394,7 @@
                 </span>
                 <span class="sub-toggle-text">
                     <strong><span class="en">Add Voice-Over</span><span class="it">Aggiungi Voce Fuori Campo</span><span class="fr">Ajouter une Voix Off</span></strong>
-                    <span><span class="en">+€50 per video</span><span class="it">+€50 per video</span><span class="fr">+€50 par vidéo</span></span>
+                    <span class="sub-toggle-price"><span class="en">+€50 per video</span><span class="it">+€50 per video</span><span class="fr">+€50 par vidéo</span></span>
                 </span>
             </label>
 
@@ -403,8 +404,20 @@
                     <span class="sub-toggle-slider"></span>
                 </span>
                 <span class="sub-toggle-text">
-                    <strong><span class="en">Add Aerial / Drone Footage</span><span class="it">Aggiungi Riprese Aeree / Drone</span><span class="fr">Ajouter des Prises de Vue Aériennes / Drone</span></strong>
-                    <span><span class="en">+€100 per month</span><span class="it">+€100 al mese</span><span class="fr">+€100 par mois</span></span>
+                    <strong><span class="en">Add Aerial Footage</span><span class="it">Aggiungi Riprese Aeree</span><span class="fr">Ajouter des Prises de Vue Aériennes</span></strong>
+                    <span class="sub-toggle-price"><span class="en">+€100 per month</span><span class="it">+€100 al mese</span><span class="fr">+€100 par mois</span></span>
+                </span>
+            </label>
+
+            <label class="sub-toggle-row is-disabled" for="subDroneToggle" id="subDroneToggleRow">
+                <span class="sub-toggle">
+                    <input type="checkbox" id="subDroneToggle" disabled>
+                    <span class="sub-toggle-slider"></span>
+                </span>
+                <span class="sub-toggle-text">
+                    <strong><span class="en">Add Drone Footage</span><span class="it">Aggiungi Riprese con Drone</span><span class="fr">Ajouter des Prises de Vue par Drone</span></strong>
+                    <span class="sub-toggle-price"><span class="en">+€150 per month</span><span class="it">+€150 al mese</span><span class="fr">+€150 par mois</span></span>
+                    <span class="sub-toggle-hint"><span class="en">Requires Aerial add-on</span><span class="it">Richiede l'opzione Aerea</span><span class="fr">Nécessite l'option Aérienne</span></span>
                 </span>
             </label>
 
@@ -415,7 +428,7 @@
                 </span>
                 <span class="sub-toggle-text">
                     <strong><span class="en">Rush Delivery (48 hours)</span><span class="it">Consegna Express (48 ore)</span><span class="fr">Livraison Express (48 heures)</span></strong>
-                    <span><span class="en">+€150 per month</span><span class="it">+€150 al mese</span><span class="fr">+€150 par mois</span></span>
+                    <span class="sub-toggle-price"><span class="en">+€150 per month</span><span class="it">+€150 al mese</span><span class="fr">+€150 par mois</span></span>
                 </span>
             </label>
 
@@ -441,8 +454,12 @@
                     <span id="subOutfitsLine"></span>
                 </div>
                 <div class="sub-breakdown-row" id="subAerialRow" style="display: none;">
-                    <span><span class="en">Aerial / Drone footage</span><span class="it">Riprese aeree / drone</span><span class="fr">Prises de vue aériennes / drone</span></span>
+                    <span><span class="en">Aerial footage</span><span class="it">Riprese aeree</span><span class="fr">Prises de vue aériennes</span></span>
                     <span>€100</span>
+                </div>
+                <div class="sub-breakdown-row" id="subDroneRow" style="display: none;">
+                    <span><span class="en">Drone footage</span><span class="it">Riprese con drone</span><span class="fr">Prises de vue par drone</span></span>
+                    <span>€150</span>
                 </div>
                 <div class="sub-breakdown-row" id="subRushRow" style="display: none;">
                     <span><span class="en">Rush delivery (48h)</span><span class="it">Consegna express (48h)</span><span class="fr">Livraison express (48h)</span></span>
@@ -916,6 +933,7 @@
             const OUTFIT_RATE = 25;
             const VOICE_RATE = 50;
             const AERIAL_RATE = 100;
+            const DRONE_RATE = 150;
             const RUSH_RATE = 150;
 
             const PHOTO_MIN = 20, PHOTO_MAX = 200, PHOTO_STEP = 5;
@@ -933,6 +951,8 @@
             const outfitsValueEl = document.getElementById('subOutfitsValue');
             const voiceToggleEl = document.getElementById('subVoiceToggle');
             const aerialToggleEl = document.getElementById('subAerialToggle');
+            const droneToggleEl = document.getElementById('subDroneToggle');
+            const droneToggleRowEl = document.getElementById('subDroneToggleRow');
             const rushToggleEl = document.getElementById('subRushToggle');
 
             const photosRowEl = document.getElementById('subPhotosRow');
@@ -952,11 +972,13 @@
             const outfitsLineEl = document.getElementById('subOutfitsLine');
 
             const aerialRowEl = document.getElementById('subAerialRow');
+            const droneRowEl = document.getElementById('subDroneRow');
             const rushRowEl = document.getElementById('subRushRow');
 
             const voiceRowEl = document.getElementById('subVoiceRow');
             const voiceLabelEl = document.getElementById('subVoiceLabel');
             const voiceLineEl = document.getElementById('subVoiceLine');
+            const videosVoiceNoteEl = document.getElementById('subVideosVoiceNote');
 
             const totalEl = document.getElementById('subTotalValue');
 
@@ -982,6 +1004,7 @@
                 const extraDays = Math.max(0, days - 1);
                 const voiceOn = voiceToggleEl.checked;
                 const aerialOn = aerialToggleEl.checked;
+                const droneOn = aerialOn && droneToggleEl.checked;
                 const rushOn = rushToggleEl.checked;
                 return BASE_FEE
                     + extraPhotos * PHOTO_RATE
@@ -990,6 +1013,7 @@
                     + outfits * OUTFIT_RATE
                     + (voiceOn ? videos * VOICE_RATE : 0)
                     + (aerialOn ? AERIAL_RATE : 0)
+                    + (droneOn ? DRONE_RATE : 0)
                     + (rushOn ? RUSH_RATE : 0);
             }
 
@@ -1000,7 +1024,12 @@
                 const extraDays = Math.max(0, days - 1);
                 const voiceOn = voiceToggleEl.checked;
                 const aerialOn = aerialToggleEl.checked;
+                const droneOn = aerialOn && droneToggleEl.checked;
                 const rushOn = rushToggleEl.checked;
+
+                droneToggleEl.disabled = !aerialOn;
+                if (!aerialOn && droneToggleEl.checked) droneToggleEl.checked = false;
+                droneToggleRowEl.classList.toggle('is-disabled', !aerialOn);
 
                 photosValueEl.textContent = photos;
                 videosValueEl.textContent = videos;
@@ -1040,6 +1069,7 @@
                 }
 
                 aerialRowEl.style.display = aerialOn ? '' : 'none';
+                droneRowEl.style.display = droneOn ? '' : 'none';
                 rushRowEl.style.display = rushOn ? '' : 'none';
 
                 if (voiceOn) {
@@ -1049,6 +1079,7 @@
                 } else {
                     voiceRowEl.style.display = 'none';
                 }
+                videosVoiceNoteEl.style.display = voiceOn ? '' : 'none';
 
                 totalEl.textContent = `€${computeTotal()}`;
             }
@@ -1070,7 +1101,7 @@
                 });
             });
 
-            [voiceToggleEl, aerialToggleEl, rushToggleEl].forEach(el => el.addEventListener('change', render));
+            [voiceToggleEl, aerialToggleEl, droneToggleEl, rushToggleEl].forEach(el => el.addEventListener('change', render));
 
             const subCta = document.getElementById('subCta');
             if (subCta) {
@@ -1083,7 +1114,8 @@
                         const parts = [`${photos} photos/month`, `${videos} video(s)/month`, `${days} shoot day(s)`];
                         if (outfits > 0) parts.push(`${outfits} outfits/products`);
                         if (voiceToggleEl.checked) parts.push('voice-over add-on');
-                        if (aerialToggleEl.checked) parts.push('aerial/drone add-on');
+                        if (aerialToggleEl.checked) parts.push('aerial add-on');
+                        if (aerialToggleEl.checked && droneToggleEl.checked) parts.push('drone add-on');
                         if (rushToggleEl.checked) parts.push('rush delivery add-on');
                         textarea.value = `Monthly Subscription inquiry: ${parts.join(', ')} — estimated €${total}/month.`;
                     }
