@@ -397,18 +397,40 @@
                 </span>
             </label>
 
+            <label class="sub-toggle-row" for="subAerialToggle">
+                <span class="sub-toggle">
+                    <input type="checkbox" id="subAerialToggle">
+                    <span class="sub-toggle-slider"></span>
+                </span>
+                <span class="sub-toggle-text">
+                    <strong><span class="en">Add Aerial / Drone Footage</span><span class="it">Aggiungi Riprese Aeree / Drone</span><span class="fr">Ajouter des Prises de Vue Aériennes / Drone</span></strong>
+                    <span><span class="en">+€100 per month</span><span class="it">+€100 al mese</span><span class="fr">+€100 par mois</span></span>
+                </span>
+            </label>
+
+            <label class="sub-toggle-row" for="subRushToggle">
+                <span class="sub-toggle">
+                    <input type="checkbox" id="subRushToggle">
+                    <span class="sub-toggle-slider"></span>
+                </span>
+                <span class="sub-toggle-text">
+                    <strong><span class="en">Rush Delivery (48 hours)</span><span class="it">Consegna Express (48 ore)</span><span class="fr">Livraison Express (48 heures)</span></strong>
+                    <span><span class="en">+€150 per month</span><span class="it">+€150 al mese</span><span class="fr">+€150 par mois</span></span>
+                </span>
+            </label>
+
             <div class="sub-breakdown">
                 <div class="sub-breakdown-row">
-                    <span><span class="en">Base fee (4-hour shoot, 1 day)</span><span class="it">Quota base (shooting di 4 ore, 1 giorno)</span><span class="fr">Frais de base (shooting de 4 heures, 1 jour)</span></span>
-                    <span>€300</span>
+                    <span><span class="en">Base fee (4-hour shoot, 1 day — includes 20 photos + 1 video)</span><span class="it">Quota base (shooting di 4 ore, 1 giorno — include 20 foto + 1 video)</span><span class="fr">Frais de base (shooting de 4 heures, 1 jour — inclut 20 photos + 1 vidéo)</span></span>
+                    <span>€400</span>
                 </div>
-                <div class="sub-breakdown-row">
-                    <span id="subPhotosLabel">20 photos × €10</span>
-                    <span id="subPhotosLine">€200</span>
+                <div class="sub-breakdown-row" id="subPhotosRow" style="display: none;">
+                    <span id="subPhotosLabel"></span>
+                    <span id="subPhotosLine"></span>
                 </div>
-                <div class="sub-breakdown-row">
-                    <span id="subVideosLabel">1 video × €100</span>
-                    <span id="subVideosLine">€100</span>
+                <div class="sub-breakdown-row" id="subVideosRow" style="display: none;">
+                    <span id="subVideosLabel"></span>
+                    <span id="subVideosLine"></span>
                 </div>
                 <div class="sub-breakdown-row" id="subDaysRow" style="display: none;">
                     <span id="subDaysLabel"></span>
@@ -417,6 +439,14 @@
                 <div class="sub-breakdown-row" id="subOutfitsRow" style="display: none;">
                     <span id="subOutfitsLabel"></span>
                     <span id="subOutfitsLine"></span>
+                </div>
+                <div class="sub-breakdown-row" id="subAerialRow" style="display: none;">
+                    <span><span class="en">Aerial / Drone footage</span><span class="it">Riprese aeree / drone</span><span class="fr">Prises de vue aériennes / drone</span></span>
+                    <span>€100</span>
+                </div>
+                <div class="sub-breakdown-row" id="subRushRow" style="display: none;">
+                    <span><span class="en">Rush delivery (48h)</span><span class="it">Consegna express (48h)</span><span class="fr">Livraison express (48h)</span></span>
+                    <span>€150</span>
                 </div>
                 <div class="sub-breakdown-row" id="subVoiceRow" style="display: none;">
                     <span id="subVoiceLabel"></span>
@@ -879,12 +909,14 @@
             const photosValueEl = document.getElementById('subPhotosValue');
             if (!photosValueEl) return;
 
-            const BASE_FEE = 300;
+            const BASE_FEE = 400;
             const PHOTO_RATE = 10;
             const VIDEO_RATE = 100;
             const DAY_RATE = 100;
             const OUTFIT_RATE = 25;
             const VOICE_RATE = 50;
+            const AERIAL_RATE = 100;
+            const RUSH_RATE = 150;
 
             const PHOTO_MIN = 20, PHOTO_MAX = 200, PHOTO_STEP = 5;
             const VIDEO_MIN = 1, VIDEO_MAX = 20, VIDEO_STEP = 1;
@@ -900,10 +932,15 @@
             const daysValueEl = document.getElementById('subDaysValue');
             const outfitsValueEl = document.getElementById('subOutfitsValue');
             const voiceToggleEl = document.getElementById('subVoiceToggle');
+            const aerialToggleEl = document.getElementById('subAerialToggle');
+            const rushToggleEl = document.getElementById('subRushToggle');
 
+            const photosRowEl = document.getElementById('subPhotosRow');
             const photosLabelEl = document.getElementById('subPhotosLabel');
-            const videosLabelEl = document.getElementById('subVideosLabel');
             const photosLineEl = document.getElementById('subPhotosLine');
+
+            const videosRowEl = document.getElementById('subVideosRow');
+            const videosLabelEl = document.getElementById('subVideosLabel');
             const videosLineEl = document.getElementById('subVideosLine');
 
             const daysRowEl = document.getElementById('subDaysRow');
@@ -914,14 +951,19 @@
             const outfitsLabelEl = document.getElementById('subOutfitsLabel');
             const outfitsLineEl = document.getElementById('subOutfitsLine');
 
+            const aerialRowEl = document.getElementById('subAerialRow');
+            const rushRowEl = document.getElementById('subRushRow');
+
             const voiceRowEl = document.getElementById('subVoiceRow');
             const voiceLabelEl = document.getElementById('subVoiceLabel');
             const voiceLineEl = document.getElementById('subVoiceLine');
 
             const totalEl = document.getElementById('subTotalValue');
 
-            const photoWord = { en: 'photos', it: 'foto', fr: 'photos' };
-            const videoWord = { en: 'video', it: 'video', fr: 'vidéo' };
+            const extraPhotoWord = { en: 'extra photo', it: 'foto extra', fr: 'photo supplémentaire' };
+            const extraPhotosWord = { en: 'extra photos', it: 'foto extra', fr: 'photos supplémentaires' };
+            const extraVideoWord = { en: 'extra video', it: 'video extra', fr: 'vidéo supplémentaire' };
+            const extraVideosWord = { en: 'extra videos', it: 'video extra', fr: 'vidéos supplémentaires' };
             const extraDayWord = { en: 'extra day', it: 'giorno extra', fr: 'jour supplémentaire' };
             const extraDaysWord = { en: 'extra days', it: 'giorni extra', fr: 'jours supplémentaires' };
             const outfitWord = { en: 'outfit', it: 'outfit', fr: 'tenue' };
@@ -934,20 +976,52 @@
                 return 'en';
             }
 
-            function render() {
-                const lang = subLang();
+            function computeTotal() {
+                const extraPhotos = Math.max(0, photos - PHOTO_MIN);
+                const extraVideos = Math.max(0, videos - VIDEO_MIN);
                 const extraDays = Math.max(0, days - 1);
                 const voiceOn = voiceToggleEl.checked;
+                const aerialOn = aerialToggleEl.checked;
+                const rushOn = rushToggleEl.checked;
+                return BASE_FEE
+                    + extraPhotos * PHOTO_RATE
+                    + extraVideos * VIDEO_RATE
+                    + extraDays * DAY_RATE
+                    + outfits * OUTFIT_RATE
+                    + (voiceOn ? videos * VOICE_RATE : 0)
+                    + (aerialOn ? AERIAL_RATE : 0)
+                    + (rushOn ? RUSH_RATE : 0);
+            }
+
+            function render() {
+                const lang = subLang();
+                const extraPhotos = Math.max(0, photos - PHOTO_MIN);
+                const extraVideos = Math.max(0, videos - VIDEO_MIN);
+                const extraDays = Math.max(0, days - 1);
+                const voiceOn = voiceToggleEl.checked;
+                const aerialOn = aerialToggleEl.checked;
+                const rushOn = rushToggleEl.checked;
 
                 photosValueEl.textContent = photos;
                 videosValueEl.textContent = videos;
                 daysValueEl.textContent = days;
                 outfitsValueEl.textContent = outfits;
 
-                photosLabelEl.textContent = `${photos} ${photoWord[lang]} × €${PHOTO_RATE}`;
-                videosLabelEl.textContent = `${videos} ${videoWord[lang]} × €${VIDEO_RATE}`;
-                photosLineEl.textContent = `€${photos * PHOTO_RATE}`;
-                videosLineEl.textContent = `€${videos * VIDEO_RATE}`;
+                if (extraPhotos > 0) {
+                    photosRowEl.style.display = '';
+                    photosLabelEl.textContent = `${extraPhotos} ${extraPhotos === 1 ? extraPhotoWord[lang] : extraPhotosWord[lang]} × €${PHOTO_RATE}`;
+                    photosLineEl.textContent = `€${extraPhotos * PHOTO_RATE}`;
+                } else {
+                    photosRowEl.style.display = 'none';
+                }
+
+                if (extraVideos > 0) {
+                    videosRowEl.style.display = '';
+                    videosLabelEl.textContent = `${extraVideos} ${extraVideos === 1 ? extraVideoWord[lang] : extraVideosWord[lang]} × €${VIDEO_RATE}`;
+                    videosLineEl.textContent = `€${extraVideos * VIDEO_RATE}`;
+                } else {
+                    videosRowEl.style.display = 'none';
+                }
 
                 if (extraDays > 0) {
                     daysRowEl.style.display = '';
@@ -965,6 +1039,9 @@
                     outfitsRowEl.style.display = 'none';
                 }
 
+                aerialRowEl.style.display = aerialOn ? '' : 'none';
+                rushRowEl.style.display = rushOn ? '' : 'none';
+
                 if (voiceOn) {
                     voiceRowEl.style.display = '';
                     voiceLabelEl.textContent = `${voiceWord[lang]} × ${videos} × €${VOICE_RATE}`;
@@ -973,13 +1050,7 @@
                     voiceRowEl.style.display = 'none';
                 }
 
-                const total = BASE_FEE
-                    + photos * PHOTO_RATE
-                    + videos * VIDEO_RATE
-                    + extraDays * DAY_RATE
-                    + outfits * OUTFIT_RATE
-                    + (voiceOn ? videos * VOICE_RATE : 0);
-                totalEl.textContent = `€${total}`;
+                totalEl.textContent = `€${computeTotal()}`;
             }
 
             document.querySelectorAll('.sub-step-btn').forEach(btn => {
@@ -999,26 +1070,21 @@
                 });
             });
 
-            voiceToggleEl.addEventListener('change', render);
+            [voiceToggleEl, aerialToggleEl, rushToggleEl].forEach(el => el.addEventListener('change', render));
 
             const subCta = document.getElementById('subCta');
             if (subCta) {
                 subCta.addEventListener('click', () => {
-                    const extraDays = Math.max(0, days - 1);
-                    const voiceOn = voiceToggleEl.checked;
-                    const total = BASE_FEE
-                        + photos * PHOTO_RATE
-                        + videos * VIDEO_RATE
-                        + extraDays * DAY_RATE
-                        + outfits * OUTFIT_RATE
-                        + (voiceOn ? videos * VOICE_RATE : 0);
+                    const total = computeTotal();
                     const packageSelect = document.getElementById('packageSelect');
                     if (packageSelect) packageSelect.value = 'subscription';
                     const textarea = document.querySelector('textarea[name="Special Requests"]');
                     if (textarea && !textarea.value) {
                         const parts = [`${photos} photos/month`, `${videos} video(s)/month`, `${days} shoot day(s)`];
                         if (outfits > 0) parts.push(`${outfits} outfits/products`);
-                        if (voiceOn) parts.push('voice-over add-on');
+                        if (voiceToggleEl.checked) parts.push('voice-over add-on');
+                        if (aerialToggleEl.checked) parts.push('aerial/drone add-on');
+                        if (rushToggleEl.checked) parts.push('rush delivery add-on');
                         textarea.value = `Monthly Subscription inquiry: ${parts.join(', ')} — estimated €${total}/month.`;
                     }
                     document.getElementById('booking').scrollIntoView();
