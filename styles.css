@@ -174,14 +174,12 @@
 
         .hero-tag {
             display: inline-flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 5px;
-            padding: 13px 22px;
+            align-items: center;
+            padding: 5px;
             border: 1px solid var(--border);
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(10px);
-            border-radius: 18px;
+            border-radius: var(--r-pill);
             margin-bottom: 30px;
             opacity: 0;
             animation: fadeUp 0.7s var(--ease) forwards;
@@ -190,41 +188,57 @@
         .hero-tag-primary {
             display: flex;
             align-items: center;
-            font-size: 0.95em;
+            padding: 8px 16px;
+            border-radius: var(--r-pill);
+            background: var(--accent-soft);
+            font-size: 0.82em;
             font-weight: 800;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             color: var(--text-dark);
         }
 
         .hero-tag span.dot {
             display: inline-block;
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
             background: var(--accent);
-            margin-right: 8px;
+            margin-right: 7px;
+        }
+
+        .hero-tag-divider {
+            width: 1px;
+            height: 16px;
+            background: var(--border);
+            margin: 0 4px;
+            flex-shrink: 0;
         }
 
         .hero-tag-secondary {
             display: flex;
             align-items: center;
-            gap: 5px;
-            padding-left: 16px;
-            font-size: 0.78em;
-            font-weight: 500;
-            color: #6f8fb8;
+            gap: 6px;
+            padding: 8px 14px 8px 12px;
+            font-size: 0.82em;
+            font-weight: 600;
+            color: var(--text-light);
         }
 
         .hero-tag-secondary svg {
-            width: 11px;
-            height: 11px;
-            opacity: 0.85;
+            width: 12px;
+            height: 12px;
+            opacity: 0.6;
             flex-shrink: 0;
         }
 
         .hero-tag-secondary .soon-badge {
             font-weight: 700;
+            font-size: 0.88em;
             color: var(--text-light);
+            background: var(--bg-light);
+            padding: 3px 9px;
+            border-radius: var(--r-pill);
+            margin-left: 2px;
         }
 
         .hero h1 {
