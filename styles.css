@@ -1052,17 +1052,6 @@
             color: var(--text-light);
         }
 
-        .sub-toggle-hint {
-            font-size: 0.76em;
-            color: var(--text-light);
-            font-style: italic;
-        }
-
-        .sub-toggle-row.is-disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
         /* ---------- Features ---------- */
         .features {
             background: var(--bg);
