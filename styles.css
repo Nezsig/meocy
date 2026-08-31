@@ -58,6 +58,17 @@
             letter-spacing: -1px;
         }
 
+        .nav-logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-logo img {
+            height: 22px;
+            width: auto;
+            display: block;
+        }
+
         .nav-right {
             display: flex;
             gap: 30px;
@@ -1266,19 +1277,10 @@
             gap: 14px;
         }
 
-        .footer-wordmark-dot {
-            width: 34px;
-            height: 34px;
-            border-radius: 10px;
-            background: var(--accent);
-            flex-shrink: 0;
-        }
-
-        .footer-wordmark-text {
-            font-size: 1.7em;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            color: var(--bg);
+        .footer-logo-img {
+            height: 30px;
+            width: auto;
+            display: block;
         }
 
         .footer-chips {
