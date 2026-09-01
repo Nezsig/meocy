@@ -1216,7 +1216,7 @@
 
         .form-container {
             background: var(--bg-light);
-            padding: 35px 50px 50px;
+            padding: 45px;
             border-radius: var(--r-lg);
             box-shadow: var(--shadow-soft);
         }
