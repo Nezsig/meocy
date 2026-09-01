@@ -1697,6 +1697,8 @@
 
         @media (max-width: 768px) {
             .nav-links { display: none; }
+            .nav-right { gap: 14px; }
+            .language-switcher { margin-left: 16px; }
             .hero-cta { flex-direction: column; }
             .cta-primary, .cta-secondary { width: 100%; }
             .form-grid { grid-template-columns: 1fr; }
