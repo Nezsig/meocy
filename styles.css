@@ -818,6 +818,11 @@
             line-height: 1;
         }
 
+        .package-features li.feature-unique {
+            font-weight: 600;
+            color: var(--accent);
+        }
+
         /* ---------- Equipment ---------- */
         .equipment {
             background: var(--bg-light);
