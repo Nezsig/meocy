@@ -1247,9 +1247,9 @@
         input,
         select,
         textarea {
-            padding: 13px 16px;
+            padding: 14px;
             border: 1px solid var(--border);
-            border-radius: var(--r-sm);
+            border-radius: var(--r-md);
             font-family: inherit;
             font-size: 0.95em;
             background: var(--bg);
