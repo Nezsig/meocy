@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import Database from 'better-sqlite3';
 import { v4 as uuidv4 } from 'uuid';
+import nodemailer from 'nodemailer';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -117,6 +118,70 @@ app.post('/api/admin/remove-date', (req, res) => {
   } catch (error) {
     console.error('Error removing date:', error);
     res.status(500).json({ error: 'Failed to remove booked date' });
+  }
+});
+
+// Send booking confirmation email
+app.post('/api/send-email', async (req, res) => {
+  try {
+    const { email, name, package_name, date, phone, notes } = req.body;
+
+    if (!email || !name) {
+      return res.status(400).json({ error: 'email and name are required' });
+    }
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_APP_PASSWORD
+      }
+    });
+
+    const mailOptions = {
+      from: process.env.GMAIL_USER,
+      to: email,
+      subject: 'MEOCY - Booking Request Received ✓',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
+          <div style="background-color: #fff; padding: 30px; border-radius: 8px;">
+            <h2 style="color: #0a0a0a; margin-top: 0;">Thank you, ${name}!</h2>
+
+            <p style="color: #68686c; font-size: 16px;">We've received your booking request. Here are your details:</p>
+
+            <div style="background-color: #f6f6f4; padding: 20px; border-radius: 6px; margin: 20px 0;">
+              <p style="margin: 10px 0;"><strong>Package:</strong> ${package_name || 'Not specified'}</p>
+              <p style="margin: 10px 0;"><strong>Date:</strong> ${date || 'Not specified'}</p>
+              <p style="margin: 10px 0;"><strong>Name:</strong> ${name}</p>
+              <p style="margin: 10px 0;"><strong>Email:</strong> ${email}</p>
+              <p style="margin: 10px 0;"><strong>Phone:</strong> ${phone || 'Not provided'}</p>
+              ${notes ? `<p style="margin: 10px 0;"><strong>Notes:</strong> ${notes}</p>` : ''}
+            </div>
+
+            <p style="color: #68686c; font-size: 14px;">We'll confirm your booking and discuss final details with you shortly. In the meantime, if you have any questions, feel free to reach out.</p>
+
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eaeaea;">
+              <p style="color: #68686c; font-size: 12px; margin: 0;">
+                MEOCY Studio<br>
+                Milan, Italy<br>
+                hello@meocy.com<br>
+                +39 379 105 1000
+              </p>
+            </div>
+          </div>
+        </div>
+      `
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.json({
+      success: true,
+      message: 'Confirmation email sent successfully'
+    });
+  } catch (error) {
+    console.error('Error sending email:', error);
+    res.status(500).json({ error: 'Failed to send email', details: error.message });
   }
 });
 
