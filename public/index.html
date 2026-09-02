@@ -28,6 +28,7 @@
                 <li><a href="#packages" class="en">Packages</a><a href="#packages" class="it">Pacchetti</a><a href="#packages" class="fr">Forfaits</a></li>
                 <li><a href="#faq">FAQ</a></li>
                 <li><a href="dashboard.html" class="en">My Bookings</a><a href="dashboard.html" class="it">Le Mie Prenotazioni</a><a href="dashboard.html" class="fr">Mes Réservations</a></li>
+                <li><a href="api-docs.html" class="en">API Docs</a><a href="api-docs.html" class="it">Documentazione API</a><a href="api-docs.html" class="fr">Documentation API</a></li>
                 <li><a href="#booking" class="en">Booking</a><a href="#booking" class="it">Prenota</a><a href="#booking" class="fr">Réserver</a></li>
             </ul>
             <div class="language-switcher">
@@ -664,6 +665,32 @@
             <span class="it">Prenota il Tuo Shooting</span>
             <span class="fr">Réservez Votre Shooting</span>
         </h2>
+
+        <div style="background: rgba(122, 204, 0, 0.05); border-left: 3px solid #7acc00; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
+            <div style="margin-bottom: 12px;">
+                <strong><span class="en">How Payment Works:</span><span class="it" style="display: none;">Come Funziona il Pagamento:</span><span class="fr" style="display: none;">Comment fonctionne le paiement:</span></strong>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; font-size: 13px;">
+                <div>
+                    <strong style="color: #7acc00;">25%</strong>
+                    <div style="color: var(--text-secondary); margin-top: 4px;"><span class="en">Withheld at booking</span><span class="it" style="display: none;">Trattenuto al booking</span><span class="fr" style="display: none;">Retenu à la réservation</span></div>
+                </div>
+                <div>
+                    <strong style="color: #7acc00;">50%</strong>
+                    <div style="color: var(--text-secondary); margin-top: 4px;"><span class="en">For shoot period</span><span class="it" style="display: none;">Per il periodo dello shooting</span><span class="fr" style="display: none;">Pour la période de shooting</span></div>
+                </div>
+                <div>
+                    <strong style="color: #7acc00;">25%</strong>
+                    <div style="color: var(--text-secondary); margin-top: 4px;"><span class="en">After completion</span><span class="it" style="display: none;">Dopo il completamento</span><span class="fr" style="display: none;">Après l'achèvement</span></div>
+                </div>
+            </div>
+            <div style="margin-top: 12px; font-size: 12px; color: var(--text-secondary);">
+                <span class="en">✓ Cancel within 24 hours to reverse withholding • Learn more in <a href="api-docs.html" style="color: var(--accent);">API documentation</a></span>
+                <span class="it" style="display: none;">✓ Annulla entro 24 ore per annullare la trattenuta • Scopri di più nella <a href="api-docs.html" style="color: var(--accent);">documentazione API</a></span>
+                <span class="fr" style="display: none;">✓ Annulez dans les 24 heures pour annuler la retenue • En savoir plus dans la <a href="api-docs.html" style="color: var(--accent);">documentation API</a></span>
+            </div>
+        </div>
+
         <div class="form-container">
             <form id="bookingForm" onsubmit="handleBooking(event)">
                 <div class="form-grid">
