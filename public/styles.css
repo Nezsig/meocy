@@ -1422,6 +1422,12 @@
             cursor: not-allowed;
         }
 
+        .date-picker-day.booked {
+            background: #ffebee;
+            color: #c62828;
+            font-weight: 600;
+        }
+
         .date-picker-day-empty {
             visibility: hidden;
             cursor: default;

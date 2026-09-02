@@ -1205,29 +1205,32 @@
                 return;
             }
 
-            // Check if date is already booked
-            const bookedDates = JSON.parse(localStorage.getItem('meocy_booked_dates') || '[]');
-            if (bookedDates.includes(data['Preferred Date'])) {
-                alert('Sorry, this date is already booked. Please select another date.');
-                return;
-            }
+            // Check if date is booked on backend
+            fetch(`/api/check-date/${data['Preferred Date']}`)
+                .then(res => res.json())
+                .then(result => {
+                    if (result.is_booked) {
+                        alert('Sorry, this date is already booked. Please select another date.');
+                        return;
+                    }
 
-            // Store the booked date
-            bookedDates.push(data['Preferred Date']);
-            localStorage.setItem('meocy_booked_dates', JSON.stringify(bookedDates));
+                    // Create email content
+                    const message = `Booking Request\n\nName: ${data.Name}\nEmail: ${data.Email}\nPhone: ${data.Phone}\nPackage: ${data.Package}\nShoot Type: ${data['Shoot Type']}\nLocation: ${data.Location || 'Studio'}\nPreferred Date: ${data['Preferred Date']}\nPreferred Time: ${data['Preferred Time'] || 'Not specified'}\nSpecial Requests: ${data['Special Requests'] || 'None'}`;
 
-            // Create email content
-            const message = `Booking Request\n\nName: ${data.Name}\nEmail: ${data.Email}\nPhone: ${data.Phone}\nPackage: ${data.Package}\nShoot Type: ${data['Shoot Type']}\nLocation: ${data.Location || 'Studio'}\nPreferred Date: ${data['Preferred Date']}\nPreferred Time: ${data['Preferred Time'] || 'Not specified'}\nSpecial Requests: ${data['Special Requests'] || 'None'}`;
+                    // Send via email
+                    window.location.href = `mailto:hello@meocy.com?subject=Booking Request from ${data.Name}&body=${encodeURIComponent(message)}`;
 
-            // Send via email
-            window.location.href = `mailto:hello@meocy.com?subject=Booking Request from ${data.Name}&body=${encodeURIComponent(message)}`;
-
-            // Show success message
-            setTimeout(() => {
-                alert(`✅ Booking request sent!\n\nWe'll confirm your booking within 24 hours via email or WhatsApp.\n\nDate: ${data['Preferred Date']}\nContact: ${data.Phone}`);
-                event.target.reset();
-                document.getElementById('dateTriggerText').classList.add('date-picker-placeholder');
-            }, 500);
+                    // Show success message
+                    setTimeout(() => {
+                        alert(`✅ Booking request sent!\n\nWe'll confirm your booking within 24 hours via email or WhatsApp.\n\nDate: ${data['Preferred Date']}\nContact: ${data.Phone}`);
+                        event.target.reset();
+                        document.getElementById('dateTriggerText').classList.add('date-picker-placeholder');
+                    }, 500);
+                })
+                .catch(error => {
+                    console.error('Error checking date:', error);
+                    alert('Error checking date availability. Please try again.');
+                });
         }
 
         // Custom date picker
@@ -1279,40 +1282,53 @@
 
                 daysGrid.innerHTML = '';
 
-                for (let i = 0; i < startOffset; i++) {
-                    const empty = document.createElement('span');
-                    empty.className = 'date-picker-day date-picker-day-empty';
-                    daysGrid.appendChild(empty);
-                }
+                // Fetch booked dates
+                fetch('/api/booked-dates')
+                    .then(res => res.json())
+                    .then(data => {
+                        const bookedDateStrings = (data.booked_dates || []).map(d => d.booking_date);
 
-                for (let day = 1; day <= daysInMonth; day++) {
-                    const cellDate = new Date(viewYear, viewMonth, day);
-                    const btn = document.createElement('button');
-                    btn.type = 'button';
-                    btn.className = 'date-picker-day';
-                    btn.textContent = day;
+                        for (let i = 0; i < startOffset; i++) {
+                            const empty = document.createElement('span');
+                            empty.className = 'date-picker-day date-picker-day-empty';
+                            daysGrid.appendChild(empty);
+                        }
 
-                    if (cellDate < today) {
-                        btn.disabled = true;
-                    }
-                    if (sameDay(cellDate, today)) {
-                        btn.classList.add('today');
-                    }
-                    if (sameDay(cellDate, selectedDate)) {
-                        btn.classList.add('selected');
-                    }
+                        for (let day = 1; day <= daysInMonth; day++) {
+                            const cellDate = new Date(viewYear, viewMonth, day);
+                            const dateStr = `${viewYear}-${String(viewMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                            const btn = document.createElement('button');
+                            btn.type = 'button';
+                            btn.className = 'date-picker-day';
+                            btn.textContent = day;
+                            btn.title = bookedDateStrings.includes(dateStr) ? 'Date booked' : '';
 
-                    btn.addEventListener('click', () => {
-                        selectedDate = cellDate;
-                        const formatted = `${String(day).padStart(2, '0')} ${monthNames[lang][viewMonth]} ${viewYear}`;
-                        hiddenInput.value = formatted;
-                        triggerText.textContent = formatted;
-                        triggerText.classList.remove('date-picker-placeholder');
-                        closePopup();
+                            if (cellDate < today) {
+                                btn.disabled = true;
+                            }
+                            if (bookedDateStrings.includes(dateStr)) {
+                                btn.disabled = true;
+                                btn.classList.add('booked');
+                            }
+                            if (sameDay(cellDate, today)) {
+                                btn.classList.add('today');
+                            }
+                            if (sameDay(cellDate, selectedDate)) {
+                                btn.classList.add('selected');
+                            }
+
+                            btn.addEventListener('click', () => {
+                                selectedDate = cellDate;
+                                const formatted = `${String(day).padStart(2, '0')} ${monthNames[lang][viewMonth]} ${viewYear}`;
+                                hiddenInput.value = formatted;
+                                triggerText.textContent = formatted;
+                                triggerText.classList.remove('date-picker-placeholder');
+                                closePopup();
+                            });
+
+                            daysGrid.appendChild(btn);
+                        }
                     });
-
-                    daysGrid.appendChild(btn);
-                }
             }
 
             function openPopup() {
