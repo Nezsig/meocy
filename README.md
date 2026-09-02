@@ -1,295 +1,75 @@
-# MEOCY Studio — Booking System
+# MEOCY Studio — Photography Booking
 
-A professional photography studio booking system with payment withholding management.
+A professional photography studio booking website for MEOCY Studio in Milan.
 
 ## Features
 
-### Booking System
+### Simple Booking Form
 - Customer booking requests with date/time selection
 - Multiple package options (Basic, Silver, Gold, Platinum)
-- Custom subscription packages
-- Booking confirmation and tracking
+- Date conflict prevention (books display availability)
+- Email submission via mailto:
 
-### Payment Withholding
-The system implements a phased payment withholding approach:
-
-1. **First Day Booking**: 25% of total price is withheld
-2. **Remaining Days**: 50% of total price is withheld
-3. **Final Release**: 25% is released after completion
-
-Example for €100 booking:
-- First day: €25 withheld
-- Remaining days: €50 withheld
-- After completion: €25 released
-
-### Cancellation Policy
-- Customers can cancel bookings **within 24 hours** of the first booking day
-- Cancellation reverses all withholdings immediately
-- After the cancellation window closes, bookings cannot be cancelled
-- Cannot change dates without cancelling first
-
-### User Dashboard
-- View all bookings by email
-- Track payment status
-- Cancel bookings (if within window)
-- View payment breakdown
-- Copy booking IDs
+### Booking Workflow
+1. Customer fills out booking form on homepage
+2. Selects their preferred date, time, and package
+3. Form prevents double-booking of dates
+4. Clicking "Book" opens default email client with pre-filled booking request
+5. Email is sent to hello@meocy.com
+6. Studio receives request and confirms via email/WhatsApp within 24 hours
 
 ## Setup
 
-### Requirements
-- Node.js 16+
-- npm
-- Stripe account (for payment processing)
+This is a static website with no backend server or database required.
 
-### Installation
+### Deployment
 
-```bash
-npm install
-```
+The site is deployed to Vercel and serves as a static HTML/CSS/JavaScript website.
 
-### Configuration
+Simply push changes to the repository and Vercel will automatically deploy them.
 
-Create a `.env` file in the project root:
 
-```env
-STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key
-STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_publishable_key
-PORT=3000
-NODE_ENV=development
-```
+## How It Works
 
-Get your Stripe keys from: https://dashboard.stripe.com/apikeys
+### Customer Booking Process
+1. Customer visits meocy.vercel.app
+2. Selects their preferred date, time, and package
+3. Fills in contact information (name, email, phone)
+4. Clicks "Book Now"
+5. Default email client opens with pre-filled booking request
+6. Email is sent to hello@meocy.com
 
-### Running
+### Date Management
+- Each booked date is stored in the browser's localStorage
+- Users cannot select a date that's already booked
+- Prevents double-booking without requiring a backend database
 
-**Development:**
-```bash
-npm run dev
-```
-
-**Production:**
-```bash
-npm start
-```
-
-The server will start on port 3000 (or PORT environment variable).
-
-### Environment Variables
-
-- `STRIPE_SECRET_KEY` - Stripe Secret API Key (for server-side payment processing)
-- `STRIPE_PUBLISHABLE_KEY` - Stripe Publishable API Key (for client-side)
-- `PORT` - Server port (default: 3000)
-- `NODE_ENV` - Environment (development/production)
-
-## API Endpoints
-
-### Payment Endpoints (Stripe Integration)
-
-**Create Payment Intent**
-```
-POST /api/payments/create-intent
-```
-
-**Confirm Payment**
-```
-POST /api/payments/confirm
-```
-
-**Get Payment Status**
-```
-GET /api/payments/status/:payment_intent_id
-```
-
-### Booking Endpoints
-
-### Create Booking
-```
-POST /api/bookings
-```
-
-Request body:
-```json
-{
-  "customer_name": "John Doe",
-  "customer_email": "john@example.com",
-  "customer_phone": "+39 123 456 7890",
-  "package": "gold",
-  "shoot_type": "outdoor",
-  "location": "Milano, Italy",
-  "booking_date": "2026-10-15",
-  "booking_time": "10:00",
-  "special_requests": "Additional details...",
-  "total_price": 500
-}
-```
-
-Response:
-```json
-{
-  "success": true,
-  "booking_id": "uuid",
-  "payment_breakdown": {
-    "total_price": 500,
-    "first_day_withheld": 125,
-    "remaining_days_withheld": 250,
-    "final_release": 125,
-    "can_cancel_until": "2026-10-16"
-  }
-}
-```
-
-### Get Booking Details
-```
-GET /api/bookings/:booking_id
-```
-
-### Get Customer Bookings
-```
-GET /api/bookings/customer/:email
-```
-
-### Cancel Booking
-```
-POST /api/bookings/:booking_id/cancel
-```
-
-Response:
-```json
-{
-  "success": true,
-  "message": "Booking cancelled successfully",
-  "refunded_amount": 125
-}
-```
-
-### Mark Booking as Completed
-```
-POST /api/bookings/:booking_id/mark-completed
-```
-
-Response:
-```json
-{
-  "success": true,
-  "message": "Booking marked as completed",
-  "final_payment_released": 125
-}
-```
-
-## Database Schema
-
-### bookings table
-- `id`: Booking UUID
-- `customer_name`: Customer name
-- `customer_email`: Customer email
-- `customer_phone`: Customer phone
-- `package`: Package type
-- `shoot_type`: Type of shoot
-- `location`: Booking location
-- `booking_date`: Scheduled date
-- `booking_time`: Scheduled time
-- `special_requests`: Special notes
-- `total_price`: Total booking price
-- `first_day_withheld`: 25% of total
-- `remaining_days_withheld`: 50% of total
-- `final_release`: 25% of total
-- `payment_status`: pending/completed
-- `can_cancel_until`: Last cancellation date
-- `is_cancelled`: Boolean
-- `created_at`: Creation timestamp
-- `updated_at`: Last update timestamp
-
-### booking_payment_history table
-- `id`: Transaction UUID
-- `booking_id`: Reference to booking
-- `transaction_type`: withheld/reversed/released
-- `amount`: Transaction amount
-- `transaction_date`: When it occurred
-- `description`: Transaction description
-
-## User Flow
-
-### Booking a Shoot
-1. Customer fills out booking form on homepage
-2. System creates booking and calculates withholding
-3. Customer receives booking ID and confirmation
-4. First day amount (25%) is withheld
-
-### Managing Booking
-1. Customer visits dashboard at `/dashboard.html`
-2. Enters their email to view bookings
-3. Can view payment status and breakdown
-4. Can cancel (if within 24-hour window)
-5. Cancellation reverses first day withholding
-
-### Completing a Shoot
-1. Admin marks booking as completed
-2. Final 25% payment is released
+### Studio Workflow
+- Studio receives booking email
+- Contacts customer within 24 hours via email or WhatsApp
+- Confirms availability and discusses details
+- Sends payment information if needed
 
 ## Files Structure
 
 ```
 meocy/
-├── server.js              # Express server and API
-├── package.json           # Dependencies
-├── .gitignore            # Git ignore rules
 ├── public/
 │   ├── index.html        # Homepage with booking form
-│   ├── dashboard.html    # Booking management dashboard
 │   ├── work.html         # Portfolio page
 │   ├── privacy.html      # Privacy policy
 │   ├── terms.html        # Terms of service
 │   ├── styles.css        # Global styles
 │   └── assets/           # Images and logos
-└── bookings.db          # SQLite database (auto-created)
+└── README.md            # This file
 ```
 
-## Environment Variables
+## Language Support
 
-Optional configuration:
-- `PORT`: Server port (default: 3000)
+The website supports English, Italian, and French with a language switcher in the navigation.
 
-## Security Notes
+## Contact
 
-- All prices are calculated server-side
-- Cancellation window is validated server-side
-- Database queries use parameterized statements (SQLite prepared statements)
-- CORS enabled for development
-
-## Payment System (Stripe Integration)
-
-### Features
-
-- **Secure Payment Processing** - PCI-DSS compliant via Stripe
-- **Payment Withholding** - Automatic calculation of 25%/50%/25% phases
-- **Real-time Status Tracking** - Monitor payment status in dashboard
-- **Automatic Refunds** - Immediate refunds for cancellations within 24-hour window
-- **Test Mode Support** - Test payments without charging real cards
-
-### How It Works
-
-1. Customer creates booking with form
-2. System generates Stripe Payment Intent
-3. Customer enters payment information securely via Stripe
-4. Payment is processed and tracked in database
-5. 25% is immediately charged, 50% is held, 25% released after completion
-6. Cancellation within 24 hours automatically refunds charged amount
-
-### Test Mode
-
-Use test card numbers for development:
-- `4242 4242 4242 4242` - Successful payment
-- `4000 0000 0000 0002` - Card declined
-
-See `/payment-guide.html` for complete setup instructions.
-
-## Future Enhancements
-
-- Email notifications for bookings
-- Admin dashboard for managing bookings
-- Automatic status updates
-- SMS notifications
-- Google Calendar integration
-- PayPal integration alongside Stripe
-- Webhook support for real-time payment updates
+For technical questions or support:
+- Email: hello@meocy.com
+- Phone: +39 379 105 1000
