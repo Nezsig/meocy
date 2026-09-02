@@ -5,7 +5,11 @@ import { createClient } from '@supabase/supabase-js';
 const app = express();
 
 // ============ MIDDLEWARE ============
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: false
+}));
 app.use(express.json());
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.static('public'));
