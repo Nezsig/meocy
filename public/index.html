@@ -27,6 +27,7 @@
                 <li><a href="work.html" class="en">Work</a><a href="work.html" class="it">Lavori</a><a href="work.html" class="fr">Travaux</a></li>
                 <li><a href="#packages" class="en">Packages</a><a href="#packages" class="it">Pacchetti</a><a href="#packages" class="fr">Forfaits</a></li>
                 <li><a href="#faq">FAQ</a></li>
+                <li><a href="dashboard.html" class="en">My Bookings</a><a href="dashboard.html" class="it">Le Mie Prenotazioni</a><a href="dashboard.html" class="fr">Mes Réservations</a></li>
                 <li><a href="#booking" class="en">Booking</a><a href="#booking" class="it">Prenota</a><a href="#booking" class="fr">Réserver</a></li>
             </ul>
             <div class="language-switcher">
@@ -1143,12 +1144,79 @@
             }
         }
 
-        function handleBooking(event) {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            const message = `New booking request!\n\n${Array.from(formData).map(([k, v]) => `${k}: ${v}`).join('\n')}`;
+        function getPackagePrice(packageType) {
+            const prices = {
+                'basic': 150,
+                'travel': 300,
+                'outdoor': 500,
+                'video': 1000,
+                'subscription': 0,
+                'custom': 0
+            };
+            return prices[packageType] || 0;
+        }
 
-            window.location.href = `mailto:hello@meocy.com?subject=Booking Request&body=${encodeURIComponent(message)}`;
+        async function handleBooking(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+
+            const totalPrice = getPackagePrice(data.Package);
+            if (totalPrice === 0 && data.Package !== 'subscription' && data.Package !== 'custom') {
+                alert('Please select a valid package');
+                return;
+            }
+
+            const bookingData = {
+                customer_name: data.Name,
+                customer_email: data.Email,
+                customer_phone: data.Phone,
+                package: data.Package,
+                shoot_type: data['Shoot Type'],
+                location: data.Location || '',
+                booking_date: data['Preferred Date'],
+                booking_time: data['Preferred Time'] || '',
+                special_requests: data['Special Requests'] || '',
+                total_price: totalPrice
+            };
+
+            try {
+                const response = await fetch('/api/bookings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(bookingData)
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    alert(result.error || 'Failed to create booking');
+                    return;
+                }
+
+                // Show success message with booking details
+                const breakdown = result.payment_breakdown;
+                const message = `✅ Booking Created Successfully!\n\nBooking ID: ${result.booking_id}\n\nPayment Breakdown:\n- First day withheld: €${breakdown.first_day_withheld.toFixed(2)} (25%)\n- Remaining days withheld: €${breakdown.remaining_days_withheld.toFixed(2)} (50%)\n- Final release: €${breakdown.final_release.toFixed(2)} (25%)\n\nYou can cancel until: ${breakdown.can_cancel_until}\n\nSave your booking ID for future reference.`;
+
+                alert(message);
+
+                // Store booking ID in localStorage
+                const bookings = JSON.parse(localStorage.getItem('meocy_bookings') || '[]');
+                bookings.push({
+                    id: result.booking_id,
+                    email: bookingData.customer_email,
+                    date: new Date().toISOString()
+                });
+                localStorage.setItem('meocy_bookings', JSON.stringify(bookings));
+
+                // Reset form
+                form.reset();
+                document.getElementById('dateTriggerText').classList.add('date-picker-placeholder');
+            } catch (error) {
+                console.error('Error creating booking:', error);
+                alert('An error occurred while creating the booking. Please try again.');
+            }
         }
 
         // Custom date picker
