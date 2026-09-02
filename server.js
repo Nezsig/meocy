@@ -23,6 +23,44 @@ app.get('/health', (req, res) => {
 
 // ============ BOOKINGS ENDPOINTS ============
 
+// Get all booked dates
+app.get('/api/booked-dates', async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from('bookings')
+      .select('preferred_date, name, email, special_requests')
+      .order('preferred_date', { ascending: true });
+
+    if (error) throw error;
+
+    res.json({ booked_dates: data });
+  } catch (error) {
+    console.error('Error fetching booked dates:', error);
+    res.status(500).json({ error: 'Failed to fetch booked dates' });
+  }
+});
+
+// Check if a date is booked
+app.get('/api/check-date/:date', async (req, res) => {
+  try {
+    const { date } = req.params;
+    const { data, error } = await supabase
+      .from('bookings')
+      .select('*')
+      .eq('preferred_date', date);
+
+    if (error) throw error;
+
+    res.json({
+      is_booked: data && data.length > 0,
+      booking: data && data.length > 0 ? data[0] : null
+    });
+  } catch (error) {
+    console.error('Error checking date:', error);
+    res.status(500).json({ error: 'Failed to check date' });
+  }
+});
+
 // Get all bookings
 app.get('/api/bookings', async (req, res) => {
   try {
