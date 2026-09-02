@@ -801,6 +801,54 @@
                     </div>
                 </div>
 
+                <!-- Payment Policy Information -->
+                <div style="background: rgba(122, 204, 0, 0.08); border-left: 4px solid var(--accent); padding: 20px; border-radius: 8px; margin: 24px 0;">
+                    <h4 style="margin: 0 0 12px 0; font-weight: 600; font-size: 15px;">
+                        <span class="en">Payment & Booking Policy</span>
+                        <span class="it">Politica di Pagamento e Prenotazione</span>
+                        <span class="fr">Politique de Paiement et de Réservation</span>
+                    </h4>
+                    <ul style="margin: 0; padding-left: 20px; line-height: 1.6; font-size: 14px;">
+                        <li>
+                            <span class="en"><strong>Day of Booking:</strong> 25% deposit is charged and held</span>
+                            <span class="it"><strong>Giorno della Prenotazione:</strong> Il 25% del deposito viene addebitato e trattenuto</span>
+                            <span class="fr"><strong>Jour de la Réservation:</strong> Un dépôt de 25% est facturé et retenu</span>
+                        </li>
+                        <li>
+                            <span class="en"><strong>During Booking Period:</strong> 50% remains held until shoot completion</span>
+                            <span class="it"><strong>Durante il Periodo di Prenotazione:</strong> Il 50% rimane trattenuto fino al completamento dello shooting</span>
+                            <span class="fr"><strong>Pendant la Période de Réservation:</strong> 50% reste retenu jusqu'à la fin de la séance</span>
+                        </li>
+                        <li>
+                            <span class="en"><strong>After Completion:</strong> Final 25% is released</span>
+                            <span class="it"><strong>Dopo il Completamento:</strong> Il restante 25% viene rilasciato</span>
+                            <span class="fr"><strong>Après Achèvement:</strong> Le dernier 25% est libéré</span>
+                        </li>
+                        <li>
+                            <span class="en"><strong>Cancellation:</strong> Cancel within 24 hours for full refund; no refunds after that window</span>
+                            <span class="it"><strong>Cancellazione:</strong> Cancella entro 24 ore per il rimborso completo; nessun rimborso dopo tale periodo</span>
+                            <span class="fr"><strong>Annulation:</strong> Annulez dans les 24 heures pour un remboursement complet; pas de remboursement après cette période</span>
+                        </li>
+                        <li>
+                            <span class="en"><strong>Date Changes:</strong> Can only change dates 7+ days after booking or by cancelling and rebooking</span>
+                            <span class="it"><strong>Modifiche della Data:</strong> È possibile modificare le date solo 7+ giorni dopo la prenotazione o cancellando e riprenota​ndo</span>
+                            <span class="fr"><strong>Changements de Date:</strong> Vous ne pouvez modifier les dates que 7+ jours après la réservation ou en annulant et en réservant à nouveau</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Terms Checkbox -->
+                <div style="margin: 24px 0;">
+                    <label style="display: flex; align-items: flex-start; gap: 12px; cursor: pointer; font-size: 14px;">
+                        <input type="checkbox" name="termsAccepted" id="termsCheckbox" required style="margin-top: 4px; cursor: pointer;">
+                        <span>
+                            <span class="en">I understand and accept the payment structure, cancellation policy, and date change rules outlined above</span>
+                            <span class="it">Comprendo e accetto la struttura dei pagamenti, la politica di cancellazione e le regole di cambio data sopra descritte</span>
+                            <span class="fr">Je comprends et accepte la structure de paiement, la politique d'annulation et les règles de modification de date décrites ci-dessus</span>
+                        </span>
+                    </label>
+                </div>
+
                 <button type="submit" class="submit-btn">
                     <span class="en">Confirm Booking Request</span>
                     <span class="it">Conferma Richiesta di Prenotazione</span>
@@ -1149,6 +1197,12 @@
             event.preventDefault();
             const formData = new FormData(event.target);
             const data = Object.fromEntries(formData);
+
+            // Check if terms accepted
+            if (!document.getElementById('termsCheckbox').checked) {
+                alert('Please read and accept the payment & booking policy to proceed.');
+                return;
+            }
 
             // Check if date is already booked
             const bookedDates = JSON.parse(localStorage.getItem('meocy_booked_dates') || '[]');
