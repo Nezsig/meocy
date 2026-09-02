@@ -802,13 +802,13 @@
                 </div>
 
                 <!-- Payment Policy Information -->
-                <div style="background: rgba(122, 204, 0, 0.08); border-left: 4px solid var(--accent); padding: 20px; border-radius: 8px; margin: 24px 0;">
-                    <h4 style="margin: 0 0 12px 0; font-weight: 600; font-size: 15px;">
+                <div class="form-policy-box">
+                    <h4>
                         <span class="en">Payment & Booking Policy</span>
                         <span class="it">Politica di Pagamento e Prenotazione</span>
                         <span class="fr">Politique de Paiement et de Réservation</span>
                     </h4>
-                    <ul style="margin: 0; padding-left: 20px; line-height: 1.6; font-size: 14px;">
+                    <ul>
                         <li>
                             <span class="en"><strong>Day of Booking:</strong> 25% deposit is charged and held</span>
                             <span class="it"><strong>Giorno della Prenotazione:</strong> Il 25% del deposito viene addebitato e trattenuto</span>
@@ -838,16 +838,14 @@
                 </div>
 
                 <!-- Terms Checkbox -->
-                <div style="margin: 24px 0;">
-                    <label style="display: flex; align-items: flex-start; gap: 12px; cursor: pointer; font-size: 14px;">
-                        <input type="checkbox" name="termsAccepted" id="termsCheckbox" required style="margin-top: 4px; cursor: pointer;">
-                        <span>
-                            <span class="en">I understand and accept the payment structure, cancellation policy, and date change rules outlined above</span>
-                            <span class="it">Comprendo e accetto la struttura dei pagamenti, la politica di cancellazione e le regole di cambio data sopra descritte</span>
-                            <span class="fr">Je comprends et accepte la structure de paiement, la politique d'annulation et les règles de modification de date décrites ci-dessus</span>
-                        </span>
-                    </label>
-                </div>
+                <label class="form-terms-label">
+                    <input type="checkbox" name="termsAccepted" id="termsCheckbox" required>
+                    <span>
+                        <span class="en">I understand and accept the payment structure, cancellation policy, and date change rules outlined above</span>
+                        <span class="it">Comprendo e accetto la struttura dei pagamenti, la politica di cancellazione e le regole di cambio data sopra descritte</span>
+                        <span class="fr">Je comprends et accepte la structure de paiement, la politique d'annulation et les règles de modification de date décrites ci-dessus</span>
+                    </span>
+                </label>
 
                 <button type="submit" class="submit-btn">
                     <span class="en">Confirm Booking Request</span>
