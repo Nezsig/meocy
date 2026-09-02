@@ -794,6 +794,24 @@
                         </select>
                     </div>
 
+                    <div class="form-group">
+                        <label>
+                            <span class="en">Expected Photos</span>
+                            <span class="it">Foto Previste</span>
+                            <span class="fr">Photos Attendues</span>
+                        </label>
+                        <input type="number" name="Photos Count" min="0" placeholder="e.g., 20">
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <span class="en">Expected Videos</span>
+                            <span class="it">Video Previsti</span>
+                            <span class="fr">Vidéos Attendues</span>
+                        </label>
+                        <input type="number" name="Videos Count" min="0" placeholder="e.g., 1">
+                    </div>
+
                     <div class="form-group full">
                         <label>
                             <span class="en">Special Requests</span>
@@ -1219,18 +1237,48 @@
                         return;
                     }
 
-                    // Create email content
-                    const message = `Booking Request\n\nName: ${data.Name}\nEmail: ${data.Email}\nPhone: ${data.Phone}\nPackage: ${data.Package}\nShoot Type: ${data['Shoot Type']}\nLocation: ${data.Location || 'Studio'}\nPreferred Date: ${data['Preferred Date']}\nPreferred Time: ${data['Preferred Time'] || 'Not specified'}\nSpecial Requests: ${data['Special Requests'] || 'None'}`;
+                    // Create booking in database
+                    fetch(`${API_URL}/api/bookings`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            customer_name: data.Name,
+                            customer_email: data.Email,
+                            customer_phone: data.Phone,
+                            package: data.Package,
+                            shoot_type: data['Shoot Type'],
+                            location: data.Location || null,
+                            booking_date: data['Preferred Date'],
+                            booking_time: data['Preferred Time'] || null,
+                            photos_count: parseInt(data['Photos Count']) || 0,
+                            videos_count: parseInt(data['Videos Count']) || 0,
+                            special_requests: data['Special Requests'] || null,
+                            total_price: 0
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(bookingResult => {
+                        if (bookingResult.success) {
+                            // Create email content
+                            const message = `Booking Request\n\nName: ${data.Name}\nEmail: ${data.Email}\nPhone: ${data.Phone}\nPackage: ${data.Package}\nShoot Type: ${data['Shoot Type']}\nLocation: ${data.Location || 'Studio'}\nPreferred Date: ${data['Preferred Date']}\nPreferred Time: ${data['Preferred Time'] || 'Not specified'}\nPhotos: ${data['Photos Count'] || 'N/A'}\nVideos: ${data['Videos Count'] || 'N/A'}\nSpecial Requests: ${data['Special Requests'] || 'None'}\n\nOrder Number: ${bookingResult.order_number}`;
 
-                    // Send via email
-                    window.location.href = `mailto:hello@meocy.com?subject=Booking Request from ${data.Name}&body=${encodeURIComponent(message)}`;
+                            // Send via email
+                            window.location.href = `mailto:hello@meocy.com?subject=Booking Request from ${data.Name}&body=${encodeURIComponent(message)}`;
 
-                    // Show success message
-                    setTimeout(() => {
-                        alert(`✅ Booking request sent!\n\nWe'll confirm your booking within 24 hours via email or WhatsApp.\n\nDate: ${data['Preferred Date']}\nContact: ${data.Phone}`);
-                        event.target.reset();
-                        document.getElementById('dateTriggerText').classList.add('date-picker-placeholder');
-                    }, 500);
+                            // Show success message
+                            setTimeout(() => {
+                                alert(`✅ Booking request sent!\n\nWe'll confirm your booking within 24 hours via email or WhatsApp.\n\nDate: ${data['Preferred Date']}\nOrder: ${bookingResult.order_number}\nContact: ${data.Phone}`);
+                                event.target.reset();
+                                document.getElementById('dateTriggerText').classList.add('date-picker-placeholder');
+                            }, 500);
+                        } else {
+                            alert('Error creating booking: ' + (bookingResult.error || 'Unknown error'));
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error creating booking:', error);
+                        alert('Error creating booking. Please try again.');
+                    });
                 })
                 .catch(error => {
                     console.error('Error checking date:', error);
