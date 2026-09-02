@@ -957,6 +957,11 @@
     </footer>
 
     <script>
+        // API Configuration - Update this if using a cloud backend
+        const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://localhost:3000'
+            : 'https://your-backend-url.railway.app'; // Replace with your Railway link
+
         function setLanguage(lang) {
             const buttons = document.querySelectorAll('.lang-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
@@ -1206,7 +1211,7 @@
             }
 
             // Check if date is booked on backend
-            fetch(`/api/check-date/${data['Preferred Date']}`)
+            fetch(`${API_URL}/api/check-date/${data['Preferred Date']}`)
                 .then(res => res.json())
                 .then(result => {
                     if (result.is_booked) {
@@ -1283,7 +1288,7 @@
                 daysGrid.innerHTML = '';
 
                 // Fetch booked dates
-                fetch('/api/booked-dates')
+                fetch(`${API_URL}/api/booked-dates`)
                     .then(res => res.json())
                     .then(data => {
                         const bookedDateStrings = (data.booked_dates || []).map(d => d.booking_date);
