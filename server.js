@@ -33,7 +33,14 @@ app.get('/api/booked-dates', async (req, res) => {
 
     if (error) throw error;
 
-    res.json({ booked_dates: data });
+    const bookedDates = data.map(booking => ({
+      booking_date: booking.preferred_date,
+      name: booking.name,
+      email: booking.email,
+      special_requests: booking.special_requests
+    }));
+
+    res.json({ booked_dates: bookedDates });
   } catch (error) {
     console.error('Error fetching booked dates:', error);
     res.status(500).json({ error: 'Failed to fetch booked dates' });
