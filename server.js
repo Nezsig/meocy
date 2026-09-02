@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import Database from 'better-sqlite3';
 import { v4 as uuidv4 } from 'uuid';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -130,16 +130,10 @@ app.post('/api/send-email', async (req, res) => {
       return res.status(400).json({ error: 'email and name are required' });
     }
 
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_APP_PASSWORD
-      }
-    });
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
-    const mailOptions = {
-      from: process.env.GMAIL_USER,
+    const result = await resend.emails.send({
+      from: 'noreply@meocy.com',
       to: email,
       subject: 'MEOCY - Booking Request Received ✓',
       html: `
@@ -171,9 +165,11 @@ app.post('/api/send-email', async (req, res) => {
           </div>
         </div>
       `
-    };
+    });
 
-    await transporter.sendMail(mailOptions);
+    if (result.error) {
+      return res.status(500).json({ error: 'Failed to send email', details: result.error });
+    }
 
     res.json({
       success: true,
