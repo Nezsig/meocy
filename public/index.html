@@ -1304,18 +1304,35 @@
                         return;
                     }
 
-                    // Create email content
-                    const message = `Booking Request\n\nName: ${data.Name}\nEmail: ${data.Email}\nPhone: ${data.Phone}\nPackage: ${data.Package}\nShoot Type: ${data['Shoot Type']}\nLocation: ${data.Location || 'Studio'}\nPreferred Date: ${data['Preferred Date']}\nPreferred Time: ${data['Preferred Time'] || 'Not specified'}\nSpecial Requests: ${data['Special Requests'] || 'None'}`;
-
-                    // Send via email
-                    window.location.href = `mailto:hello@meocy.com?subject=Booking Request from ${data.Name}&body=${encodeURIComponent(message)}`;
-
-                    // Show success message
-                    setTimeout(() => {
-                        alert(`✅ Booking request sent!\n\nWe'll confirm your booking within 24 hours via email or WhatsApp.\n\nDate: ${data['Preferred Date']}\nContact: ${data.Phone}`);
+                    // Send confirmation email to customer
+                    fetch(`${API_URL}/api/send-email`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            email: data.Email,
+                            name: data.Name,
+                            package_name: data.Package,
+                            date: data['Preferred Date'],
+                            phone: data.Phone,
+                            notes: `Shoot Type: ${data['Shoot Type']}\nLocation: ${data.Location || 'Studio'}\nTime: ${data['Preferred Time'] || 'Not specified'}\nRequests: ${data['Special Requests'] || 'None'}`
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(result => {
+                        if (result.success) {
+                            // Show success message
+                            alert(`✅ Booking request sent!\n\nConfirmation email sent to: ${data.Email}\n\nWe'll confirm your booking within 24 hours.\n\nDate: ${data['Preferred Date']}\nContact: ${data.Phone}`);
+                            event.target.reset();
+                            document.getElementById('dateTriggerText').classList.add('date-picker-placeholder');
+                        } else {
+                            alert('Booking saved but email could not be sent. We will contact you at ' + data.Phone);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error sending email:', error);
+                        alert('✅ Booking request received!\n\nWe will contact you at ' + data.Phone);
                         event.target.reset();
-                        document.getElementById('dateTriggerText').classList.add('date-picker-placeholder');
-                    }, 500);
+                    });
                 })
                 .catch(error => {
                     console.error('Error checking date:', error);
