@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>MEOCY — Photography Studio, Milan</title>
     <meta name="description" content="MEOCY is a professional photography studio in Milan, Italy. Product, fashion, restaurant and model shoots — in studio or on location.">
     <meta property="og:type" content="website">
@@ -16,7 +19,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=20260902-001">
 </head>
 <body>
     <nav>
@@ -750,6 +753,8 @@
             <span class="it">Prenota il Tuo Shooting</span>
             <span class="fr">Réservez Votre Shooting</span>
         </h2>
+
+
         <div class="form-container">
             <form id="bookingForm" onsubmit="handleBooking(event)">
                 <div class="form-grid">
@@ -886,6 +891,52 @@
                     </div>
                 </div>
 
+                <!-- Payment Policy Information -->
+                <div class="form-policy-box">
+                    <h4>
+                        <span class="en">Payment & Booking Policy</span>
+                        <span class="it">Politica di Pagamento e Prenotazione</span>
+                        <span class="fr">Politique de Paiement et de Réservation</span>
+                    </h4>
+                    <ul>
+                        <li>
+                            <span class="en"><strong>Day of Booking:</strong> 25% deposit is charged and held</span>
+                            <span class="it"><strong>Giorno della Prenotazione:</strong> Il 25% del deposito viene addebitato e trattenuto</span>
+                            <span class="fr"><strong>Jour de la Réservation:</strong> Un dépôt de 25% est facturé et retenu</span>
+                        </li>
+                        <li>
+                            <span class="en"><strong>During Booking Period:</strong> 50% remains held until shoot completion</span>
+                            <span class="it"><strong>Durante il Periodo di Prenotazione:</strong> Il 50% rimane trattenuto fino al completamento dello shooting</span>
+                            <span class="fr"><strong>Pendant la Période de Réservation:</strong> 50% reste retenu jusqu'à la fin de la séance</span>
+                        </li>
+                        <li>
+                            <span class="en"><strong>After Completion:</strong> Final 25% is released</span>
+                            <span class="it"><strong>Dopo il Completamento:</strong> Il restante 25% viene rilasciato</span>
+                            <span class="fr"><strong>Après Achèvement:</strong> Le dernier 25% est libéré</span>
+                        </li>
+                        <li>
+                            <span class="en"><strong>Cancellation:</strong> Cancel within 24 hours for full refund; no refunds after that window</span>
+                            <span class="it"><strong>Cancellazione:</strong> Cancella entro 24 ore per il rimborso completo; nessun rimborso dopo tale periodo</span>
+                            <span class="fr"><strong>Annulation:</strong> Annulez dans les 24 heures pour un remboursement complet; pas de remboursement après cette période</span>
+                        </li>
+                        <li>
+                            <span class="en"><strong>Date Changes:</strong> Can only change dates 7+ days after booking or by cancelling and rebooking</span>
+                            <span class="it"><strong>Modifiche della Data:</strong> È possibile modificare le date solo 7+ giorni dopo la prenotazione o cancellando e riprenota​ndo</span>
+                            <span class="fr"><strong>Changements de Date:</strong> Vous ne pouvez modifier les dates que 7+ jours après la réservation ou en annulant et en réservant à nouveau</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Terms Checkbox -->
+                <label class="form-terms-label">
+                    <input type="checkbox" name="termsAccepted" id="termsCheckbox" required>
+                    <span>
+                        <span class="en">I understand and accept the payment structure, cancellation policy, and date change rules outlined above</span>
+                        <span class="it">Comprendo e accetto la struttura dei pagamenti, la politica di cancellazione e le regole di cambio data sopra descritte</span>
+                        <span class="fr">Je comprends et accepte la structure de paiement, la politique d'annulation et les règles de modification de date décrites ci-dessus</span>
+                    </span>
+                </label>
+
                 <button type="submit" class="submit-btn">
                     <span class="en">Confirm Booking Request</span>
                     <span class="it">Conferma Richiesta di Prenotazione</span>
@@ -991,6 +1042,11 @@
     </footer>
 
     <script>
+        // API Configuration - Update this if using a cloud backend
+        const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://localhost:3000'
+            : 'https://your-backend-url.railway.app'; // Replace with your Railway link
+
         function setLanguage(lang) {
             const buttons = document.querySelectorAll('.lang-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
@@ -1231,9 +1287,40 @@
         function handleBooking(event) {
             event.preventDefault();
             const formData = new FormData(event.target);
-            const message = `New booking request!\n\n${Array.from(formData).map(([k, v]) => `${k}: ${v}`).join('\n')}`;
+            const data = Object.fromEntries(formData);
 
-            window.location.href = `mailto:hello@meocy.com?subject=Booking Request&body=${encodeURIComponent(message)}`;
+            // Check if terms accepted
+            if (!document.getElementById('termsCheckbox').checked) {
+                alert('Please read and accept the payment & booking policy to proceed.');
+                return;
+            }
+
+            // Check if date is booked on backend
+            fetch(`${API_URL}/api/check-date/${data['Preferred Date']}`)
+                .then(res => res.json())
+                .then(result => {
+                    if (result.is_booked) {
+                        alert('Sorry, this date is already booked. Please select another date.');
+                        return;
+                    }
+
+                    // Create email content
+                    const message = `Booking Request\n\nName: ${data.Name}\nEmail: ${data.Email}\nPhone: ${data.Phone}\nPackage: ${data.Package}\nShoot Type: ${data['Shoot Type']}\nLocation: ${data.Location || 'Studio'}\nPreferred Date: ${data['Preferred Date']}\nPreferred Time: ${data['Preferred Time'] || 'Not specified'}\nSpecial Requests: ${data['Special Requests'] || 'None'}`;
+
+                    // Send via email
+                    window.location.href = `mailto:hello@meocy.com?subject=Booking Request from ${data.Name}&body=${encodeURIComponent(message)}`;
+
+                    // Show success message
+                    setTimeout(() => {
+                        alert(`✅ Booking request sent!\n\nWe'll confirm your booking within 24 hours via email or WhatsApp.\n\nDate: ${data['Preferred Date']}\nContact: ${data.Phone}`);
+                        event.target.reset();
+                        document.getElementById('dateTriggerText').classList.add('date-picker-placeholder');
+                    }, 500);
+                })
+                .catch(error => {
+                    console.error('Error checking date:', error);
+                    alert('Error checking date availability. Please try again.');
+                });
         }
 
         // Custom date picker
@@ -1285,40 +1372,53 @@
 
                 daysGrid.innerHTML = '';
 
-                for (let i = 0; i < startOffset; i++) {
-                    const empty = document.createElement('span');
-                    empty.className = 'date-picker-day date-picker-day-empty';
-                    daysGrid.appendChild(empty);
-                }
+                // Fetch booked dates
+                fetch(`${API_URL}/api/booked-dates`)
+                    .then(res => res.json())
+                    .then(data => {
+                        const bookedDateStrings = (data.booked_dates || []).map(d => d.booking_date);
 
-                for (let day = 1; day <= daysInMonth; day++) {
-                    const cellDate = new Date(viewYear, viewMonth, day);
-                    const btn = document.createElement('button');
-                    btn.type = 'button';
-                    btn.className = 'date-picker-day';
-                    btn.textContent = day;
+                        for (let i = 0; i < startOffset; i++) {
+                            const empty = document.createElement('span');
+                            empty.className = 'date-picker-day date-picker-day-empty';
+                            daysGrid.appendChild(empty);
+                        }
 
-                    if (cellDate < today) {
-                        btn.disabled = true;
-                    }
-                    if (sameDay(cellDate, today)) {
-                        btn.classList.add('today');
-                    }
-                    if (sameDay(cellDate, selectedDate)) {
-                        btn.classList.add('selected');
-                    }
+                        for (let day = 1; day <= daysInMonth; day++) {
+                            const cellDate = new Date(viewYear, viewMonth, day);
+                            const dateStr = `${viewYear}-${String(viewMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                            const btn = document.createElement('button');
+                            btn.type = 'button';
+                            btn.className = 'date-picker-day';
+                            btn.textContent = day;
+                            btn.title = bookedDateStrings.includes(dateStr) ? 'Date booked' : '';
 
-                    btn.addEventListener('click', () => {
-                        selectedDate = cellDate;
-                        const formatted = `${String(day).padStart(2, '0')} ${monthNames[lang][viewMonth]} ${viewYear}`;
-                        hiddenInput.value = formatted;
-                        triggerText.textContent = formatted;
-                        triggerText.classList.remove('date-picker-placeholder');
-                        closePopup();
+                            if (cellDate < today) {
+                                btn.disabled = true;
+                            }
+                            if (bookedDateStrings.includes(dateStr)) {
+                                btn.disabled = true;
+                                btn.classList.add('booked');
+                            }
+                            if (sameDay(cellDate, today)) {
+                                btn.classList.add('today');
+                            }
+                            if (sameDay(cellDate, selectedDate)) {
+                                btn.classList.add('selected');
+                            }
+
+                            btn.addEventListener('click', () => {
+                                selectedDate = cellDate;
+                                const formatted = `${String(day).padStart(2, '0')} ${monthNames[lang][viewMonth]} ${viewYear}`;
+                                hiddenInput.value = formatted;
+                                triggerText.textContent = formatted;
+                                triggerText.classList.remove('date-picker-placeholder');
+                                closePopup();
+                            });
+
+                            daysGrid.appendChild(btn);
+                        }
                     });
-
-                    daysGrid.appendChild(btn);
-                }
             }
 
             function openPopup() {

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEOCY Admin — Booking Management</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230a0a0a'/%3E%3Crect x='30' y='30' width='40' height='40' rx='10' fill='%237acc00'/%3E%3C/svg%3E">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        header {
+            background: #0a0a0a;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            opacity: 0.8;
+            font-size: 14px;
+        }
+
+        main {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #0a0a0a;
+            border-bottom: 2px solid #7acc00;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #7acc00;
+            box-shadow: 0 0 0 3px rgba(122, 204, 0, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        button {
+            background: #7acc00;
+            color: #0a0a0a;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #6ab600;
+            transform: translateY(-2px);
+        }
+
+        button.danger {
+            background: #ff4444;
+            color: white;
+        }
+
+        button.danger:hover {
+            background: #cc0000;
+        }
+
+        .booked-dates-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .date-item {
+            background: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .date-info {
+            flex: 1;
+        }
+
+        .date-info .date {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0a0a0a;
+            margin-bottom: 6px;
+        }
+
+        .date-info .customer {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .date-actions {
+            margin-left: 15px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .empty-state p {
+            font-size: 16px;
+        }
+
+        .message {
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #999;
+        }
+
+        @media (max-width: 600px) {
+            main {
+                padding: 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .date-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .date-actions {
+                margin-left: 0;
+                margin-top: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 MEOCY Admin Dashboard</h1>
+            <p>Manage booking dates and availability</p>
+        </header>
+
+        <main>
+            <!-- Add New Booked Date -->
+            <section class="section">
+                <h2>➕ Mark Date as Booked</h2>
+                <div id="addMessage"></div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bookingDate">Date *</label>
+                        <input type="date" id="bookingDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customerName">Customer Name</label>
+                        <input type="text" id="customerName" placeholder="e.g., John Doe">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="customerEmail">Customer Email</label>
+                        <input type="email" id="customerEmail" placeholder="e.g., john@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="customerPhone">Customer Phone</label>
+                        <input type="tel" id="customerPhone" placeholder="e.g., +39 123 456 7890">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notes</label>
+                    <textarea id="notes" placeholder="Any additional notes..."></textarea>
+                </div>
+                <button onclick="addBookedDate()">Mark as Booked</button>
+            </section>
+
+            <!-- Booked Dates List -->
+            <section class="section">
+                <h2>📋 Booked Dates</h2>
+                <div id="bookedMessage"></div>
+                <div id="bookedDatesList" class="loading">Loading booked dates...</div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // API Configuration - Update this if using a cloud backend
+        const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://localhost:3000'
+            : 'https://your-backend-url.railway.app'; // Replace with your Railway link
+
+        // Load booked dates on page load
+        loadBookedDates();
+
+        function loadBookedDates() {
+            fetch(`${API_URL}/api/booked-dates`)
+                .then(res => res.json())
+                .then(data => {
+                    const container = document.getElementById('bookedDatesList');
+                    const dates = data.booked_dates || [];
+
+                    if (dates.length === 0) {
+                        container.innerHTML = '<div class="empty-state"><p>No booked dates yet</p></div>';
+                        return;
+                    }
+
+                    container.innerHTML = dates.map(date => `
+                        <div class="date-item">
+                            <div class="date-info">
+                                <div class="date">${formatDate(date.booking_date)}</div>
+                                <div class="customer">
+                                    ${date.customer_name ? `<strong>${date.customer_name}</strong>` : ''}
+                                    ${date.customer_email ? `• ${date.customer_email}` : ''}
+                                    ${date.customer_phone ? `• ${date.customer_phone}` : ''}
+                                    ${date.notes ? `<br>Note: ${date.notes}` : ''}
+                                </div>
+                            </div>
+                            <div class="date-actions">
+                                <button class="danger" onclick="removeBookedDate('${date.booking_date}')">Remove</button>
+                            </div>
+                        </div>
+                    `).join('');
+                })
+                .catch(error => {
+                    console.error('Error loading dates:', error);
+                    document.getElementById('bookedDatesList').innerHTML = '<div class="empty-state"><p>Error loading booked dates</p></div>';
+                });
+        }
+
+        function addBookedDate() {
+            const date = document.getElementById('bookingDate').value;
+            const name = document.getElementById('customerName').value;
+            const email = document.getElementById('customerEmail').value;
+            const phone = document.getElementById('customerPhone').value;
+            const notes = document.getElementById('notes').value;
+
+            if (!date) {
+                showMessage('addMessage', 'Please select a date', 'error');
+                return;
+            }
+
+            fetch(`${API_URL}/api/admin/add-date`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    booking_date: date,
+                    customer_name: name || null,
+                    customer_email: email || null,
+                    customer_phone: phone || null,
+                    notes: notes || null
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    showMessage('addMessage', `✓ ${formatDate(date)} marked as booked`, 'success');
+                    document.getElementById('bookingDate').value = '';
+                    document.getElementById('customerName').value = '';
+                    document.getElementById('customerEmail').value = '';
+                    document.getElementById('customerPhone').value = '';
+                    document.getElementById('notes').value = '';
+                    loadBookedDates();
+                } else {
+                    showMessage('addMessage', data.error || 'Failed to add date', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showMessage('addMessage', 'Error adding date', 'error');
+            });
+        }
+
+        function removeBookedDate(date) {
+            if (!confirm(`Remove ${formatDate(date)} from booked dates?`)) return;
+
+            fetch(`${API_URL}/api/admin/remove-date`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ booking_date: date })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    showMessage('bookedMessage', `✓ ${formatDate(date)} removed`, 'success');
+                    loadBookedDates();
+                } else {
+                    showMessage('bookedMessage', data.error || 'Failed to remove date', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showMessage('bookedMessage', 'Error removing date', 'error');
+            });
+        }
+
+        function showMessage(elementId, text, type) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `<div class="message ${type}">${text}</div>`;
+            setTimeout(() => {
+                element.innerHTML = '';
+            }, 4000);
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr + 'T00:00:00');
+            return date.toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+        }
+    </script>
+</body>
+</html>

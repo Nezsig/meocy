@@ -1489,6 +1489,12 @@
             cursor: not-allowed;
         }
 
+        .date-picker-day.booked {
+            background: #ffebee;
+            color: #c62828;
+            font-weight: 600;
+        }
+
         .date-picker-day-empty {
             visibility: hidden;
             cursor: default;
@@ -1499,6 +1505,78 @@
             color: var(--text-light);
             margin-top: 14px;
             text-align: center;
+        }
+
+        /* Policy information box */
+        .form-policy-box {
+            background: rgba(122, 204, 0, 0.08);
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 32px 0 24px;
+        }
+
+        .form-policy-box h4 {
+            margin: 0 0 12px 0;
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--text-dark);
+        }
+
+        .form-policy-box ul {
+            margin: 0;
+            padding-left: 20px;
+            line-height: 1.6;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .form-policy-box li {
+            margin-bottom: 8px;
+        }
+
+        .form-policy-box strong {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        /* Terms checkbox */
+        .form-terms-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 28px 0 32px;
+            padding: 16px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-terms-label:hover {
+            border-color: var(--accent);
+        }
+
+        .form-terms-label input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            margin-top: 2px;
+            cursor: pointer;
+            accent-color: var(--accent);
+            border-radius: 4px;
+        }
+
+        .form-terms-label input[type="checkbox"]:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px var(--accent-soft);
+        }
+
+        .form-terms-label span {
+            color: var(--text-dark);
+            line-height: 1.5;
         }
 
         .submit-btn {
@@ -1512,7 +1590,7 @@
             cursor: pointer;
             transition: all 0.4s var(--ease);
             width: 100%;
-            margin-top: 20px;
+            margin-top: 12px;
         }
 
         .submit-btn:hover {
