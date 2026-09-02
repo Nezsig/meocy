@@ -5,6 +5,7 @@ import { dirname, join } from 'path';
 import Database from 'better-sqlite3';
 import { v4 as uuidv4 } from 'uuid';
 import fs from 'fs';
+import Stripe from 'stripe';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -13,6 +14,12 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(express.static('public'));
+
+// Initialize Stripe (requires STRIPE_SECRET_KEY environment variable)
+let stripe = null;
+if (process.env.STRIPE_SECRET_KEY) {
+  stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+}
 
 let db;
 
@@ -39,6 +46,11 @@ function initializeDatabase() {
       remaining_days_withheld REAL NOT NULL DEFAULT 0,
       final_release REAL NOT NULL DEFAULT 0,
       payment_status TEXT DEFAULT 'pending',
+
+      -- Stripe Payment
+      stripe_payment_intent_id TEXT,
+      stripe_customer_id TEXT,
+      payment_method TEXT DEFAULT 'offline',
 
       -- Cancellation
       can_cancel_until DATE,
@@ -85,6 +97,118 @@ function canCancelBooking(bookingDate) {
 
   return now <= nextDay;
 }
+
+// Payment Endpoints
+
+app.post('/api/payments/create-intent', async (req, res) => {
+  if (!stripe) {
+    return res.status(400).json({ error: 'Payment processing not configured. Please set STRIPE_SECRET_KEY environment variable.' });
+  }
+
+  try {
+    const { booking_id, total_price, customer_email, customer_name } = req.body;
+
+    if (!booking_id || !total_price || !customer_email) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    // Create Stripe payment intent
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: Math.round(total_price * 100), // Amount in cents
+      currency: 'eur',
+      customer: customer_email,
+      description: `MEOCY Booking: ${booking_id}`,
+      metadata: {
+        booking_id,
+        customer_name,
+        customer_email
+      },
+      receipt_email: customer_email
+    });
+
+    // Update booking with payment intent
+    const updateStmt = db.prepare('UPDATE bookings SET stripe_payment_intent_id = ?, payment_method = ? WHERE id = ?');
+    updateStmt.run(paymentIntent.id, 'stripe', booking_id);
+
+    res.json({
+      success: true,
+      client_secret: paymentIntent.client_secret,
+      payment_intent_id: paymentIntent.id,
+      amount: total_price,
+      currency: 'EUR'
+    });
+  } catch (error) {
+    console.error('Error creating payment intent:', error);
+    res.status(500).json({ error: 'Failed to create payment intent' });
+  }
+});
+
+app.post('/api/payments/confirm', async (req, res) => {
+  if (!stripe) {
+    return res.status(400).json({ error: 'Payment processing not configured' });
+  }
+
+  try {
+    const { payment_intent_id, booking_id } = req.body;
+
+    if (!payment_intent_id || !booking_id) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    // Retrieve payment intent from Stripe
+    const paymentIntent = await stripe.paymentIntents.retrieve(payment_intent_id);
+
+    if (paymentIntent.status === 'succeeded') {
+      // Update booking payment status
+      const updateStmt = db.prepare('UPDATE bookings SET payment_status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?');
+      updateStmt.run('paid', booking_id);
+
+      res.json({
+        success: true,
+        message: 'Payment confirmed successfully',
+        status: 'succeeded'
+      });
+    } else if (paymentIntent.status === 'processing') {
+      res.json({
+        success: true,
+        message: 'Payment is processing',
+        status: 'processing'
+      });
+    } else {
+      res.status(400).json({
+        error: 'Payment not completed',
+        status: paymentIntent.status
+      });
+    }
+  } catch (error) {
+    console.error('Error confirming payment:', error);
+    res.status(500).json({ error: 'Failed to confirm payment' });
+  }
+});
+
+app.get('/api/payments/status/:payment_intent_id', async (req, res) => {
+  if (!stripe) {
+    return res.status(400).json({ error: 'Payment processing not configured' });
+  }
+
+  try {
+    const { payment_intent_id } = req.params;
+
+    const paymentIntent = await stripe.paymentIntents.retrieve(payment_intent_id);
+
+    res.json({
+      payment_intent_id: paymentIntent.id,
+      status: paymentIntent.status,
+      amount: paymentIntent.amount / 100,
+      currency: paymentIntent.currency.toUpperCase(),
+      created: new Date(paymentIntent.created * 1000).toISOString(),
+      customer_email: paymentIntent.receipt_email
+    });
+  } catch (error) {
+    console.error('Error fetching payment status:', error);
+    res.status(500).json({ error: 'Failed to fetch payment status' });
+  }
+});
 
 // API Endpoints
 

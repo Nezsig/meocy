@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Integration Guide — MEOCY Studio</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230a0a0a'/%3E%3Crect x='30' y='30' width='40' height='40' rx='10' fill='%237acc00'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .payment-container {
+            max-width: 1200px;
+            margin: 80px auto 40px;
+            padding: 0 20px;
+        }
+
+        .payment-header {
+            margin-bottom: 50px;
+        }
+
+        .payment-header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .payment-section {
+            margin-bottom: 50px;
+        }
+
+        .payment-section h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .payment-subsection {
+            margin-bottom: 30px;
+        }
+
+        .payment-subsection h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent);
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.05);
+            border-left: 3px solid var(--accent);
+            padding: 16px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 12px 0;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .info-box {
+            background: rgba(33, 150, 243, 0.1);
+            border-left: 4px solid #1976d2;
+            padding: 16px;
+            border-radius: 6px;
+            margin: 16px 0;
+        }
+
+        .success-box {
+            background: rgba(76, 175, 80, 0.1);
+            border-left: 4px solid #2e7d32;
+            padding: 16px;
+            border-radius: 6px;
+            margin: 16px 0;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .payment-flow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .flow-step {
+            background: rgba(0, 0, 0, 0.02);
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .flow-step-number {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 40px;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .payment-container {
+                margin-top: 60px;
+            }
+
+            .payment-header h1 {
+                font-size: 28px;
+            }
+
+            .payment-section h2 {
+                font-size: 20px;
+            }
+
+            .code-block {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-left"><a href="index.html" class="nav-logo"><img src="assets/meocy-wordmark-black.png" alt="MEOCY"><span class="nav-logo-sub">Studio</span></a></div>
+        <div class="nav-right">
+            <ul class="nav-links">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#packages">Packages</a></li>
+                <li><a href="index.html#booking">Booking</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="payment-container">
+        <a href="index.html" class="back-link">← Back to Home</a>
+
+        <div class="payment-header">
+            <h1>Payment Integration Guide</h1>
+            <p>Setup guide for integrating Stripe payment processing with MEOCY Studio booking system.</p>
+        </div>
+
+        <!-- Setup Section -->
+        <div class="payment-section">
+            <h2>Setup Instructions</h2>
+
+            <div class="payment-subsection">
+                <h3>1. Create a Stripe Account</h3>
+                <ol style="margin: 12px 0; padding-left: 20px; line-height: 1.8;">
+                    <li>Go to <a href="https://stripe.com" target="_blank">stripe.com</a> and sign up</li>
+                    <li>Verify your email address</li>
+                    <li>Complete your account details</li>
+                    <li>Get your API keys from <a href="https://dashboard.stripe.com/apikeys" target="_blank">Dashboard → API Keys</a></li>
+                </ol>
+            </div>
+
+            <div class="payment-subsection">
+                <h3>2. Configure Environment Variables</h3>
+                <p>Create a <code>.env</code> file in the project root:</p>
+                <div class="code-block">
+STRIPE_SECRET_KEY=sk_test_your_secret_key_here
+STRIPE_PUBLISHABLE_KEY=pk_test_your_publishable_key_here
+PORT=3000
+NODE_ENV=development
+                </div>
+                <div class="info-box">
+                    <strong>Important:</strong> Never commit the .env file to version control. Use .env.example as a template for users.
+                </div>
+            </div>
+
+            <div class="payment-subsection">
+                <h3>3. Install Dependencies</h3>
+                <div class="code-block">
+npm install
+                </div>
+            </div>
+
+            <div class="payment-subsection">
+                <h3>4. Start the Server</h3>
+                <div class="code-block">
+npm start
+                </div>
+                <p>The server will start on port 3000 (or your configured PORT).</p>
+            </div>
+        </div>
+
+        <!-- Payment Flow -->
+        <div class="payment-section">
+            <h2>Payment Flow</h2>
+
+            <p>Here's how the payment system works:</p>
+
+            <div class="payment-flow">
+                <div class="flow-step">
+                    <div class="flow-step-number">1</div>
+                    <strong>Booking Created</strong>
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-top: 8px;">Customer creates booking with form</p>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-step-number">2</div>
+                    <strong>Payment Intent</strong>
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-top: 8px;">Booking ID sent to Stripe</p>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-step-number">3</div>
+                    <strong>Payment Processing</strong>
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-top: 8px;">Stripe collects payment info</p>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-step-number">4</div>
+                    <strong>Confirmation</strong>
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-top: 8px;">Payment confirmed and tracked</p>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <strong>Payment Status:</strong> Once payment is confirmed, the booking status changes to "paid" and payment history is recorded.
+            </div>
+        </div>
+
+        <!-- Payment Endpoints -->
+        <div class="payment-section">
+            <h2>Payment API Endpoints</h2>
+
+            <div class="payment-subsection">
+                <h3>Create Payment Intent</h3>
+                <p><strong>POST</strong> /api/payments/create-intent</p>
+                <div class="code-block">
+{
+  "booking_id": "550e8400-e29b-41d4-a716-446655440000",
+  "total_price": 500,
+  "customer_email": "john@example.com",
+  "customer_name": "John Doe"
+}
+                </div>
+
+                <strong>Response:</strong>
+                <div class="code-block" style="background: rgba(76, 175, 80, 0.05); border-left-color: #2e7d32;">
+{
+  "success": true,
+  "client_secret": "pi_..._secret_...",
+  "payment_intent_id": "pi_...",
+  "amount": 500,
+  "currency": "EUR"
+}
+                </div>
+            </div>
+
+            <div class="payment-subsection">
+                <h3>Confirm Payment</h3>
+                <p><strong>POST</strong> /api/payments/confirm</p>
+                <div class="code-block">
+{
+  "payment_intent_id": "pi_...",
+  "booking_id": "550e8400-e29b-41d4-a716-446655440000"
+}
+                </div>
+
+                <strong>Response:</strong>
+                <div class="code-block" style="background: rgba(76, 175, 80, 0.05); border-left-color: #2e7d32;">
+{
+  "success": true,
+  "message": "Payment confirmed successfully",
+  "status": "succeeded"
+}
+                </div>
+            </div>
+
+            <div class="payment-subsection">
+                <h3>Get Payment Status</h3>
+                <p><strong>GET</strong> /api/payments/status/:payment_intent_id</p>
+                <div class="code-block">
+GET /api/payments/status/pi_1234567890
+                </div>
+
+                <strong>Response:</strong>
+                <div class="code-block" style="background: rgba(76, 175, 80, 0.05); border-left-color: #2e7d32;">
+{
+  "payment_intent_id": "pi_...",
+  "status": "succeeded",
+  "amount": 500,
+  "currency": "EUR",
+  "created": "2026-09-02T05:00:00.000Z",
+  "customer_email": "john@example.com"
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Withholding with Stripe -->
+        <div class="payment-section">
+            <h2>Payment Withholding + Stripe</h2>
+
+            <p>The booking system combines payment withholding with Stripe processing:</p>
+
+            <div class="payment-subsection">
+                <h3>Payment Structure</h3>
+                <table style="width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px;">
+                    <tr style="background: rgba(0, 0, 0, 0.05);">
+                        <th style="padding: 12px; text-align: left; font-weight: 700; border-bottom: 2px solid var(--border);">Phase</th>
+                        <th style="padding: 12px; text-align: left; font-weight: 700; border-bottom: 2px solid var(--border);">Amount</th>
+                        <th style="padding: 12px; text-align: left; font-weight: 700; border-bottom: 2px solid var(--border);">Status</th>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <td style="padding: 12px;">First Day Booking</td>
+                        <td style="padding: 12px;">25%</td>
+                        <td style="padding: 12px;">Charged immediately via Stripe</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <td style="padding: 12px;">Remaining Days</td>
+                        <td style="padding: 12px;">50%</td>
+                        <td style="padding: 12px;">Held by Stripe (reserved)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px;">After Completion</td>
+                        <td style="padding: 12px;">25%</td>
+                        <td style="padding: 12px;">Released after shoot completion</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="info-box">
+                <strong>Cancellation:</strong> If a customer cancels within 24 hours, Stripe automatically refunds the charged amount (25%) to their card.
+            </div>
+        </div>
+
+        <!-- Testing -->
+        <div class="payment-section">
+            <h2>Testing with Stripe Test Mode</h2>
+
+            <div class="payment-subsection">
+                <h3>Test Card Numbers</h3>
+                <p>Use these card numbers for testing (with any future expiry and 3-digit CVC):</p>
+                <ul class="feature-list">
+                    <li><code>4242 4242 4242 4242</code> - Successful payment</li>
+                    <li><code>4000 0000 0000 0002</code> - Card declined</li>
+                    <li><code>4000 0025 0000 3155</code> - Requires authentication (3D Secure)</li>
+                </ul>
+            </div>
+
+            <div class="payment-subsection">
+                <h3>Testing Flow</h3>
+                <ol style="margin: 12px 0; padding-left: 20px; line-height: 1.8;">
+                    <li>Create a booking using the form</li>
+                    <li>Click "Pay Now" button</li>
+                    <li>Enter a test card number above</li>
+                    <li>Use any future date for expiry (e.g., 12/25)</li>
+                    <li>Use any 3-digit number for CVC</li>
+                    <li>Check the dashboard to see payment status</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Security -->
+        <div class="payment-section">
+            <h2>Security Best Practices</h2>
+
+            <ul class="feature-list">
+                <li>Never expose your Stripe Secret Key in frontend code</li>
+                <li>Always use HTTPS in production</li>
+                <li>Keep your .env file out of version control</li>
+                <li>Validate all payment requests server-side</li>
+                <li>Use Stripe's built-in fraud detection</li>
+                <li>Enable webhooks to track payment status changes</li>
+                <li>Store payment IDs for audit trails</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>PCI Compliance:</strong> Using Stripe means your application never directly handles credit card data, keeping you PCI DSS compliant.
+            </div>
+        </div>
+
+        <!-- Support -->
+        <div class="payment-section">
+            <h2>Support & Resources</h2>
+
+            <div class="payment-subsection">
+                <h3>Stripe Resources</h3>
+                <ul class="feature-list">
+                    <li><a href="https://stripe.com/docs" target="_blank">Stripe Documentation</a></li>
+                    <li><a href="https://dashboard.stripe.com/test/apikeys" target="_blank">Stripe Test API Keys</a></li>
+                    <li><a href="https://stripe.com/docs/payments/accept-a-payment" target="_blank">Accept a Payment Guide</a></li>
+                </ul>
+            </div>
+
+            <div class="payment-subsection">
+                <h3>MEOCY Support</h3>
+                <p>For technical questions or integration help:</p>
+                <ul class="feature-list">
+                    <li>Email: <a href="mailto:hello@meocy.com">hello@meocy.com</a></li>
+                    <li>Phone: <a href="tel:+39379105100">+39 379 105 1000</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -40,12 +40,26 @@ Example for €100 booking:
 ### Requirements
 - Node.js 16+
 - npm
+- Stripe account (for payment processing)
 
 ### Installation
 
 ```bash
 npm install
 ```
+
+### Configuration
+
+Create a `.env` file in the project root:
+
+```env
+STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key
+STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_publishable_key
+PORT=3000
+NODE_ENV=development
+```
+
+Get your Stripe keys from: https://dashboard.stripe.com/apikeys
 
 ### Running
 
@@ -61,7 +75,33 @@ npm start
 
 The server will start on port 3000 (or PORT environment variable).
 
+### Environment Variables
+
+- `STRIPE_SECRET_KEY` - Stripe Secret API Key (for server-side payment processing)
+- `STRIPE_PUBLISHABLE_KEY` - Stripe Publishable API Key (for client-side)
+- `PORT` - Server port (default: 3000)
+- `NODE_ENV` - Environment (development/production)
+
 ## API Endpoints
+
+### Payment Endpoints (Stripe Integration)
+
+**Create Payment Intent**
+```
+POST /api/payments/create-intent
+```
+
+**Confirm Payment**
+```
+POST /api/payments/confirm
+```
+
+**Get Payment Status**
+```
+GET /api/payments/status/:payment_intent_id
+```
+
+### Booking Endpoints
 
 ### Create Booking
 ```
@@ -217,11 +257,39 @@ Optional configuration:
 - Database queries use parameterized statements (SQLite prepared statements)
 - CORS enabled for development
 
+## Payment System (Stripe Integration)
+
+### Features
+
+- **Secure Payment Processing** - PCI-DSS compliant via Stripe
+- **Payment Withholding** - Automatic calculation of 25%/50%/25% phases
+- **Real-time Status Tracking** - Monitor payment status in dashboard
+- **Automatic Refunds** - Immediate refunds for cancellations within 24-hour window
+- **Test Mode Support** - Test payments without charging real cards
+
+### How It Works
+
+1. Customer creates booking with form
+2. System generates Stripe Payment Intent
+3. Customer enters payment information securely via Stripe
+4. Payment is processed and tracked in database
+5. 25% is immediately charged, 50% is held, 25% released after completion
+6. Cancellation within 24 hours automatically refunds charged amount
+
+### Test Mode
+
+Use test card numbers for development:
+- `4242 4242 4242 4242` - Successful payment
+- `4000 0000 0000 0002` - Card declined
+
+See `/payment-guide.html` for complete setup instructions.
+
 ## Future Enhancements
 
 - Email notifications for bookings
-- Payment gateway integration (Stripe, PayPal)
 - Admin dashboard for managing bookings
 - Automatic status updates
 - SMS notifications
 - Google Calendar integration
+- PayPal integration alongside Stripe
+- Webhook support for real-time payment updates
