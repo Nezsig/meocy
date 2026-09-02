@@ -133,7 +133,7 @@ app.post('/api/send-email', async (req, res) => {
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     const result = await resend.emails.send({
-      from: 'noreply@meocy.com',
+      from: 'onboarding@resend.dev',
       to: email,
       subject: 'MEOCY - Booking Request Received ✓',
       html: `
