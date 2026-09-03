@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { createClient } from '@supabase/supabase-js';
+import { Resend } from 'resend';
 
 const app = express();
 
@@ -19,6 +20,9 @@ const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_ANON_KEY
 );
+
+// ============ RESEND EMAIL CLIENT ============
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // ============ HEALTH CHECK ============
 app.get('/health', (req, res) => {
@@ -114,12 +118,12 @@ app.post('/api/bookings', async (req, res) => {
       name,
       email,
       phone,
-      package_type,
-      shoot_type,
+      package,
+      shootType,
       location,
-      preferred_date,
-      preferred_time,
-      special_requests,
+      preferredDate,
+      preferredTime,
+      specialRequests,
     } = req.body;
 
     // Validate required fields
@@ -138,12 +142,12 @@ app.post('/api/bookings', async (req, res) => {
           name,
           email,
           phone,
-          package_type,
-          shoot_type,
-          location,
-          preferred_date,
-          preferred_time,
-          special_requests,
+          package_type: package,
+          shoot_type: shootType,
+          location: location || 'Studio',
+          preferred_date: preferredDate,
+          preferred_time: preferredTime,
+          special_requests: specialRequests,
           status: 'pending',
         },
       ])
@@ -151,10 +155,67 @@ app.post('/api/bookings', async (req, res) => {
 
     if (error) throw error;
 
+    const booking = data[0];
+
+    // Send booking inquiry email to MEOCY
+    if (process.env.RESEND_API_KEY) {
+      try {
+        await resend.emails.send({
+          from: 'MEOCY Bookings <onboarding@resend.dev>',
+          to: 'hello@meocy.com',
+          subject: `New Booking Inquiry from ${name}`,
+          html: `
+            <h2>New Booking Inquiry</h2>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Phone:</strong> ${phone}</p>
+            <p><strong>Package:</strong> ${package}</p>
+            <p><strong>Shoot Type:</strong> ${shootType}</p>
+            <p><strong>Location:</strong> ${location || 'Studio'}</p>
+            <p><strong>Preferred Date:</strong> ${preferredDate}</p>
+            <p><strong>Preferred Time:</strong> ${preferredTime}</p>
+            <p><strong>Special Requests:</strong> ${specialRequests || 'None'}</p>
+            <p><a href="https://meocy-production.up.railway.app/admin">View in Admin Dashboard</a></p>
+          `
+        });
+        console.log('✅ Booking inquiry email sent to hello@meocy.com');
+      } catch (emailError) {
+        console.error('⚠️ Failed to send email:', emailError);
+        // Don't fail the booking if email fails
+      }
+    }
+
+    // Send confirmation email to customer
+    if (process.env.RESEND_API_KEY) {
+      try {
+        await resend.emails.send({
+          from: 'MEOCY Studio <onboarding@resend.dev>',
+          to: email,
+          subject: 'Your MEOCY Booking Request Received',
+          html: `
+            <h2>Thanks for your booking inquiry, ${name}!</h2>
+            <p>We've received your request for a ${package} package shoot.</p>
+            <p><strong>Details:</strong></p>
+            <ul>
+              <li>Date: ${preferredDate}</li>
+              <li>Time: ${preferredTime}</li>
+              <li>Location: ${location || 'Studio'}</li>
+            </ul>
+            <p>We'll confirm your booking within 24 hours. If you have questions, reply to this email.</p>
+            <p>Best regards,<br/>MEOCY Studio<br/>Milan, Italy</p>
+          `
+        });
+        console.log('✅ Confirmation email sent to customer');
+      } catch (emailError) {
+        console.error('⚠️ Failed to send confirmation email:', emailError);
+        // Don't fail the booking if email fails
+      }
+    }
+
     res.status(201).json({
       success: true,
-      message: 'Booking saved successfully! We will contact you shortly.',
-      data: data[0],
+      message: 'Booking request submitted! Check your email for confirmation. We\'ll contact you within 24 hours.',
+      data: booking,
     });
   } catch (error) {
     console.error('Error creating booking:', error);
