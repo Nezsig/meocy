@@ -160,7 +160,7 @@ app.post('/api/bookings', async (req, res) => {
     // Send booking inquiry email to MEOCY
     if (process.env.RESEND_API_KEY) {
       try {
-        await resend.emails.send({
+        const inquiryResponse = await resend.emails.send({
           from: 'MEOCY Bookings <onboarding@resend.dev>',
           to: 'hello@meocy.com',
           subject: `New Booking Inquiry from ${name}`,
@@ -178,17 +178,22 @@ app.post('/api/bookings', async (req, res) => {
             <p><a href="https://meocy-production.up.railway.app/admin">View in Admin Dashboard</a></p>
           `
         });
-        console.log('✅ Booking inquiry email sent to hello@meocy.com');
+        console.log('✅ Booking inquiry email sent:', inquiryResponse);
       } catch (emailError) {
-        console.error('⚠️ Failed to send email:', emailError);
-        // Don't fail the booking if email fails
+        console.error('❌ Failed to send inquiry email - Details:', {
+          message: emailError.message,
+          error: emailError,
+          resendApiKeySet: !!process.env.RESEND_API_KEY
+        });
       }
+    } else {
+      console.warn('⚠️ RESEND_API_KEY not set - emails disabled');
     }
 
     // Send confirmation email to customer
     if (process.env.RESEND_API_KEY) {
       try {
-        await resend.emails.send({
+        const confirmResponse = await resend.emails.send({
           from: 'MEOCY Studio <onboarding@resend.dev>',
           to: email,
           subject: 'Your MEOCY Booking Request Received',
@@ -205,10 +210,13 @@ app.post('/api/bookings', async (req, res) => {
             <p>Best regards,<br/>MEOCY Studio<br/>Milan, Italy</p>
           `
         });
-        console.log('✅ Confirmation email sent to customer');
+        console.log('✅ Confirmation email sent to customer:', confirmResponse);
       } catch (emailError) {
-        console.error('⚠️ Failed to send confirmation email:', emailError);
-        // Don't fail the booking if email fails
+        console.error('❌ Failed to send confirmation email - Details:', {
+          message: emailError.message,
+          error: emailError,
+          recipientEmail: email
+        });
       }
     }
 
