@@ -162,7 +162,7 @@ app.post('/api/bookings', async (req, res) => {
       try {
         const inquiryResponse = await resend.emails.send({
           from: 'MEOCY Bookings <onboarding@resend.dev>',
-          to: 'hello@meocy.com',
+          to: 'meocystudio@gmail.com',
           subject: `New Booking Inquiry from ${name}`,
           html: `
             <h2>New Booking Inquiry</h2>
@@ -178,7 +178,7 @@ app.post('/api/bookings', async (req, res) => {
             <p><a href="https://meocy-production.up.railway.app/admin">View in Admin Dashboard</a></p>
           `
         });
-        console.log('✅ Booking inquiry email sent:', inquiryResponse);
+        console.log('✅ Booking inquiry email sent to meocystudio@gmail.com:', inquiryResponse);
       } catch (emailError) {
         console.error('❌ Failed to send inquiry email - Details:', {
           message: emailError.message,
