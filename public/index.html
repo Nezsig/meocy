@@ -1320,25 +1320,10 @@
                     return;
                 }
 
-                // Send confirmation email to customer (best-effort, booking is already saved)
-                fetch(`${API_URL}/api/send-email`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        email: data.Email,
-                        name: data.Name,
-                        package_name: data.Package,
-                        date: data['Preferred Date'],
-                        phone: data.Phone,
-                        notes: `Shoot Type: ${data['Shoot Type']}\nLocation: ${data.Location || 'Studio'}\nTime: ${data['Preferred Time'] || 'Not specified'}\nRequests: ${data['Special Requests'] || 'None'}`
-                    })
-                })
-                .catch(error => console.error('Error sending confirmation email:', error))
-                .finally(() => {
-                    alert(`✅ Booking request sent!\n\nConfirmation email sent to: ${data.Email}\n\nWe'll confirm your booking within 24 hours.\n\nDate: ${data['Preferred Date']}\nContact: ${data.Phone}`);
-                    event.target.reset();
-                    document.getElementById('dateTriggerText').classList.add('date-picker-placeholder');
-                });
+                // Success! Emails are sent by backend
+                alert(`✅ Booking request sent!\n\nConfirmation email sent to: ${data.Email}\n\nWe'll confirm your booking within 24 hours.\n\nDate: ${data['Preferred Date']}\nContact: ${data.Phone}`);
+                event.target.reset();
+                document.getElementById('dateTriggerText').classList.add('date-picker-placeholder');
             })
             .catch(error => {
                 console.error('Error creating booking:', error);
