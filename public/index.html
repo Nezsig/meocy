@@ -1295,49 +1295,55 @@
                 return;
             }
 
-            // Check if date is booked on backend
-            fetch(`${API_URL}/api/check-date/${data['Preferred Date']}`)
-                .then(res => res.json())
-                .then(result => {
-                    if (result.is_booked) {
-                        alert('Sorry, this date is already booked. Please select another date.');
-                        return;
-                    }
-
-                    // Send confirmation email to customer
-                    fetch(`${API_URL}/api/send-email`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            email: data.Email,
-                            name: data.Name,
-                            package_name: data.Package,
-                            date: data['Preferred Date'],
-                            phone: data.Phone,
-                            notes: `Shoot Type: ${data['Shoot Type']}\nLocation: ${data.Location || 'Studio'}\nTime: ${data['Preferred Time'] || 'Not specified'}\nRequests: ${data['Special Requests'] || 'None'}`
-                        })
-                    })
-                    .then(res => res.json())
-                    .then(result => {
-                        if (result.success) {
-                            // Show success message
-                            alert(`✅ Booking request sent!\n\nConfirmation email sent to: ${data.Email}\n\nWe'll confirm your booking within 24 hours.\n\nDate: ${data['Preferred Date']}\nContact: ${data.Phone}`);
-                            event.target.reset();
-                            document.getElementById('dateTriggerText').classList.add('date-picker-placeholder');
-                        } else {
-                            alert('Booking saved but email could not be sent. We will contact you at ' + data.Phone);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error sending email:', error);
-                        alert('✅ Booking request received!\n\nWe will contact you at ' + data.Phone);
-                        event.target.reset();
-                    });
+            // Create the order + book the date on the backend
+            fetch(`${API_URL}/api/bookings`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: data.Name,
+                    email: data.Email,
+                    phone: data.Phone,
+                    package: data.Package,
+                    shootType: data['Shoot Type'],
+                    location: data.Location || 'Studio',
+                    preferredDate: data['Preferred Date'],
+                    preferredTime: data['Preferred Time'],
+                    specialRequests: data['Special Requests']
                 })
-                .catch(error => {
-                    console.error('Error checking date:', error);
-                    alert('Error checking date availability. Please try again.');
+            })
+            .then(res => res.json().then(body => ({ ok: res.ok, body })))
+            .then(({ ok, body }) => {
+                if (!ok) {
+                    alert(body.error === 'This date is already booked'
+                        ? 'Sorry, this date is already booked. Please select another date.'
+                        : (body.error || 'Something went wrong. Please try again.'));
+                    return;
+                }
+
+                // Send confirmation email to customer (best-effort, booking is already saved)
+                fetch(`${API_URL}/api/send-email`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: data.Email,
+                        name: data.Name,
+                        package_name: data.Package,
+                        date: data['Preferred Date'],
+                        phone: data.Phone,
+                        notes: `Shoot Type: ${data['Shoot Type']}\nLocation: ${data.Location || 'Studio'}\nTime: ${data['Preferred Time'] || 'Not specified'}\nRequests: ${data['Special Requests'] || 'None'}`
+                    })
+                })
+                .catch(error => console.error('Error sending confirmation email:', error))
+                .finally(() => {
+                    alert(`✅ Booking request sent!\n\nConfirmation email sent to: ${data.Email}\n\nWe'll confirm your booking within 24 hours.\n\nDate: ${data['Preferred Date']}\nContact: ${data.Phone}`);
+                    event.target.reset();
+                    document.getElementById('dateTriggerText').classList.add('date-picker-placeholder');
                 });
+            })
+            .catch(error => {
+                console.error('Error creating booking:', error);
+                alert('Error submitting booking. Please try again.');
+            });
         }
 
         // Custom date picker
