@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { createClient } from '@supabase/supabase-js';
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
 const app = express();
 
@@ -21,8 +21,14 @@ const supabase = createClient(
   process.env.SUPABASE_ANON_KEY
 );
 
-// ============ RESEND EMAIL CLIENT ============
-const resend = new Resend(process.env.RESEND_API_KEY);
+// ============ GMAIL SMTP TRANSPORTER ============
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASSWORD
+  }
+});
 
 // ============ HEALTH CHECK ============
 app.get('/health', (req, res) => {
@@ -158,10 +164,10 @@ app.post('/api/bookings', async (req, res) => {
     const booking = data[0];
 
     // Send booking inquiry email to MEOCY
-    if (process.env.RESEND_API_KEY) {
+    if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
       try {
-        const inquiryResponse = await resend.emails.send({
-          from: 'MEOCY Bookings <onboarding@resend.dev>',
+        await transporter.sendMail({
+          from: process.env.GMAIL_USER,
           to: 'meocystudio@gmail.com',
           subject: `New Booking Inquiry from ${name}`,
           html: `
@@ -175,26 +181,23 @@ app.post('/api/bookings', async (req, res) => {
             <p><strong>Preferred Date:</strong> ${preferredDate}</p>
             <p><strong>Preferred Time:</strong> ${preferredTime}</p>
             <p><strong>Special Requests:</strong> ${specialRequests || 'None'}</p>
-            <p><a href="https://meocy-production.up.railway.app/admin">View in Admin Dashboard</a></p>
+            <hr/>
+            <p><small>Booking ID: ${booking.id}</small></p>
           `
         });
-        console.log('✅ Booking inquiry email sent to meocystudio@gmail.com:', inquiryResponse);
+        console.log('✅ Booking inquiry email sent to meocystudio@gmail.com');
       } catch (emailError) {
-        console.error('❌ Failed to send inquiry email - Details:', {
-          message: emailError.message,
-          error: emailError,
-          resendApiKeySet: !!process.env.RESEND_API_KEY
-        });
+        console.error('❌ Failed to send inquiry email:', emailError.message);
       }
     } else {
-      console.warn('⚠️ RESEND_API_KEY not set - emails disabled');
+      console.warn('⚠️ Gmail credentials not set (GMAIL_USER, GMAIL_APP_PASSWORD)');
     }
 
     // Send confirmation email to customer
-    if (process.env.RESEND_API_KEY) {
+    if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
       try {
-        const confirmResponse = await resend.emails.send({
-          from: 'MEOCY Studio <onboarding@resend.dev>',
+        await transporter.sendMail({
+          from: process.env.GMAIL_USER,
           to: email,
           subject: 'Your MEOCY Booking Request Received',
           html: `
@@ -210,13 +213,9 @@ app.post('/api/bookings', async (req, res) => {
             <p>Best regards,<br/>MEOCY Studio<br/>Milan, Italy</p>
           `
         });
-        console.log('✅ Confirmation email sent to customer:', confirmResponse);
+        console.log('✅ Confirmation email sent to customer:', email);
       } catch (emailError) {
-        console.error('❌ Failed to send confirmation email - Details:', {
-          message: emailError.message,
-          error: emailError,
-          recipientEmail: email
-        });
+        console.error('❌ Failed to send confirmation email to', email, ':', emailError.message);
       }
     }
 
