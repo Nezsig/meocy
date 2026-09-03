@@ -118,7 +118,7 @@ app.post('/api/bookings', async (req, res) => {
       name,
       email,
       phone,
-      package,
+      package: packageType,
       shootType,
       location,
       preferredDate,
@@ -142,7 +142,7 @@ app.post('/api/bookings', async (req, res) => {
           name,
           email,
           phone,
-          package_type: package,
+          package_type: packageType,
           shoot_type: shootType,
           location: location || 'Studio',
           preferred_date: preferredDate,
@@ -169,7 +169,7 @@ app.post('/api/bookings', async (req, res) => {
             <p><strong>Name:</strong> ${name}</p>
             <p><strong>Email:</strong> ${email}</p>
             <p><strong>Phone:</strong> ${phone}</p>
-            <p><strong>Package:</strong> ${package}</p>
+            <p><strong>Package:</strong> ${packageType}</p>
             <p><strong>Shoot Type:</strong> ${shootType}</p>
             <p><strong>Location:</strong> ${location || 'Studio'}</p>
             <p><strong>Preferred Date:</strong> ${preferredDate}</p>
@@ -194,7 +194,7 @@ app.post('/api/bookings', async (req, res) => {
           subject: 'Your MEOCY Booking Request Received',
           html: `
             <h2>Thanks for your booking inquiry, ${name}!</h2>
-            <p>We've received your request for a ${package} package shoot.</p>
+            <p>We've received your request for a ${packageType} package shoot.</p>
             <p><strong>Details:</strong></p>
             <ul>
               <li>Date: ${preferredDate}</li>
