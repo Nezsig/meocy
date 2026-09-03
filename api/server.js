@@ -1,18 +1,31 @@
 import express from 'express';
 import cors from 'cors';
 import { createClient } from '@supabase/supabase-js';
+import { Resend } from 'resend';
 
 const app = express();
 
 // ============ MIDDLEWARE ============
+const allowedOrigins = [
+  'https://www.meocy.com',
+  'https://meocy.com',
+  'https://www.meocy.vercel.app',
+  process.env.FRONTEND_URL || 'http://localhost:3000'
+];
+
 app.use(cors({
-  origin: '*',
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: false
 }));
 app.use(express.json());
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
-app.use(express.static('public'));
 
 // ============ SUPABASE CLIENT ============
 const supabase = createClient(
@@ -20,9 +33,62 @@ const supabase = createClient(
   process.env.SUPABASE_ANON_KEY
 );
 
+// ============ RESEND EMAIL CLIENT ============
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 // ============ HEALTH CHECK ============
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+// ============ STATUS ENDPOINT ============
+app.get('/api/status', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+// ============ EMAIL TEMPLATES ============
+const getBookingConfirmationEmail = (booking) => ({
+  subject: `Booking Confirmation - MEOCY Photography Studio`,
+  html: `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <h2>Thank you for your booking request!</h2>
+      <p>Dear ${booking.name},</p>
+      <p>We have received your booking request and will contact you shortly to confirm the details.</p>
+      <div style="background-color: #f5f5f5; padding: 20px; margin: 20px 0; border-radius: 8px;">
+        <h3>Your Booking Details:</h3>
+        <p><strong>Package:</strong> ${booking.package_type || 'N/A'}</p>
+        <p><strong>Shoot Type:</strong> ${booking.shoot_type || 'N/A'}</p>
+        <p><strong>Location:</strong> ${booking.location || 'N/A'}</p>
+        <p><strong>Preferred Date:</strong> ${booking.preferred_date || 'N/A'}</p>
+        <p><strong>Preferred Time:</strong> ${booking.preferred_time || 'N/A'}</p>
+        <p><strong>Special Requests:</strong> ${booking.special_requests || 'None'}</p>
+      </div>
+      <p>We look forward to working with you!</p>
+      <p>Best regards,<br>MEOCY Photography Studio</p>
+      <p style="font-size: 12px; color: #999; margin-top: 30px;">
+        <a href="https://www.meocy.com" style="color: #999; text-decoration: none;">www.meocy.com</a>
+      </p>
+    </div>
+  `
+});
+
+const getAdminNotificationEmail = (booking) => ({
+  subject: `New Booking Request - ${booking.name}`,
+  html: `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <h2>New Booking Request</h2>
+      <p><strong>Name:</strong> ${booking.name}</p>
+      <p><strong>Email:</strong> ${booking.email}</p>
+      <p><strong>Phone:</strong> ${booking.phone}</p>
+      <p><strong>Package:</strong> ${booking.package_type || 'N/A'}</p>
+      <p><strong>Shoot Type:</strong> ${booking.shoot_type || 'N/A'}</p>
+      <p><strong>Location:</strong> ${booking.location || 'N/A'}</p>
+      <p><strong>Preferred Date:</strong> ${booking.preferred_date || 'N/A'}</p>
+      <p><strong>Preferred Time:</strong> ${booking.preferred_time || 'N/A'}</p>
+      <p><strong>Special Requests:</strong> ${booking.special_requests || 'None'}</p>
+      <p><strong>Booking ID:</strong> ${booking.id}</p>
+    </div>
+  `
 });
 
 // ============ BOOKINGS ENDPOINTS ============
@@ -151,10 +217,36 @@ app.post('/api/bookings', async (req, res) => {
 
     if (error) throw error;
 
+    const booking = data[0];
+
+    // Send confirmation email to user
+    try {
+      const confirmationEmail = getBookingConfirmationEmail(booking);
+      await resend.emails.send({
+        from: 'MEOCY Studio <noreply@meocy.com>',
+        to: email,
+        ...confirmationEmail,
+      });
+    } catch (emailError) {
+      console.error('Error sending confirmation email:', emailError);
+    }
+
+    // Send admin notification
+    try {
+      const adminEmail = getAdminNotificationEmail(booking);
+      await resend.emails.send({
+        from: 'MEOCY Studio <noreply@meocy.com>',
+        to: process.env.ADMIN_EMAIL || 'hello@meocy.com',
+        ...adminEmail,
+      });
+    } catch (emailError) {
+      console.error('Error sending admin email:', emailError);
+    }
+
     res.status(201).json({
       success: true,
       message: 'Booking saved successfully! We will contact you shortly.',
-      data: data[0],
+      data: booking,
     });
   } catch (error) {
     console.error('Error creating booking:', error);

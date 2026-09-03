@@ -1,0 +1,65 @@
+{
+  "nav": {
+    "home": "Home",
+    "work": "Work",
+    "packages": "Packages",
+    "faq": "FAQ",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "MEOCY Photography Studio",
+    "subtitle": "Professional Photography for Your Vision",
+    "cta": "Book a Session"
+  },
+  "about": {
+    "title": "About MEOCY",
+    "description": "We are a professional photography studio based in Milan, Italy, specializing in product, fashion, restaurant, and model photography. With years of experience and state-of-the-art equipment, we transform your vision into stunning visual stories."
+  },
+  "services": {
+    "title": "Our Services",
+    "product": "Product Photography",
+    "fashion": "Fashion Photography",
+    "restaurant": "Restaurant Photography",
+    "model": "Model Photography"
+  },
+  "packages": {
+    "title": "Packages & Pricing",
+    "starter": "Starter",
+    "professional": "Professional",
+    "premium": "Premium",
+    "description": "Choose the perfect package for your needs"
+  },
+  "booking": {
+    "title": "Book Your Session",
+    "name": "Full Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "package": "Select Package",
+    "shootType": "Shoot Type",
+    "location": "Location",
+    "date": "Preferred Date",
+    "time": "Preferred Time",
+    "specialRequests": "Special Requests",
+    "submit": "Submit Booking",
+    "submitting": "Submitting...",
+    "success": "Booking submitted successfully! We will contact you shortly.",
+    "error": "Failed to submit booking. Please try again."
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "q1": "What is your turnaround time?",
+    "a1": "Typically 2-3 weeks for deliverables, depending on the project scope.",
+    "q2": "Do you offer retouching services?",
+    "a2": "Yes, retouching is included in all our packages.",
+    "q3": "What is your cancellation policy?",
+    "a3": "Cancellations must be made 7 days in advance for a full refund."
+  },
+  "footer": {
+    "company": "MEOCY Photography Studio",
+    "address": "Milan, Italy",
+    "email": "hello@meocy.com",
+    "rights": "All rights reserved",
+    "privacy": "Privacy Policy",
+    "terms": "Terms & Conditions"
+  }
+}

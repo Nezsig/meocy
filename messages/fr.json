@@ -1,0 +1,65 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "work": "Portfolio",
+    "packages": "Forfaits",
+    "faq": "FAQ",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Studio Photographique MEOCY",
+    "subtitle": "Photographie Professionnelle pour Votre Vision",
+    "cta": "Réserver une Séance"
+  },
+  "about": {
+    "title": "À Propos de MEOCY",
+    "description": "Nous sommes un studio photographique professionnel basé à Milan, en Italie, spécialisé dans la photographie de produits, de mode, de restaurants et de mannequins. Avec des années d'expérience et un équipement de pointe, nous transformons votre vision en histoires visuelles étonnantes."
+  },
+  "services": {
+    "title": "Nos Services",
+    "product": "Photographie de Produits",
+    "fashion": "Photographie de Mode",
+    "restaurant": "Photographie de Restaurants",
+    "model": "Photographie de Mannequins"
+  },
+  "packages": {
+    "title": "Forfaits et Tarifs",
+    "starter": "Démarrage",
+    "professional": "Professionnel",
+    "premium": "Premium",
+    "description": "Choisissez le forfait parfait pour vos besoins"
+  },
+  "booking": {
+    "title": "Réservez Votre Séance",
+    "name": "Nom Complet",
+    "email": "Adresse E-mail",
+    "phone": "Numéro de Téléphone",
+    "package": "Sélectionner un Forfait",
+    "shootType": "Type de Séance",
+    "location": "Lieu",
+    "date": "Date Préférée",
+    "time": "Heure Préférée",
+    "specialRequests": "Demandes Spéciales",
+    "submit": "Soumettre la Réservation",
+    "submitting": "Envoi en cours...",
+    "success": "Réservation soumise avec succès! Nous vous contacterons bientôt.",
+    "error": "Erreur lors de la soumission de la réservation. Veuillez réessayer."
+  },
+  "faq": {
+    "title": "Questions Fréquemment Posées",
+    "q1": "Quel est votre délai de livraison?",
+    "a1": "Généralement 2-3 semaines pour les fichiers finaux, selon la portée du projet.",
+    "q2": "Proposez-vous des services de retouche?",
+    "a2": "Oui, la retouche est incluse dans tous nos forfaits.",
+    "q3": "Quelle est votre politique d'annulation?",
+    "a3": "Les annulations doivent être notifiées 7 jours à l'avance pour un remboursement complet."
+  },
+  "footer": {
+    "company": "Studio Photographique MEOCY",
+    "address": "Milan, Italie",
+    "email": "hello@meocy.com",
+    "rights": "Tous les droits sont réservés",
+    "privacy": "Politique de Confidentialité",
+    "terms": "Conditions d'Utilisation"
+  }
+}
