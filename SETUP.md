@@ -60,10 +60,46 @@ npx supabase db push
 
 ### 4. Set Up Resend Email Service
 
-1. Sign up at https://resend.com
-2. Create an API key in the dashboard
-3. Add your API key to `.env.local`
-4. Configure verified email domain (or use Resend's default)
+**CRITICAL: Domain Authentication (Prevents Spam Filtering)**
+
+Booking emails MUST come from a verified domain to avoid being marked as spam in Gmail/Outlook.
+
+1. **Sign up at https://resend.com**
+
+2. **Create an API key** in Resend dashboard
+
+3. **Add Domain to Resend:**
+   - Go to Resend Dashboard → Domains
+   - Click "Add New Domain"
+   - Enter: `meocy.com`
+   - Resend will provide DNS records (DKIM, SPF, DMARC)
+
+4. **Add DNS Records to Your Domain Registrar:**
+   - Copy the DKIM record from Resend
+   - Copy the SPF record from Resend
+   - Copy the DMARC record from Resend
+   - Go to your domain registrar (GoDaddy, Namecheap, etc.)
+   - Add these records to your DNS settings
+   - **Wait 10-30 minutes for DNS propagation**
+
+5. **Verify Domain in Resend:**
+   - Once DNS records are added, click "Verify" in Resend
+   - Status should change to ✅ Verified
+   - Now emails will be sent FROM your domain, not Resend's
+
+6. **Update Backend Code:**
+   - In `api/server.js`, the email sender is already set to:
+     ```javascript
+     from: 'noreply@meocy.com'  // or hello@meocy.com
+     ```
+   - This matches your verified domain
+
+7. **Add to Environment Variables:**
+   ```env
+   RESEND_API_KEY=re_xxxxxxxxxxxxx
+   ```
+
+**Without domain verification, booking emails will be spam-filtered by Gmail/Outlook.**
 
 ### 5. Run Development Servers
 
@@ -224,11 +260,62 @@ curl https://api.meocy.com/api/status
 - Verify API key permissions
 - Check Row Level Security (RLS) policies
 
-### Email Not Sending
-- Verify Resend API key
-- Check email domain is verified
-- Check admin email in environment variables
-- Review Resend dashboard for delivery status
+### Email Not Sending or Marked as Spam
+
+**Step 1: Check Resend Dashboard**
+- Go to https://resend.com → Logs
+- Look for failed or rejected emails
+- Check the error message for specific issues
+
+**Step 2: Verify Domain Authentication**
+- Domains → Check if `meocy.com` status is ✅ Verified
+- If not verified:
+  - Ensure DNS records (DKIM, SPF, DMARC) are added to registrar
+  - Wait 10-30 minutes for propagation
+  - Click "Verify" button again
+- **Without verification, emails go to spam**
+
+**Step 3: Verify Environment Variables**
+```env
+RESEND_API_KEY=re_xxxxxxxxxxxxx  # Check it's correct
+ADMIN_EMAIL=hello@meocy.com       # Check spelling
+```
+
+**Step 4: Check Email Server (api/server.js)**
+- Verify sender is set to your domain:
+  ```javascript
+  from: 'noreply@meocy.com'  // Must match verified domain
+  ```
+- If using different email, update it
+
+**Step 5: Test Email Delivery**
+```bash
+# Use Resend's test endpoint
+curl -X POST https://api.resend.com/emails \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "from": "noreply@meocy.com",
+    "to": "your-email@gmail.com",
+    "subject": "Test",
+    "html": "<p>Test email</p>"
+  }'
+```
+
+**Step 6: Check Spam Folder**
+- If email arrives but in spam:
+  - Verify domain authentication (most common issue)
+  - Mark email as "Not Spam" in Gmail/Outlook
+  - This trains their filters
+
+**Common Issues:**
+| Issue | Solution |
+|-------|----------|
+| "Domain not verified" | Add DNS records + verify in Resend |
+| Emails in spam folder | Verify domain is authenticated |
+| API key error | Check RESEND_API_KEY is correct |
+| "Invalid from address" | From address must match verified domain |
+| Slow delivery | Check Resend logs, may have rate limit |
 
 ## Security Checklist
 
