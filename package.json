@@ -2,6 +2,11 @@
   "name": "meocy-studio",
   "version": "1.0.0",
   "description": "MEOCY Photography Studio Booking System",
+  "main": "server.js",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
