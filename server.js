@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { createClient } from '@supabase/supabase-js';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 
 const app = express();
 
@@ -21,29 +21,11 @@ const supabase = createClient(
   process.env.SUPABASE_ANON_KEY
 );
 
-// ============ GMAIL SMTP TRANSPORTER ============
-console.log('🔧 STARTUP: Initializing Gmail SMTP transporter');
-console.log('🔧 STARTUP: GMAIL_USER =', process.env.GMAIL_USER ? '✓ SET' : '❌ NOT SET');
-console.log('🔧 STARTUP: GMAIL_APP_PASSWORD =', process.env.GMAIL_APP_PASSWORD ? '✓ SET (length: ' + process.env.GMAIL_APP_PASSWORD.length + ')' : '❌ NOT SET');
+// ============ RESEND EMAIL CLIENT ============
+console.log('🔧 STARTUP: Initializing Resend email client');
+console.log('🔧 STARTUP: RESEND_API_KEY =', process.env.RESEND_API_KEY ? '✓ SET' : '❌ NOT SET');
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD
-  }
-});
-
-// Test connection at startup
-console.log('🔧 STARTUP: Testing Gmail SMTP connection...');
-transporter.verify((error, success) => {
-  if (error) {
-    console.error('❌ STARTUP: Gmail SMTP verification failed:', error.message);
-    console.error('   Error code:', error.code);
-  } else {
-    console.log('✅ STARTUP: Gmail SMTP connection successful');
-  }
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // ============ HEALTH CHECK ============
 app.get('/health', (req, res) => {
@@ -197,13 +179,13 @@ app.post('/api/bookings', async (req, res) => {
     });
 
     // Send emails ASYNCHRONOUSLY in the background (don't await, don't block response)
-    console.log('📧 Starting async email sends...');
+    console.log('📧 Starting async email sends via Resend...');
 
-    // Inquiry email to MEOCY
-    if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
-      console.log('📧 Sending inquiry email from:', process.env.GMAIL_USER);
-      transporter.sendMail({
-        from: process.env.GMAIL_USER,
+    if (process.env.RESEND_API_KEY) {
+      // Inquiry email to MEOCY
+      console.log('📧 Sending inquiry email via Resend...');
+      resend.emails.send({
+        from: 'onboarding@resend.dev',
         to: 'meocystudio@gmail.com',
         subject: `New Booking Inquiry from ${name}`,
         html: `
@@ -220,23 +202,20 @@ app.post('/api/bookings', async (req, res) => {
           <hr/>
           <p><small>Booking ID: ${booking.id}</small></p>
         `
-      }).then((info) => {
-        console.log('✅ Inquiry email sent successfully. Response:', info.response);
+      }).then((res) => {
+        if (res.error) {
+          console.error('❌ Inquiry email failed:', res.error);
+        } else {
+          console.log('✅ Inquiry email sent successfully. ID:', res.data?.id);
+        }
       }).catch(err => {
-        console.error('❌ INQUIRY EMAIL FAILED');
-        console.error('   Error:', err.message);
-        console.error('   Code:', err.code);
-        console.error('   Attempted from:', process.env.GMAIL_USER);
+        console.error('❌ INQUIRY EMAIL FAILED:', err.message);
       });
-    } else {
-      console.error('❌ GMAIL CREDENTIALS MISSING: GMAIL_USER or GMAIL_APP_PASSWORD not set');
-    }
 
-    // Confirmation email to customer
-    if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
+      // Confirmation email to customer
       console.log('📧 Sending confirmation email to:', email);
-      transporter.sendMail({
-        from: process.env.GMAIL_USER,
+      resend.emails.send({
+        from: 'onboarding@resend.dev',
         to: email,
         subject: 'Your MEOCY Booking Request Received',
         html: `
@@ -251,16 +230,17 @@ app.post('/api/bookings', async (req, res) => {
           <p>We'll confirm your booking within 24 hours. If you have questions, reply to this email.</p>
           <p>Best regards,<br/>MEOCY Studio<br/>Milan, Italy</p>
         `
-      }).then((info) => {
-        console.log('✅ Confirmation email sent to:', email, 'Response:', info.response);
+      }).then((res) => {
+        if (res.error) {
+          console.error('❌ Confirmation email failed:', res.error);
+        } else {
+          console.log('✅ Confirmation email sent to:', email, 'ID:', res.data?.id);
+        }
       }).catch(err => {
-        console.error('❌ CONFIRMATION EMAIL FAILED');
-        console.error('   Error:', err.message);
-        console.error('   Code:', err.code);
-        console.error('   Recipient:', email);
+        console.error('❌ CONFIRMATION EMAIL FAILED:', err.message);
       });
     } else {
-      console.error('❌ GMAIL CREDENTIALS MISSING for confirmation email');
+      console.error('❌ RESEND_API_KEY not set - emails disabled');
     }
 
   } catch (error) {
