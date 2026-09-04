@@ -119,6 +119,8 @@ app.get('/api/bookings/:id', async (req, res) => {
 
 // Create booking
 app.post('/api/bookings', async (req, res) => {
+  console.log('📥 POST /api/bookings received');
+
   try {
     const {
       name,
@@ -132,8 +134,11 @@ app.post('/api/bookings', async (req, res) => {
       specialRequests,
     } = req.body;
 
+    console.log('📋 Booking data:', { name, email, phone, packageType, preferredDate });
+
     // Validate required fields
     if (!name || !email || !phone) {
+      console.warn('⚠️ Missing required fields');
       return res.status(400).json({
         success: false,
         error: 'Name, email, and phone are required'
@@ -141,6 +146,7 @@ app.post('/api/bookings', async (req, res) => {
     }
 
     // Insert booking into Supabase
+    console.log('💾 Inserting into Supabase...');
     const { data, error } = await supabase
       .from('bookings')
       .insert([
@@ -159,73 +165,79 @@ app.post('/api/bookings', async (req, res) => {
       ])
       .select();
 
-    if (error) throw error;
+    if (error) {
+      console.error('❌ Supabase insert failed:', error);
+      throw error;
+    }
 
     const booking = data[0];
+    console.log('✅ Booking saved to Supabase:', booking.id);
 
-    // Send booking inquiry email to MEOCY
-    if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
-      try {
-        await transporter.sendMail({
-          from: process.env.GMAIL_USER,
-          to: 'meocystudio@gmail.com',
-          subject: `New Booking Inquiry from ${name}`,
-          html: `
-            <h2>New Booking Inquiry</h2>
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Phone:</strong> ${phone}</p>
-            <p><strong>Package:</strong> ${packageType}</p>
-            <p><strong>Shoot Type:</strong> ${shootType}</p>
-            <p><strong>Location:</strong> ${location || 'Studio'}</p>
-            <p><strong>Preferred Date:</strong> ${preferredDate}</p>
-            <p><strong>Preferred Time:</strong> ${preferredTime}</p>
-            <p><strong>Special Requests:</strong> ${specialRequests || 'None'}</p>
-            <hr/>
-            <p><small>Booking ID: ${booking.id}</small></p>
-          `
-        });
-        console.log('✅ Booking inquiry email sent to meocystudio@gmail.com');
-      } catch (emailError) {
-        console.error('❌ Failed to send inquiry email:', emailError.message);
-      }
-    } else {
-      console.warn('⚠️ Gmail credentials not set (GMAIL_USER, GMAIL_APP_PASSWORD)');
-    }
-
-    // Send confirmation email to customer
-    if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
-      try {
-        await transporter.sendMail({
-          from: process.env.GMAIL_USER,
-          to: email,
-          subject: 'Your MEOCY Booking Request Received',
-          html: `
-            <h2>Thanks for your booking inquiry, ${name}!</h2>
-            <p>We've received your request for a ${packageType} package shoot.</p>
-            <p><strong>Details:</strong></p>
-            <ul>
-              <li>Date: ${preferredDate}</li>
-              <li>Time: ${preferredTime}</li>
-              <li>Location: ${location || 'Studio'}</li>
-            </ul>
-            <p>We'll confirm your booking within 24 hours. If you have questions, reply to this email.</p>
-            <p>Best regards,<br/>MEOCY Studio<br/>Milan, Italy</p>
-          `
-        });
-        console.log('✅ Confirmation email sent to customer:', email);
-      } catch (emailError) {
-        console.error('❌ Failed to send confirmation email to', email, ':', emailError.message);
-      }
-    }
-
+    // SEND RESPONSE IMMEDIATELY - don't wait for email
+    console.log('📤 Sending success response to client...');
     res.status(201).json({
       success: true,
       message: 'Booking request submitted! Check your email for confirmation. We\'ll contact you within 24 hours.',
       data: booking,
     });
+
+    // Send emails ASYNCHRONOUSLY in the background (don't await, don't block response)
+    console.log('📧 Starting async email sends...');
+
+    // Inquiry email to MEOCY
+    if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
+      transporter.sendMail({
+        from: process.env.GMAIL_USER,
+        to: 'meocystudio@gmail.com',
+        subject: `New Booking Inquiry from ${name}`,
+        html: `
+          <h2>New Booking Inquiry</h2>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Phone:</strong> ${phone}</p>
+          <p><strong>Package:</strong> ${packageType}</p>
+          <p><strong>Shoot Type:</strong> ${shootType}</p>
+          <p><strong>Location:</strong> ${location || 'Studio'}</p>
+          <p><strong>Preferred Date:</strong> ${preferredDate}</p>
+          <p><strong>Preferred Time:</strong> ${preferredTime}</p>
+          <p><strong>Special Requests:</strong> ${specialRequests || 'None'}</p>
+          <hr/>
+          <p><small>Booking ID: ${booking.id}</small></p>
+        `
+      }).then(() => {
+        console.log('✅ Inquiry email sent to meocystudio@gmail.com');
+      }).catch(err => {
+        console.error('❌ Failed to send inquiry email:', err.message);
+      });
+    }
+
+    // Confirmation email to customer
+    if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
+      transporter.sendMail({
+        from: process.env.GMAIL_USER,
+        to: email,
+        subject: 'Your MEOCY Booking Request Received',
+        html: `
+          <h2>Thanks for your booking inquiry, ${name}!</h2>
+          <p>We've received your request for a ${packageType} package shoot.</p>
+          <p><strong>Details:</strong></p>
+          <ul>
+            <li>Date: ${preferredDate}</li>
+            <li>Time: ${preferredTime}</li>
+            <li>Location: ${location || 'Studio'}</li>
+          </ul>
+          <p>We'll confirm your booking within 24 hours. If you have questions, reply to this email.</p>
+          <p>Best regards,<br/>MEOCY Studio<br/>Milan, Italy</p>
+        `
+      }).then(() => {
+        console.log('✅ Confirmation email sent to customer:', email);
+      }).catch(err => {
+        console.error('❌ Failed to send confirmation email:', err.message);
+      });
+    }
+
   } catch (error) {
-    console.error('Error creating booking:', error);
+    console.error('❌ Booking error:', error.message);
     res.status(500).json({
       success: false,
       error: error.message
