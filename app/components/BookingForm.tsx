@@ -33,7 +33,7 @@ export default function BookingForm() {
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
       const response = await axios.get(`${apiUrl}/api/booked-dates`);
-      const dates = new Set(response.data.booked_dates.map((booking: any) => booking.booking_date));
+      const dates = new Set<string>(response.data.booked_dates.map((booking: any) => booking.booking_date));
       setBookedDates(dates);
     } catch (error) {
       console.error('Error fetching booked dates:', error);
