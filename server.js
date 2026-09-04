@@ -186,6 +186,7 @@ app.post('/api/bookings', async (req, res) => {
 
     // Inquiry email to MEOCY
     if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
+      console.log('📧 Sending inquiry email from:', process.env.GMAIL_USER);
       transporter.sendMail({
         from: process.env.GMAIL_USER,
         to: 'meocystudio@gmail.com',
@@ -204,15 +205,21 @@ app.post('/api/bookings', async (req, res) => {
           <hr/>
           <p><small>Booking ID: ${booking.id}</small></p>
         `
-      }).then(() => {
-        console.log('✅ Inquiry email sent to meocystudio@gmail.com');
+      }).then((info) => {
+        console.log('✅ Inquiry email sent successfully. Response:', info.response);
       }).catch(err => {
-        console.error('❌ Failed to send inquiry email:', err.message);
+        console.error('❌ INQUIRY EMAIL FAILED');
+        console.error('   Error:', err.message);
+        console.error('   Code:', err.code);
+        console.error('   Attempted from:', process.env.GMAIL_USER);
       });
+    } else {
+      console.error('❌ GMAIL CREDENTIALS MISSING: GMAIL_USER or GMAIL_APP_PASSWORD not set');
     }
 
     // Confirmation email to customer
     if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
+      console.log('📧 Sending confirmation email to:', email);
       transporter.sendMail({
         from: process.env.GMAIL_USER,
         to: email,
@@ -229,11 +236,16 @@ app.post('/api/bookings', async (req, res) => {
           <p>We'll confirm your booking within 24 hours. If you have questions, reply to this email.</p>
           <p>Best regards,<br/>MEOCY Studio<br/>Milan, Italy</p>
         `
-      }).then(() => {
-        console.log('✅ Confirmation email sent to customer:', email);
+      }).then((info) => {
+        console.log('✅ Confirmation email sent to:', email, 'Response:', info.response);
       }).catch(err => {
-        console.error('❌ Failed to send confirmation email:', err.message);
+        console.error('❌ CONFIRMATION EMAIL FAILED');
+        console.error('   Error:', err.message);
+        console.error('   Code:', err.code);
+        console.error('   Recipient:', email);
       });
+    } else {
+      console.error('❌ GMAIL CREDENTIALS MISSING for confirmation email');
     }
 
   } catch (error) {
