@@ -22,11 +22,26 @@ const supabase = createClient(
 );
 
 // ============ GMAIL SMTP TRANSPORTER ============
+console.log('🔧 STARTUP: Initializing Gmail SMTP transporter');
+console.log('🔧 STARTUP: GMAIL_USER =', process.env.GMAIL_USER ? '✓ SET' : '❌ NOT SET');
+console.log('🔧 STARTUP: GMAIL_APP_PASSWORD =', process.env.GMAIL_APP_PASSWORD ? '✓ SET (length: ' + process.env.GMAIL_APP_PASSWORD.length + ')' : '❌ NOT SET');
+
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: process.env.GMAIL_USER,
     pass: process.env.GMAIL_APP_PASSWORD
+  }
+});
+
+// Test connection at startup
+console.log('🔧 STARTUP: Testing Gmail SMTP connection...');
+transporter.verify((error, success) => {
+  if (error) {
+    console.error('❌ STARTUP: Gmail SMTP verification failed:', error.message);
+    console.error('   Error code:', error.code);
+  } else {
+    console.log('✅ STARTUP: Gmail SMTP connection successful');
   }
 });
 
