@@ -43,7 +43,8 @@
     "submit": "Soumettre la Réservation",
     "submitting": "Envoi en cours...",
     "success": "Réservation soumise avec succès! Nous vous contacterons bientôt.",
-    "error": "Erreur lors de la soumission de la réservation. Veuillez réessayer."
+    "error": "Erreur lors de la soumission de la réservation. Veuillez réessayer.",
+    "dateUnavailable": "Cette date est déjà réservée. Veuillez choisir une autre date."
   },
   "faq": {
     "title": "Questions Fréquemment Posées",

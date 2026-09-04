@@ -43,7 +43,8 @@
     "submit": "Invia Prenotazione",
     "submitting": "Invio in corso...",
     "success": "Prenotazione inviata con successo! Ti contatteremo al più presto.",
-    "error": "Errore nell'invio della prenotazione. Riprova."
+    "error": "Errore nell'invio della prenotazione. Riprova.",
+    "dateUnavailable": "Questa data è già prenotata. Scegli un'altra data."
   },
   "faq": {
     "title": "Domande Frequenti",

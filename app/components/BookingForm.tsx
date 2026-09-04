@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import axios from 'axios';
 
@@ -10,7 +10,9 @@ const SHOOT_TYPES = ['Product', 'Fashion', 'Restaurant', 'Model'];
 export default function BookingForm() {
   const t = useTranslations('booking');
   const [isLoading, setIsLoading] = useState(false);
-  const [toast, setToast] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const [toast, setToast] = useState<{ type: 'success' | 'error' | 'warning'; message: string } | null>(null);
+  const [bookedDates, setBookedDates] = useState<Set<string>>(new Set());
+  const [isDateUnavailable, setIsDateUnavailable] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -23,8 +25,38 @@ export default function BookingForm() {
     special_requests: '',
   });
 
+  useEffect(() => {
+    fetchBookedDates();
+  }, []);
+
+  const fetchBookedDates = async () => {
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+      const response = await axios.get(`${apiUrl}/api/booked-dates`);
+      const dates = new Set(response.data.booked_dates.map((booking: any) => booking.booking_date));
+      setBookedDates(dates);
+    } catch (error) {
+      console.error('Error fetching booked dates:', error);
+    }
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+
+    if (name === 'preferred_date') {
+      const isUnavailable = bookedDates.has(value);
+      setIsDateUnavailable(isUnavailable);
+
+      if (isUnavailable) {
+        setToast({
+          type: 'warning',
+          message: t('dateUnavailable') || 'This date is already booked. Please choose another date.',
+        });
+      } else if (toast?.type === 'warning') {
+        setToast(null);
+      }
+    }
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -33,6 +65,16 @@ export default function BookingForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (isDateUnavailable || bookedDates.has(formData.preferred_date)) {
+      setToast({
+        type: 'error',
+        message: t('dateUnavailable') || 'This date is already booked. Please choose another date.',
+      });
+      setTimeout(() => setToast(null), 5000);
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -55,6 +97,8 @@ export default function BookingForm() {
           preferred_time: '',
           special_requests: '',
         });
+        setIsDateUnavailable(false);
+        fetchBookedDates();
       }
     } catch (error) {
       console.error('Booking error:', error);
@@ -77,6 +121,8 @@ export default function BookingForm() {
           className={`mb-6 p-4 rounded-lg ${
             toast.type === 'success'
               ? 'bg-green-50 dark:bg-green-900 text-green-800 dark:text-green-200 border border-green-200 dark:border-green-700'
+              : toast.type === 'warning'
+              ? 'bg-yellow-50 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 border border-yellow-200 dark:border-yellow-700'
               : 'bg-red-50 dark:bg-red-900 text-red-800 dark:text-red-200 border border-red-200 dark:border-red-700'
           }`}
         >
@@ -195,8 +241,17 @@ export default function BookingForm() {
               name="preferred_date"
               value={formData.preferred_date}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
+              className={`w-full px-4 py-2 border rounded-lg bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 transition ${
+                isDateUnavailable
+                  ? 'border-red-500 dark:border-red-500 focus:ring-red-500 dark:focus:ring-red-500'
+                  : 'border-gray-300 dark:border-gray-600 focus:ring-black dark:focus:ring-white'
+              }`}
             />
+            {isDateUnavailable && (
+              <p className="text-red-600 dark:text-red-400 text-sm mt-2">
+                {t('dateUnavailable') || 'This date is already booked'}
+              </p>
+            )}
           </div>
 
           <div>

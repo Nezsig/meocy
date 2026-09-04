@@ -43,7 +43,8 @@
     "submit": "Submit Booking",
     "submitting": "Submitting...",
     "success": "Booking submitted successfully! We will contact you shortly.",
-    "error": "Failed to submit booking. Please try again."
+    "error": "Failed to submit booking. Please try again.",
+    "dateUnavailable": "This date is already booked. Please choose another date."
   },
   "faq": {
     "title": "Frequently Asked Questions",
