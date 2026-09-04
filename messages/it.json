@@ -1,0 +1,66 @@
+{
+  "nav": {
+    "home": "Home",
+    "work": "Lavori",
+    "packages": "Pacchetti",
+    "faq": "Domande Frequenti",
+    "contact": "Contatti"
+  },
+  "hero": {
+    "title": "Studio Fotografico MEOCY",
+    "subtitle": "Fotografia Professionale per la Tua Visione",
+    "cta": "Prenota una Sessione"
+  },
+  "about": {
+    "title": "Chi Siamo",
+    "description": "Siamo uno studio fotografico professionale con sede a Milano, Italia, specializzati in fotografia di prodotto, moda, ristorazione e modelle. Con anni di esperienza e attrezzature all'avanguardia, trasformiamo la tua visione in storie visive straordinarie."
+  },
+  "services": {
+    "title": "I Nostri Servizi",
+    "product": "Fotografia di Prodotto",
+    "fashion": "Fotografia di Moda",
+    "restaurant": "Fotografia di Ristorazione",
+    "model": "Fotografia di Modelle"
+  },
+  "packages": {
+    "title": "Pacchetti e Prezzi",
+    "starter": "Base",
+    "professional": "Professionale",
+    "premium": "Premium",
+    "description": "Scegli il pacchetto perfetto per le tue esigenze"
+  },
+  "booking": {
+    "title": "Prenota la Tua Sessione",
+    "name": "Nome Completo",
+    "email": "Indirizzo Email",
+    "phone": "Numero di Telefono",
+    "package": "Seleziona Pacchetto",
+    "shootType": "Tipo di Sessione",
+    "location": "Luogo",
+    "date": "Data Preferita",
+    "time": "Ora Preferita",
+    "specialRequests": "Richieste Speciali",
+    "submit": "Invia Prenotazione",
+    "submitting": "Invio in corso...",
+    "success": "Prenotazione inviata con successo! Ti contatteremo al più presto.",
+    "error": "Errore nell'invio della prenotazione. Riprova.",
+    "dateUnavailable": "Questa data è già prenotata. Scegli un'altra data."
+  },
+  "faq": {
+    "title": "Domande Frequenti",
+    "q1": "Qual è il vostro tempo di consegna?",
+    "a1": "Generalmente 2-3 settimane per i file finali, a seconda dell'ambito del progetto.",
+    "q2": "Offrite servizi di ritocco?",
+    "a2": "Sì, il ritocco è incluso in tutti i nostri pacchetti.",
+    "q3": "Quale è la vostra politica di cancellazione?",
+    "a3": "Le cancellazioni devono essere comunicate 7 giorni prima per il rimborso completo."
+  },
+  "footer": {
+    "company": "Studio Fotografico MEOCY",
+    "address": "Milano, Italia",
+    "email": "hello@meocy.com",
+    "rights": "Tutti i diritti riservati",
+    "privacy": "Informativa sulla Privacy",
+    "terms": "Termini e Condizioni"
+  }
+}
