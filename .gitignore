@@ -11,3 +11,4 @@ build/
 coverage/
 .idea/
 .vscode/
+next-env.d.ts
