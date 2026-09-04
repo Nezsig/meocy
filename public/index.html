@@ -1285,9 +1285,13 @@
         }
 
         function handleBooking(event) {
+            console.log('🔵 BOOKING: handleBooking called');
             event.preventDefault();
             const formData = new FormData(event.target);
             const data = Object.fromEntries(formData);
+
+            console.log('📋 BOOKING: Form data:', data);
+            console.log('🌐 BOOKING: API_URL =', API_URL);
 
             // Check if terms accepted
             if (!document.getElementById('termsCheckbox').checked) {
@@ -1295,8 +1299,17 @@
                 return;
             }
 
+            // Disable submit button and show loading state
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="en">Sending...</span><span class="it">Invio...</span><span class="fr">Envio...</span>';
+
             // Create the order + book the date on the backend
-            fetch(`${API_URL}/api/bookings`, {
+            const endpoint = `${API_URL}/api/bookings`;
+            console.log('📤 BOOKING: POST to', endpoint);
+
+            fetch(endpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -1311,23 +1324,35 @@
                     specialRequests: data['Special Requests']
                 })
             })
-            .then(res => res.json().then(body => ({ ok: res.ok, body })))
-            .then(({ ok, body }) => {
+            .then(res => {
+                console.log('✅ BOOKING: Response', res.status, res.statusText);
+                return res.json().then(body => ({ ok: res.ok, status: res.status, body }));
+            })
+            .then(({ ok, status, body }) => {
+                console.log('📊 BOOKING: Response body:', body);
+
                 if (!ok) {
-                    alert(body.error === 'This date is already booked'
-                        ? 'Sorry, this date is already booked. Please select another date.'
-                        : (body.error || 'Something went wrong. Please try again.'));
+                    const errorMsg = body.error || `HTTP ${status}: Something went wrong`;
+                    console.error('❌ BOOKING: Error -', errorMsg);
+                    alert(`❌ BOOKING FAILED\n\n${errorMsg}\n\nPlease try again or contact us.`);
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
                     return;
                 }
 
-                // Success! Emails are sent by backend
-                alert(`✅ Booking request sent!\n\nConfirmation email sent to: ${data.Email}\n\nWe'll confirm your booking within 24 hours.\n\nDate: ${data['Preferred Date']}\nContact: ${data.Phone}`);
+                // SUCCESS!
+                console.log('🎉 BOOKING: SUCCESS!');
+                alert(`✅ BOOKING REQUEST SENT!\n\nConfirmation email sent to:\n${data.Email}\n\nWe'll confirm within 24 hours.\n\nDate: ${data['Preferred Date']}\nContact: ${data.Phone}`);
                 event.target.reset();
                 document.getElementById('dateTriggerText').classList.add('date-picker-placeholder');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
             })
             .catch(error => {
-                console.error('Error creating booking:', error);
-                alert('Error submitting booking. Please try again.');
+                console.error('❌ BOOKING: Network error -', error);
+                alert(`❌ NETWORK ERROR\n\nCouldn't reach the server:\n${error.message}\n\nCheck your connection and try again.`);
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
             });
         }
 
