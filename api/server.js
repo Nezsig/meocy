@@ -50,25 +50,106 @@ app.get('/api/status', (req, res) => {
 const getBookingConfirmationEmail = (booking) => ({
   subject: `Booking Confirmation - MEOCY Photography Studio`,
   html: `
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <h2>Thank you for your booking request!</h2>
-      <p>Dear ${booking.name},</p>
-      <p>We have received your booking request and will contact you shortly to confirm the details.</p>
-      <div style="background-color: #f5f5f5; padding: 20px; margin: 20px 0; border-radius: 8px;">
-        <h3>Your Booking Details:</h3>
-        <p><strong>Package:</strong> ${booking.package_type || 'N/A'}</p>
-        <p><strong>Shoot Type:</strong> ${booking.shoot_type || 'N/A'}</p>
-        <p><strong>Location:</strong> ${booking.location || 'N/A'}</p>
-        <p><strong>Preferred Date:</strong> ${booking.preferred_date || 'N/A'}</p>
-        <p><strong>Preferred Time:</strong> ${booking.preferred_time || 'N/A'}</p>
-        <p><strong>Special Requests:</strong> ${booking.special_requests || 'None'}</p>
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <style>
+        body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif; background-color: #f9f9f9; }
+        .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
+        .header { background-color: #000000; padding: 24px; text-align: center; }
+        .header-logo { color: #7acc00; font-size: 20px; font-weight: 600; letter-spacing: 2px; margin: 0; }
+        .content { padding: 40px 32px; }
+        .checkmark { background-color: #e6f7cc; border-radius: 8px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 16px; }
+        .status-badge { color: #7acc00; font-size: 12px; font-weight: 600; letter-spacing: 1px; text-align: center; margin-bottom: 12px; text-transform: uppercase; }
+        h1 { font-size: 28px; font-weight: 700; color: #000000; margin: 0 0 8px 0; text-align: center; }
+        .greeting { font-size: 14px; color: #666666; text-align: center; margin: 16px 0 24px 0; line-height: 1.6; }
+        .booking-section { background-color: #f9f9f9; border-left: 3px solid #7acc00; padding: 20px; margin: 24px 0; border-radius: 4px; }
+        .booking-section-title { color: #7acc00; font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin: 0 0 16px 0; }
+        .booking-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eeeeee; font-size: 14px; }
+        .booking-item:last-child { border-bottom: none; }
+        .booking-label { color: #666666; font-weight: 500; }
+        .booking-value { color: #000000; font-weight: 600; text-align: right; }
+        .next-steps { margin-top: 32px; }
+        .next-steps-title { color: #7acc00; font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin: 0 0 16px 0; }
+        .step { display: flex; margin: 16px 0; font-size: 14px; }
+        .step-number { background-color: #000000; color: #7acc00; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-weight: 600; margin-right: 16px; flex-shrink: 0; }
+        .step-content { }
+        .step-title { font-weight: 600; color: #000000; margin: 0 0 4px 0; }
+        .step-desc { color: #666666; font-size: 13px; margin: 0; }
+        .cta-button { display: inline-block; background-color: #000000; color: #ffffff; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; margin-top: 20px; text-align: center; }
+        .footer { background-color: #000000; color: #ffffff; padding: 32px; text-align: center; font-size: 12px; }
+        .footer-brand { color: #7acc00; font-weight: 600; margin-bottom: 8px; font-size: 13px; }
+        .footer-info { color: #999999; margin: 4px 0; line-height: 1.6; }
+        .footer-divider { color: #333333; margin: 0 4px; }
+        a { color: #7acc00; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <p class="header-logo">◾ MEOCY.STUDIO</p>
+        </div>
+
+        <div class="content">
+          <div class="checkmark">✓</div>
+          <p class="status-badge">Booking Request Received</p>
+          <h1>Thank you, ${booking.name}!</h1>
+
+          <p class="greeting">
+            We've received your shoot request and we're excited to work with you. Here's a summary of what you sent us — we'll confirm everything within 24 hours.
+          </p>
+
+          <div class="booking-section">
+            <p class="booking-section-title">Your Booking</p>
+            ${booking.package_type ? `<div class="booking-item"><span class="booking-label">Package</span><span class="booking-value">${booking.package_type}</span></div>` : ''}
+            ${booking.shoot_type ? `<div class="booking-item"><span class="booking-label">Shoot type</span><span class="booking-value">${booking.shoot_type}</span></div>` : ''}
+            ${booking.preferred_date ? `<div class="booking-item"><span class="booking-label">Preferred date</span><span class="booking-value">${booking.preferred_date}</span></div>` : ''}
+            ${booking.location ? `<div class="booking-item"><span class="booking-label">Studio</span><span class="booking-value">${booking.location}</span></div>` : ''}
+            ${booking.preferred_time ? `<div class="booking-item"><span class="booking-label">Preferred time</span><span class="booking-value">${booking.preferred_time}</span></div>` : ''}
+          </div>
+
+          <div class="next-steps">
+            <p class="next-steps-title">What Happens Next</p>
+
+            <div class="step">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <p class="step-title">We confirm availability</p>
+                <p class="step-desc">Within 24 hours, by reply to this email.</p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <p class="step-title">We lock in the details</p>
+                <p class="step-desc">Date, location and payment are arranged directly with you — no online payment needed.</p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number" style="background-color: #7acc00; color: #000000;">3</div>
+              <div class="step-content">
+                <p class="step-title">Shoot day</p>
+                <p class="step-desc">We show up ready — in studio or on location.</p>
+              </div>
+            </div>
+
+            <a href="mailto:hello@meocy.com?subject=Re: Booking Confirmation" class="cta-button">Reply to This Email</a>
+          </div>
+        </div>
+
+        <div class="footer">
+          <p class="footer-brand">MEOCY · meocy.com</p>
+          <p class="footer-info">Viale Renato Serra 14, 20148 Milano, Italy <span class="footer-divider">·</span> Paris, France</p>
+          <p class="footer-info"><a href="mailto:hello@meocy.com">hello@meocy.com</a> <span class="footer-divider">·</span> +39 379 105 1000</p>
+        </div>
       </div>
-      <p>We look forward to working with you!</p>
-      <p>Best regards,<br>MEOCY Photography Studio</p>
-      <p style="font-size: 12px; color: #999; margin-top: 30px;">
-        <a href="https://www.meocy.com" style="color: #999; text-decoration: none;">www.meocy.com</a>
-      </p>
-    </div>
+    </body>
+    </html>
   `
 });
 
