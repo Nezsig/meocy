@@ -185,7 +185,7 @@ app.post('/api/bookings', async (req, res) => {
       // Inquiry email to MEOCY
       console.log('📧 Sending inquiry email via Resend...');
       resend.emails.send({
-        from: 'onboarding@resend.dev',
+        from: 'bookings@meocy.com',
         to: 'meocystudio@gmail.com',
         subject: `New Booking Inquiry from ${name}`,
         html: `
@@ -215,7 +215,7 @@ app.post('/api/bookings', async (req, res) => {
       // Confirmation email to customer
       console.log('📧 Sending confirmation email to:', email);
       resend.emails.send({
-        from: 'onboarding@resend.dev',
+        from: 'bookings@meocy.com',
         to: email,
         subject: 'Your MEOCY Booking Request Received',
         html: `

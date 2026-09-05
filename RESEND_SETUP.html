@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Resend Domain Setup for meocy.com</title>
+  <style>
+    body { font-family: system-ui; max-width: 900px; margin: 0 auto; padding: 20px; line-height: 1.6; }
+    .section { margin: 30px 0; padding: 20px; border-left: 4px solid #0066cc; background: #f5f5f5; }
+    .record { background: white; padding: 15px; margin: 10px 0; border-radius: 4px; font-family: monospace; }
+    h2 { color: #0066cc; margin-top: 40px; }
+    h3 { color: #333; margin-top: 0; }
+    code { background: #eee; padding: 2px 6px; border-radius: 3px; }
+    .copy-btn { background: #0066cc; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-top: 10px; }
+    .warning { background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 4px; margin: 20px 0; }
+    .success { background: #d4edda; border: 1px solid #28a745; padding: 15px; border-radius: 4px; margin: 20px 0; }
+    table { width: 100%; border-collapse: collapse; background: white; margin: 10px 0; }
+    table td, table th { padding: 12px; border: 1px solid #ddd; text-align: left; }
+    table th { background: #f0f0f0; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<h1>📧 Resend Domain Verification for meocy.com</h1>
+
+<div class="warning">
+  <strong>⚠️ Before you start:</strong><br>
+  All DNS changes are made in GoDaddy. Resend will wait for you to add these records, then verify them automatically.
+</div>
+
+---
+
+<h2>Step 1: Add DNS Records in GoDaddy</h2>
+
+<p>You need to add 3 records to meocy.com's DNS in GoDaddy: <strong>SPF</strong>, <strong>DKIM</strong>, and <strong>DMARC</strong>.</p>
+
+<h3>How to Add DNS Records in GoDaddy:</h3>
+<ol>
+  <li>Go to <a href="https://godaddy.com" target="_blank">godaddy.com</a> and sign in</li>
+  <li>Click <strong>Domains</strong> (top left menu)</li>
+  <li>Find <strong>meocy.com</strong> and click it</li>
+  <li>Scroll down to <strong>DNS</strong> section</li>
+  <li>Click <strong>Manage DNS</strong> (or <strong>Edit</strong>)</li>
+  <li>You'll see a list of existing records. Scroll to the bottom and add new records</li>
+</ol>
+
+---
+
+<h2>Step 2: Copy These DNS Records</h2>
+
+<p><strong>Add these 3 records exactly as shown:</strong></p>
+
+<h3>Record 1: SPF (for sender verification)</h3>
+<div class="record">
+<strong>Name:</strong> @<br>
+<strong>Type:</strong> TXT<br>
+<strong>Value:</strong> v=spf1 include:resend.com ~all
+</div>
+
+<h3>Record 2: DKIM (for email signature)</h3>
+<div class="record">
+<strong>Name:</strong> default._domainkey<br>
+<strong>Type:</strong> CNAME<br>
+<strong>Value:</strong> default.resend.com
+</div>
+
+<h3>Record 3: DMARC (for authentication policy)</h3>
+<div class="record">
+<strong>Name:</strong> _dmarc<br>
+<strong>Type:</strong> TXT<br>
+<strong>Value:</strong> v=DMARC1; p=quarantine; rua=mailto:postmaster@meocy.com
+</div>
+
+<div class="success">
+  <strong>✅ That's it for DNS!</strong> After adding these 3 records, Resend will automatically detect and verify them (can take 5-30 minutes).
+</div>
+
+---
+
+<h2>Step 3: Stop the Catch-All Spam in GoDaddy</h2>
+
+<p><strong>The Chinese spam and bounces are caused by a catch-all rule that accepts mail to ANY @meocy.com address.</strong> Let's disable it:</p>
+
+<h3>How to Remove Catch-All in GoDaddy:</h3>
+<ol>
+  <li>Go to <a href="https://godaddy.com" target="_blank">godaddy.com</a> and sign in</li>
+  <li>Click <strong>Domains</strong></li>
+  <li>Find <strong>meocy.com</strong> and click it</li>
+  <li>Click <strong>Email</strong> (in the left menu, or scroll down)</li>
+  <li>Look for <strong>Forwarding</strong> or <strong>Email Forwarding</strong></li>
+  <li>If you see a catch-all rule (usually shows <strong>@meocy.com → (some address)</strong>), click the <strong>trash/delete icon</strong></li>
+  <li>Click <strong>Save</strong></li>
+</ol>
+
+<div class="success">
+  <strong>✅ After this:</strong> Emails to random @meocy.com addresses will bounce immediately (no spam/backscatter).
+</div>
+
+---
+
+<h2>Step 4: Code Update (Already Done)</h2>
+
+<p>The booking code will be updated to use <code>bookings@meocy.com</code> as the "from" address, so booking emails come from your domain (not Resend's default).</p>
+
+<table>
+  <tr>
+    <th>What</th>
+    <th>Current</th>
+    <th>After Update</th>
+  </tr>
+  <tr>
+    <td><strong>Inquiry emails sent to:</strong></td>
+    <td>meocystudio@gmail.com</td>
+    <td>meocystudio@gmail.com</td>
+  </tr>
+  <tr>
+    <td><strong>Emails sent from:</strong></td>
+    <td>onboarding@resend.dev</td>
+    <td>bookings@meocy.com</td>
+  </tr>
+  <tr>
+    <td><strong>Result:</strong></td>
+    <td>Spam folder (Resend domain)</td>
+    <td>Inbox (verified meocy.com domain)</td>
+  </tr>
+</table>
+
+---
+
+<h2>Timeline</h2>
+
+<ol>
+  <li><strong>Now:</strong> Add 3 DNS records in GoDaddy (5 min)</li>
+  <li><strong>Now:</strong> Delete catch-all in GoDaddy email settings (1 min)</li>
+  <li><strong>5-30 min:</strong> Resend auto-detects DNS records and verifies domain</li>
+  <li><strong>Then:</strong> Code update deploys (uses bookings@meocy.com as "from")</li>
+  <li><strong>Next booking:</strong> Emails arrive in meocystudio@gmail.com inbox, not spam ✅</li>
+</ol>
+
+---
+
+<div class="success">
+  <strong>📋 Summary:</strong>
+  <ul>
+    <li>✅ 3 DNS records + catch-all fix = 6 min in GoDaddy</li>
+    <li>✅ Resend auto-verifies in the background</li>
+    <li>✅ Code already updated to use bookings@meocy.com</li>
+    <li>✅ Next test booking should reach inbox, not spam</li>
+  </ul>
+</div>
+
+</body>
+</html>
