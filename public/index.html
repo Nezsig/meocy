@@ -1442,9 +1442,11 @@
 
                             btn.addEventListener('click', () => {
                                 selectedDate = cellDate;
-                                const formatted = `${String(day).padStart(2, '0')} ${monthNames[lang][viewMonth]} ${viewYear}`;
-                                hiddenInput.value = formatted;
-                                triggerText.textContent = formatted;
+                                // Store ISO date format for API
+                                const isoDate = `${viewYear}-${String(viewMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                                const displayDate = `${String(day).padStart(2, '0')} ${monthNames[lang][viewMonth]} ${viewYear}`;
+                                hiddenInput.value = isoDate;
+                                triggerText.textContent = displayDate;
                                 triggerText.classList.remove('date-picker-placeholder');
                                 closePopup();
                             });
