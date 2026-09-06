@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
 import { CheckCircle2, Circle } from 'lucide-react';
 
 const PRICING_CONFIG = {
@@ -36,7 +35,6 @@ type LocationType = keyof typeof PRICING_CONFIG.locations;
 type PricingMode = 'oneTime' | 'retainer' | 'subscription';
 
 export default function PriceCalculator() {
-  const t = useTranslations();
   const [pricingMode, setPricingMode] = useState<PricingMode>('oneTime');
   const [selectedService, setSelectedService] = useState<ServiceType>('product');
   const [selectedLocation, setSelectedLocation] = useState<LocationType>('studio');
@@ -88,15 +86,13 @@ export default function PriceCalculator() {
       <div className="max-w-7xl mx-auto">
         <div className="mb-16">
           <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 tracking-widest uppercase mb-3">
-            {t('pricing.subtitle', { defaultValue: 'THE PART EVERYONE ASKS ABOUT FIRST' })}
+            THE PART EVERYONE ASKS ABOUT FIRST
           </p>
           <h2 className="text-6xl font-bold mb-6 max-w-3xl leading-tight">
-            {t('pricing.title', { defaultValue: 'See your price before you talk to anyone.' })}
+            See your price before you talk to anyone.
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl">
-            {t('pricing.description', {
-              defaultValue: 'Move the controls and watch the number change. This is the same calculation behind every quote we send — nothing hidden underneath it.',
-            })}
+            Move the controls and watch the number change. This is the same calculation behind every quote we send — nothing hidden underneath it.
           </p>
         </div>
 
@@ -126,7 +122,7 @@ export default function PriceCalculator() {
             {!isSubscription && (
               <div className="bg-white dark:bg-gray-800 p-8 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-sm">
                 <label className="block text-sm font-semibold text-gray-900 dark:text-white mb-6 uppercase tracking-wide">
-                  {t('pricing.whatPhotography', { defaultValue: 'What are we photographing?' })}
+                  What are we photographing?
                 </label>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                   {Object.entries(PRICING_CONFIG.oneTime.services).map(([key, service]) => (
@@ -150,7 +146,7 @@ export default function PriceCalculator() {
             <div className="bg-white dark:bg-gray-800 p-8 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-sm">
               <div className="flex justify-between items-end mb-8">
                 <label className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wide">
-                  {t('pricing.finalImages', { defaultValue: 'How many final images?' })}
+                  How many final images?
                 </label>
                 <span className="text-6xl font-bold text-gray-900 dark:text-white">{numImages}</span>
               </div>
@@ -171,7 +167,7 @@ export default function PriceCalculator() {
             {/* Location Selection - Inline */}
             <div className="bg-white dark:bg-gray-800 p-8 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-sm">
               <label className="block text-sm font-semibold text-gray-900 dark:text-white mb-6 uppercase tracking-wide">
-                {t('pricing.where', { defaultValue: 'Where?' })}
+                Where?
               </label>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {Object.entries(PRICING_CONFIG.locations).map(([key, loc]) => (
@@ -197,7 +193,7 @@ export default function PriceCalculator() {
             {/* Add-ons - Apple Style 2 Columns */}
             <div className="bg-white dark:bg-gray-800 p-8 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-sm">
               <label className="block text-sm font-semibold text-gray-900 dark:text-white mb-6 uppercase tracking-wide">
-                {t('pricing.anythingElse', { defaultValue: 'Anything else?' })}
+                Anything else?
               </label>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {Object.entries(PRICING_CONFIG.addOns).map(([key, addon]) => (
@@ -243,13 +239,13 @@ export default function PriceCalculator() {
             <div className="sticky top-20 bg-black dark:bg-white text-white dark:text-black rounded-3xl p-8 space-y-8 shadow-lg">
               <div>
                 <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-widest">
-                  {t('pricing.estimate', { defaultValue: 'Your Estimate' })}
+                  Your Estimate
                 </p>
                 <div className="flex items-baseline gap-2">
                   <span className="text-6xl font-bold">€{totalPrice}</span>
                 </div>
                 <p className="text-xs text-gray-500 dark:text-gray-500 mt-4 leading-relaxed">
-                  {t('pricing.excludingVat', { defaultValue: 'Excluding VAT. Fixed in writing before we start.' })}
+                  Excluding VAT. Fixed in writing before we start.
                 </p>
               </div>
 
@@ -308,7 +304,7 @@ export default function PriceCalculator() {
               </div>
 
               <button className="w-full bg-lime-400 dark:bg-lime-400 text-black font-semibold py-3.5 rounded-2xl hover:bg-lime-300 dark:hover:bg-lime-300 transition duration-200 shadow-md hover:shadow-lg">
-                {t('pricing.holdDate', { defaultValue: 'Hold a date with this brief' })}
+                Hold a date with this brief
               </button>
             </div>
           </div>
