@@ -29,7 +29,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <html lang={locale}>
       <body className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           <Header />
           <main className="min-h-screen">{children}</main>
           <Footer />
