@@ -742,6 +742,230 @@
         </div>
     </section>
 
+    <!-- PRICE CALCULATOR SECTION -->
+    <section class="pricing reveal" id="calculator">
+        <span class="section-eyebrow">
+            <span class="en">Pricing</span>
+            <span class="it">Prezzi</span>
+            <span class="fr">Tarifs</span>
+        </span>
+        <h2>
+            <span class="en">See your price before you talk to anyone</span>
+            <span class="it">Vedi il tuo prezzo prima di parlare con chiunque</span>
+            <span class="fr">Voyez votre prix avant de parler à quelqu'un</span>
+        </h2>
+        <p class="pricing-subtitle">
+            <span class="en">Move the controls and watch the price change. This is the same calculation behind every quote we send.</span>
+            <span class="it">Sposta i controlli e guarda il prezzo cambiare. Questo è lo stesso calcolo dietro ogni preventivo che inviamo.</span>
+            <span class="fr">Déplacez les contrôles et regardez le prix changer. C'est le même calcul derrière chaque devis que nous envoyons.</span>
+        </p>
+
+        <div class="pricing-grid">
+            <!-- Calculator Panel -->
+            <div class="pricing-panel">
+                <!-- Service Type -->
+                <div class="pricing-group">
+                    <label class="pricing-label">
+                        <span class="en">What are we photographing?</span>
+                        <span class="it">Cosa fotografiamo?</span>
+                        <span class="fr">Que photographions-nous?</span>
+                    </label>
+                    <div class="pricing-options">
+                        <button class="pricing-btn active" onclick="setService('product')">Product</button>
+                        <button class="pricing-btn" onclick="setService('fashion')">Fashion</button>
+                        <button class="pricing-btn" onclick="setService('restaurant')">Restaurant</button>
+                        <button class="pricing-btn" onclick="setService('model')">Model</button>
+                    </div>
+                </div>
+
+                <!-- Images Slider -->
+                <div class="pricing-group">
+                    <div class="pricing-label-row">
+                        <label class="pricing-label">
+                            <span class="en">How many final images?</span>
+                            <span class="it">Quante immagini finali?</span>
+                            <span class="fr">Combien d'images finales?</span>
+                        </label>
+                        <span class="pricing-value" id="imageCount">20</span>
+                    </div>
+                    <input type="range" min="5" max="150" value="20" class="pricing-slider" id="imageSlider" oninput="updateImages(this.value)">
+                    <div class="pricing-range-labels">
+                        <span class="en">5 — small drop</span>
+                        <span class="it">5 — piccolo lotto</span>
+                        <span class="fr">5 — petit lot</span>
+                        <span class="en" style="text-align:right">150 — full catalogue</span>
+                        <span class="it" style="text-align:right">150 — catalogo completo</span>
+                        <span class="fr" style="text-align:right">150 — catalogue complet</span>
+                    </div>
+                </div>
+
+                <!-- Location -->
+                <div class="pricing-group">
+                    <label class="pricing-label">
+                        <span class="en">Where?</span>
+                        <span class="it">Dove?</span>
+                        <span class="fr">Où?</span>
+                    </label>
+                    <div class="pricing-location-options">
+                        <button class="pricing-location-btn active" onclick="setLocation('studio')">
+                            <div class="pricing-location-name">
+                                <span class="en">Our Milan Studio</span>
+                                <span class="it">Nostro Studio Milano</span>
+                                <span class="fr">Notre Studio Milan</span>
+                            </div>
+                            <div class="pricing-location-desc">
+                                <span class="en">Full control of the light</span>
+                                <span class="it">Pieno controllo della luce</span>
+                                <span class="fr">Contrôle total de la lumière</span>
+                            </div>
+                        </button>
+                        <button class="pricing-location-btn" onclick="setLocation('onlocation')">
+                            <div class="pricing-location-name">
+                                <span class="en">Your Location</span>
+                                <span class="it">Tua Posizione</span>
+                                <span class="fr">Votre Lieu</span>
+                            </div>
+                            <div class="pricing-location-desc">
+                                <span class="en">We pack the studio into a van</span>
+                                <span class="it">Portiamo lo studio in un furgone</span>
+                                <span class="fr">Nous emballons le studio dans un van</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Add-ons -->
+                <div class="pricing-group">
+                    <label class="pricing-label">
+                        <span class="en">Anything else?</span>
+                        <span class="it">Altro?</span>
+                        <span class="fr">Autre chose?</span>
+                    </label>
+                    <div class="pricing-addons">
+                        <label class="pricing-addon">
+                            <input type="checkbox" onclick="updatePrice()">
+                            <div>
+                                <div class="addon-name"><span class="en">Model Casting</span><span class="it">Casting Modelli</span><span class="fr">Casting Mannequins</span></div>
+                                <div class="addon-price">+€200</div>
+                            </div>
+                        </label>
+                        <label class="pricing-addon">
+                            <input type="checkbox" onclick="updatePrice()">
+                            <div>
+                                <div class="addon-name"><span class="en">Styling & Set Build</span><span class="it">Styling e Set</span><span class="fr">Stylisme et Plateau</span></div>
+                                <div class="addon-price">+€300</div>
+                            </div>
+                        </label>
+                        <label class="pricing-addon">
+                            <input type="checkbox" onclick="updatePrice()">
+                            <div>
+                                <div class="addon-name"><span class="en">Video Clips</span><span class="it">Clip Video</span><span class="fr">Clips Vidéo</span></div>
+                                <div class="addon-price">+€250</div>
+                            </div>
+                        </label>
+                        <label class="pricing-addon">
+                            <input type="checkbox" onclick="updatePrice()">
+                            <div>
+                                <div class="addon-name"><span class="en">Express Delivery</span><span class="it">Consegna Veloce</span><span class="fr">Livraison Express</span></div>
+                                <div class="addon-price">+€150</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estimate Panel -->
+            <div class="pricing-estimate">
+                <div class="estimate-label">
+                    <span class="en">Your Estimate</span>
+                    <span class="it">Tuo Preventivo</span>
+                    <span class="fr">Votre Devis</span>
+                </div>
+                <div class="estimate-price" id="totalPrice">€420</div>
+                <div class="estimate-vat">
+                    <span class="en">Excluding VAT. Fixed in writing before we start.</span>
+                    <span class="it">IVA esclusa. Fisso per iscritto prima di iniziare.</span>
+                    <span class="fr">TVA exclue. Fixé par écrit avant de commencer.</span>
+                </div>
+                <div class="estimate-breakdown" id="breakdown"></div>
+                <button class="estimate-cta" onclick="document.getElementById('booking').scrollIntoView()">
+                    <span class="en">Get This Quote</span>
+                    <span class="it">Ottieni Questo Preventivo</span>
+                    <span class="fr">Obtenir ce Devis</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const servicesPricing = {
+            product: { name: 'Product', base: 420, images: 20 },
+            fashion: { name: 'Fashion', base: 500, images: 25 },
+            restaurant: { name: 'Restaurant', base: 480, images: 20 },
+            model: { name: 'Model', base: 550, images: 30 }
+        };
+
+        let currentService = 'product';
+        let currentLocation = 'studio';
+        let currentImages = 20;
+
+        function setService(service) {
+            currentService = service;
+            document.querySelectorAll('.pricing-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            updatePrice();
+        }
+
+        function setLocation(location) {
+            currentLocation = location;
+            document.querySelectorAll('.pricing-location-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.closest('.pricing-location-btn').classList.add('active');
+            updatePrice();
+        }
+
+        function updateImages(value) {
+            currentImages = parseInt(value);
+            document.getElementById('imageCount').textContent = value;
+            updatePrice();
+        }
+
+        function updatePrice() {
+            const service = servicesPricing[currentService];
+            let total = service.base;
+
+            // Location modifier
+            if (currentLocation === 'onlocation') total += 150;
+
+            // Extra images
+            const extraImages = Math.max(0, currentImages - service.images);
+            const extraImageCost = extraImages * 35;
+            total += extraImageCost;
+
+            // Add-ons
+            const checkboxes = document.querySelectorAll('.pricing-addon input[type="checkbox"]');
+            const addOnPrices = [200, 300, 250, 150];
+            checkboxes.forEach((cb, i) => {
+                if (cb.checked) total += addOnPrices[i];
+            });
+
+            // Update display
+            document.getElementById('totalPrice').textContent = '€' + total;
+
+            // Breakdown
+            let breakdown = `<div class="breakdown-item"><span class="en">${service.name} shoot</span><span class="it">Shooting ${service.name}</span><span class="fr">Séance ${service.name}</span></span> <strong>€${service.base}</strong></div>`;
+            if (currentLocation === 'onlocation') breakdown += `<div class="breakdown-item"><span class="en">On-location setup</span><span class="it">Setup on-location</span><span class="fr">Configuration sur site</span> <strong>€150</strong></div>`;
+            if (extraImageCost > 0) breakdown += `<div class="breakdown-item"><span>${extraImages} extra images</span> <strong>€${extraImageCost}</strong></div>`;
+            checkboxes.forEach((cb, i) => {
+                if (cb.checked) breakdown += `<div class="breakdown-item"><strong>€${addOnPrices[i]}</strong></div>`;
+            });
+
+            document.getElementById('breakdown').innerHTML = breakdown;
+        }
+
+        updatePrice();
+    </script>
+
+
     <section class="booking reveal" id="booking">
         <span class="section-eyebrow">
             <span class="en">Get Started</span>
