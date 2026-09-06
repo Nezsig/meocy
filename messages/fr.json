@@ -46,6 +46,18 @@
     "error": "Erreur lors de la soumission de la réservation. Veuillez réessayer.",
     "dateUnavailable": "Cette date est déjà réservée. Veuillez choisir une autre date."
   },
+  "pricing": {
+    "subtitle": "LA PARTIE QUE TOUT LE MONDE DEMANDE D'ABORD",
+    "title": "Voyez votre prix avant de parler à quelqu'un.",
+    "description": "Déplacez les contrôles et regardez le nombre changer. C'est le même calcul derrière chaque devis que nous envoyons — rien de caché dessous.",
+    "whatPhotography": "Que photographions-nous?",
+    "finalImages": "Combien d'images finales?",
+    "where": "Où?",
+    "anythingElse": "Autre chose?",
+    "estimate": "Votre Devis",
+    "excludingVat": "TVA exclue. Fixé par écrit avant de commencer.",
+    "holdDate": "Réservez une date avec ce brief"
+  },
   "faq": {
     "title": "Questions Fréquemment Posées",
     "q1": "Quel est votre délai de livraison?",

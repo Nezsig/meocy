@@ -46,6 +46,18 @@
     "error": "Errore nell'invio della prenotazione. Riprova.",
     "dateUnavailable": "Questa data è già prenotata. Scegli un'altra data."
   },
+  "pricing": {
+    "subtitle": "LA PARTE CHE TUTTI CHIEDONO PER PRIMA",
+    "title": "Vedi il tuo prezzo prima di parlare con chiunque.",
+    "description": "Sposta i controlli e guarda il numero cambiare. Questo è lo stesso calcolo dietro ogni preventivo che inviamo — niente nascosto.",
+    "whatPhotography": "Cosa fotografiamo?",
+    "finalImages": "Quante immagini finali?",
+    "where": "Dove?",
+    "anythingElse": "Altro?",
+    "estimate": "Il Tuo Preventivo",
+    "excludingVat": "IVA esclusa. Fissato per iscritto prima di iniziare.",
+    "holdDate": "Blocca una data con questo brief"
+  },
   "faq": {
     "title": "Domande Frequenti",
     "q1": "Qual è il vostro tempo di consegna?",
