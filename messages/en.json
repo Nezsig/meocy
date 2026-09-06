@@ -1,0 +1,122 @@
+{
+  "nav": {
+    "home": "Home",
+    "work": "Work",
+    "packages": "Packages",
+    "faq": "FAQ",
+    "booking": "Book Now",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Photography That Sells Your Brand",
+    "subtitle": "Professional product, fashion, and content photography in Milan",
+    "cta_book": "Book a Shoot",
+    "cta_work": "See Our Work"
+  },
+  "stats": {
+    "equipment": "8 Equipment Categories",
+    "response": "12-Hour Response",
+    "location": "1 Location (Milan)"
+  },
+  "packages": {
+    "title": "Our Packages",
+    "basic": {
+      "name": "Basic",
+      "subtitle": "Studio",
+      "price": "€200",
+      "features": [
+        "15 photos",
+        "Studio products only",
+        "4-hour turnaround"
+      ]
+    },
+    "silver": {
+      "name": "Silver",
+      "subtitle": "Travel/Shop/Products",
+      "price": "€400",
+      "features": [
+        "4 hours",
+        "1 location",
+        "40 photos",
+        "1 video"
+      ]
+    },
+    "gold": {
+      "name": "Gold",
+      "subtitle": "Shop and Outdoor",
+      "price": "€750",
+      "features": [
+        "6 hours",
+        "2 locations",
+        "75 photos",
+        "1 video"
+      ]
+    },
+    "platinum": {
+      "name": "Platinum",
+      "subtitle": "Content Sprint",
+      "price": "€1,000",
+      "features": [
+        "8 hours",
+        "2 locations",
+        "100 photos",
+        "10 videos"
+      ]
+    },
+    "custom": "Custom Quote"
+  },
+  "calculator": {
+    "title": "Price Calculator",
+    "serviceType": "Service Type",
+    "imageCount": "Number of Images",
+    "location": "Location",
+    "addOns": "Add-ons",
+    "estimatedPrice": "Estimated Price",
+    "studio": "Studio",
+    "onLocation": "On Location (+€150)",
+    "modelCasting": "Model Casting (+€100)",
+    "styling": "Styling (+€75)",
+    "videoClips": "Video Clips (+€200)",
+    "expressDelivery": "Express Delivery (+€150)"
+  },
+  "booking": {
+    "title": "Book Your Shoot",
+    "form": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "packageType": "Package Type",
+      "shootType": "Shoot Type (Product, Fashion, Restaurant, Model)",
+      "location": "Location Preference",
+      "preferredDate": "Preferred Date",
+      "preferredTime": "Preferred Time",
+      "specialRequests": "Special Requests",
+      "consent": "I agree to the terms and conditions",
+      "submit": "Book Now",
+      "submitting": "Processing..."
+    },
+    "success": "Booking submitted successfully! We'll contact you within 24 hours.",
+    "error": "An error occurred. Please try again."
+  },
+  "payment": {
+    "title": "Payment",
+    "deposit": "25% Deposit Required",
+    "processing": "Processing your payment...",
+    "redirecting": "Redirecting to payment gateway...",
+    "error": "Payment processing failed. Please try again."
+  },
+  "confirmation": {
+    "title": "Booking Confirmed!",
+    "message": "Thank you for your booking. We'll contact you within 24 hours to confirm details and arrange payment.",
+    "bookingId": "Booking ID",
+    "back": "Back to Home"
+  },
+  "footer": {
+    "address": "Via Example 123, Milan, Italy",
+    "email": "meocystudio@gmail.com",
+    "phone": "+39 123 456 7890",
+    "privacy": "Privacy Policy",
+    "terms": "Terms & Conditions",
+    "social": "Follow Us"
+  }
+}

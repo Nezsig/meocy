@@ -1,0 +1,122 @@
+{
+  "nav": {
+    "home": "Home",
+    "work": "Lavoro",
+    "packages": "Pacchetti",
+    "faq": "Domande Frequenti",
+    "booking": "Prenota Ora",
+    "contact": "Contatti"
+  },
+  "hero": {
+    "title": "Fotografia Che Vende il Tuo Brand",
+    "subtitle": "Fotografia professionale di prodotti, moda e contenuti a Milano",
+    "cta_book": "Prenota uno Shooting",
+    "cta_work": "Vedi il Nostro Lavoro"
+  },
+  "stats": {
+    "equipment": "8 Categorie di Attrezzature",
+    "response": "Risposta in 12 Ore",
+    "location": "1 Ubicazione (Milano)"
+  },
+  "packages": {
+    "title": "I Nostri Pacchetti",
+    "basic": {
+      "name": "Base",
+      "subtitle": "Studio",
+      "price": "€200",
+      "features": [
+        "15 foto",
+        "Solo prodotti in studio",
+        "Turnaround 4 ore"
+      ]
+    },
+    "silver": {
+      "name": "Silver",
+      "subtitle": "Viaggio/Negozio/Prodotti",
+      "price": "€400",
+      "features": [
+        "4 ore",
+        "1 ubicazione",
+        "40 foto",
+        "1 video"
+      ]
+    },
+    "gold": {
+      "name": "Gold",
+      "subtitle": "Negozio e Esterno",
+      "price": "€750",
+      "features": [
+        "6 ore",
+        "2 ubicazioni",
+        "75 foto",
+        "1 video"
+      ]
+    },
+    "platinum": {
+      "name": "Platinum",
+      "subtitle": "Content Sprint",
+      "price": "€1.000",
+      "features": [
+        "8 ore",
+        "2 ubicazioni",
+        "100 foto",
+        "10 video"
+      ]
+    },
+    "custom": "Preventivo Personalizzato"
+  },
+  "calculator": {
+    "title": "Calcolatore di Prezzo",
+    "serviceType": "Tipo di Servizio",
+    "imageCount": "Numero di Immagini",
+    "location": "Ubicazione",
+    "addOns": "Servizi Aggiuntivi",
+    "estimatedPrice": "Prezzo Stimato",
+    "studio": "Studio",
+    "onLocation": "In Loco (+€150)",
+    "modelCasting": "Casting Modelli (+€100)",
+    "styling": "Styling (+€75)",
+    "videoClips": "Clip Video (+€200)",
+    "expressDelivery": "Consegna Espressa (+€150)"
+  },
+  "booking": {
+    "title": "Prenota il Tuo Shooting",
+    "form": {
+      "name": "Nome Completo",
+      "email": "Indirizzo Email",
+      "phone": "Numero di Telefono",
+      "packageType": "Tipo di Pacchetto",
+      "shootType": "Tipo di Shooting (Prodotti, Moda, Ristorazione, Modelli)",
+      "location": "Preferenza di Ubicazione",
+      "preferredDate": "Data Preferita",
+      "preferredTime": "Ora Preferita",
+      "specialRequests": "Richieste Speciali",
+      "consent": "Accetto i termini e le condizioni",
+      "submit": "Prenota Ora",
+      "submitting": "Elaborazione..."
+    },
+    "success": "Prenotazione inviata con successo! Ti contatteremo entro 24 ore.",
+    "error": "Si è verificato un errore. Riprova."
+  },
+  "payment": {
+    "title": "Pagamento",
+    "deposit": "Deposito del 25% Richiesto",
+    "processing": "Elaborazione del pagamento...",
+    "redirecting": "Reindirizzamento al gateway di pagamento...",
+    "error": "Elaborazione del pagamento non riuscita. Riprova."
+  },
+  "confirmation": {
+    "title": "Prenotazione Confermata!",
+    "message": "Grazie per la tua prenotazione. Ti contatteremo entro 24 ore per confermare i dettagli e organizzare il pagamento.",
+    "bookingId": "ID Prenotazione",
+    "back": "Torna alla Home"
+  },
+  "footer": {
+    "address": "Via Esempio 123, Milano, Italia",
+    "email": "meocystudio@gmail.com",
+    "phone": "+39 123 456 7890",
+    "privacy": "Politica sulla Privacy",
+    "terms": "Termini e Condizioni",
+    "social": "Seguici"
+  }
+}

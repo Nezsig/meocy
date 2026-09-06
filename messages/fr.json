@@ -1,0 +1,122 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "work": "Travaux",
+    "packages": "Forfaits",
+    "faq": "FAQ",
+    "booking": "Réserver Maintenant",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Une Photographie Qui Vend Votre Marque",
+    "subtitle": "Photographie professionnelle de produits, de mode et de contenu à Milan",
+    "cta_book": "Réserver une Séance",
+    "cta_work": "Voir Notre Travail"
+  },
+  "stats": {
+    "equipment": "8 Catégories d'Équipements",
+    "response": "Réponse en 12 Heures",
+    "location": "1 Localisation (Milan)"
+  },
+  "packages": {
+    "title": "Nos Forfaits",
+    "basic": {
+      "name": "Basique",
+      "subtitle": "Studio",
+      "price": "€200",
+      "features": [
+        "15 photos",
+        "Produits en studio uniquement",
+        "Délai d'exécution 4 heures"
+      ]
+    },
+    "silver": {
+      "name": "Argent",
+      "subtitle": "Déplacement/Boutique/Produits",
+      "price": "€400",
+      "features": [
+        "4 heures",
+        "1 localisation",
+        "40 photos",
+        "1 vidéo"
+      ]
+    },
+    "gold": {
+      "name": "Or",
+      "subtitle": "Boutique et Extérieur",
+      "price": "€750",
+      "features": [
+        "6 heures",
+        "2 localisations",
+        "75 photos",
+        "1 vidéo"
+      ]
+    },
+    "platinum": {
+      "name": "Platine",
+      "subtitle": "Sprint Contenu",
+      "price": "€1.000",
+      "features": [
+        "8 heures",
+        "2 localisations",
+        "100 photos",
+        "10 vidéos"
+      ]
+    },
+    "custom": "Devis Personnalisé"
+  },
+  "calculator": {
+    "title": "Calculateur de Prix",
+    "serviceType": "Type de Service",
+    "imageCount": "Nombre de Photos",
+    "location": "Localisation",
+    "addOns": "Services Supplémentaires",
+    "estimatedPrice": "Prix Estimé",
+    "studio": "Studio",
+    "onLocation": "Sur Site (+€150)",
+    "modelCasting": "Casting de Modèles (+€100)",
+    "styling": "Stylisme (+€75)",
+    "videoClips": "Clips Vidéo (+€200)",
+    "expressDelivery": "Livraison Express (+€150)"
+  },
+  "booking": {
+    "title": "Réservez Votre Séance",
+    "form": {
+      "name": "Nom Complet",
+      "email": "Adresse E-mail",
+      "phone": "Numéro de Téléphone",
+      "packageType": "Type de Forfait",
+      "shootType": "Type de Séance (Produits, Mode, Restaurant, Modèles)",
+      "location": "Préférence de Localisation",
+      "preferredDate": "Date Préférée",
+      "preferredTime": "Heure Préférée",
+      "specialRequests": "Demandes Spéciales",
+      "consent": "J'accepte les conditions générales",
+      "submit": "Réserver Maintenant",
+      "submitting": "Traitement..."
+    },
+    "success": "Réservation envoyée avec succès! Nous vous contacterons dans 24 heures.",
+    "error": "Une erreur s'est produite. Veuillez réessayer."
+  },
+  "payment": {
+    "title": "Paiement",
+    "deposit": "Acompte de 25% Requis",
+    "processing": "Traitement de votre paiement...",
+    "redirecting": "Redirection vers la passerelle de paiement...",
+    "error": "Le traitement du paiement a échoué. Veuillez réessayer."
+  },
+  "confirmation": {
+    "title": "Réservation Confirmée!",
+    "message": "Merci pour votre réservation. Nous vous contacterons dans 24 heures pour confirmer les détails et organiser le paiement.",
+    "bookingId": "N° de Réservation",
+    "back": "Retour à l'Accueil"
+  },
+  "footer": {
+    "address": "Via Exemple 123, Milan, Italie",
+    "email": "meocystudio@gmail.com",
+    "phone": "+39 123 456 7890",
+    "privacy": "Politique de Confidentialité",
+    "terms": "Conditions Générales",
+    "social": "Nous Suivre"
+  }
+}
