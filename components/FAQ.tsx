@@ -1,6 +1,5 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 interface FAQItem {
@@ -9,7 +8,6 @@ interface FAQItem {
 }
 
 export default function FAQ() {
-  const t = useTranslations();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const faqs: FAQItem[] = [

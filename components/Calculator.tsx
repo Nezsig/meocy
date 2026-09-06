@@ -32,7 +32,7 @@ export default function Calculator() {
   };
 
   // Calculate price
-  const { basePrice, total, breakdown } = useMemo(() => {
+  const { total, breakdown } = useMemo(() => {
     let base = basePrices[serviceType] * Math.ceil(imageCount / 10);
     if (location === 'onLocation') base += 150;
 

@@ -41,7 +41,7 @@ export async function getAvailableDates() {
     .eq('payment_status', 'paid');
 
   if (error) throw error;
-  return (data || []).map(record => record.preferred_date).filter(Boolean);
+  return (data || []).map((record: any) => record.preferred_date).filter(Boolean);
 }
 
 export async function updateBookingPaymentStatus(
