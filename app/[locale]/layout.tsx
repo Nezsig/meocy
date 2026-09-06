@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
+import { getMessages } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
-import { getMessages } from '@/i18n';
 import Header from '@/app/components/Header';
 import Footer from '@/app/components/Footer';
 import '@/app/globals.css';
@@ -13,21 +13,23 @@ export const metadata: Metadata = {
 
 interface Props {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
 export default async function LocaleLayout({ children, params }: Props) {
+  const { locale } = await params;
+
   let messages;
   try {
-    messages = await getMessages(params.locale);
+    messages = await getMessages();
   } catch (error) {
     notFound();
   }
 
   return (
-    <html lang={params.locale}>
+    <html lang={locale}>
       <body className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
-        <NextIntlClientProvider locale={params.locale} messages={messages}>
+        <NextIntlClientProvider messages={messages}>
           <Header />
           <main className="min-h-screen">{children}</main>
           <Footer />
