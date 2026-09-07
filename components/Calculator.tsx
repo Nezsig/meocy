@@ -133,25 +133,25 @@ export default function Calculator() {
 
         .button-group button {
           padding: 12px 20px;
-          border: 1px solid var(--border);
-          border-radius: var(--r-sm);
-          background: var(--bg);
+          border: none;
+          border-radius: 8px;
+          background: rgba(0, 0, 0, 0.06);
           color: var(--text-dark);
           font-weight: 600;
           font-size: 0.9rem;
           cursor: pointer;
-          transition: all 0.3s var(--ease);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .button-group button:hover {
-          border-color: var(--text-dark);
-          background: var(--bg-light);
+          background: rgba(0, 0, 0, 0.1);
         }
 
         .button-group button.active {
-          background: var(--dark);
-          color: var(--bg);
-          border-color: var(--dark);
+          background: #000;
+          color: #fff;
+          font-weight: 700;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .location-buttons {
@@ -164,10 +164,17 @@ export default function Calculator() {
           width: 100%;
           padding: 16px;
           text-align: left;
+          background: rgba(0, 0, 0, 0.06);
+          border: none;
+          border-radius: 8px;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .location-buttons button.active {
-          border: 2px solid var(--dark);
+          background: #000;
+          color: #fff;
+          font-weight: 700;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .slider-container {
@@ -204,16 +211,21 @@ export default function Calculator() {
         }
 
         .addon-card {
-          border: 1px solid var(--border);
-          border-radius: var(--r-md);
+          border: none;
+          border-radius: 8px;
           padding: 16px;
           cursor: pointer;
-          transition: all 0.3s var(--ease);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          background: rgba(0, 0, 0, 0.06);
         }
 
         .addon-card:hover {
-          border-color: var(--text-dark);
-          background: var(--bg-light);
+          background: rgba(0, 0, 0, 0.1);
+        }
+
+        .addon-card input[type="checkbox"]:checked ~ .addon-label {
+          color: #000;
+          font-weight: 700;
         }
 
         .addon-card input[type="checkbox"] {
@@ -234,34 +246,36 @@ export default function Calculator() {
 
         /* Price Card */
         .price-card {
-          border: 1px solid rgba(0, 0, 0, 0.1);
-          border-radius: var(--r-lg);
-          background: var(--dark);
+          border: none;
+          border-radius: 16px;
+          background: #0a0a0a;
           color: var(--text-on-dark);
           padding: 40px;
           position: sticky;
           top: 100px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
 
         .price-card-header {
-          font-size: 0.85rem;
-          font-weight: 700;
-          letter-spacing: 1px;
+          font-size: 0.8rem;
+          font-weight: 800;
+          letter-spacing: 1.5px;
           text-transform: uppercase;
-          color: var(--accent);
+          color: #7acc00;
           margin-bottom: 16px;
         }
 
         .price-display {
-          font-size: clamp(2rem, 5vw, 2.5rem);
-          font-weight: 800;
-          margin-bottom: 8px;
+          font-size: clamp(2.25rem, 5vw, 2.75rem);
+          font-weight: 900;
+          margin-bottom: 12px;
           line-height: 1;
+          color: #fff;
         }
 
         .price-range {
-          font-size: 0.9rem;
-          color: var(--text-on-dark-dim);
+          font-size: 0.85rem;
+          color: rgba(255, 255, 255, 0.7);
           margin-bottom: 24px;
         }
 
@@ -323,21 +337,23 @@ export default function Calculator() {
         }
 
         .price-cta {
-          background: var(--accent);
-          color: var(--dark);
+          background: #7acc00;
+          color: #000;
           border: none;
           padding: 16px 24px;
-          border-radius: var(--r-pill);
+          border-radius: 10px;
           font-weight: 700;
           font-size: 1rem;
           cursor: pointer;
           width: 100%;
-          transition: all 0.3s var(--ease);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 0 4px 12px rgba(122, 204, 0, 0.3);
         }
 
         .price-cta:hover {
           background: #6ab800;
-          transform: scale(1.02);
+          box-shadow: 0 6px 16px rgba(122, 204, 0, 0.4);
+          transform: translateY(-2px);
         }
 
         @media (max-width: 1024px) {
