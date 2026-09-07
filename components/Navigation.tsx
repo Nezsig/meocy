@@ -126,13 +126,17 @@ export default function Navigation() {
         .controls {
           display: flex;
           align-items: center;
-          gap: 12px;
+          gap: 16px;
           flex-shrink: 0;
         }
 
         .language-switcher {
           display: flex;
-          gap: 8px;
+          gap: 6px;
+          background: rgba(0, 0, 0, 0.04);
+          padding: 6px;
+          border-radius: 10px;
+          border: 1px solid rgba(0, 0, 0, 0.08);
         }
 
         .language-switcher a {
@@ -141,23 +145,24 @@ export default function Navigation() {
           padding: 8px 14px;
           border-radius: 8px;
           text-decoration: none;
+          color: rgba(0, 0, 0, 0.7);
+          background: transparent;
+          transition: all 0.25s ease;
+          letter-spacing: 0.5px;
+          border: none;
+          cursor: pointer;
+        }
+
+        .language-switcher a:hover {
           color: #000;
           background: rgba(0, 0, 0, 0.06);
-          transition: all 0.2s;
-          letter-spacing: 0.5px;
-          border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .language-switcher a.active {
-          background: #000;
+          background: #7acc00;
           color: #fff;
           font-weight: 700;
-          border-color: #000;
-        }
-
-        .language-switcher a:hover:not(.active) {
-          background: rgba(0, 0, 0, 0.1);
-          border-color: rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 8px rgba(122, 204, 0, 0.25);
         }
 
         .book-now-btn {
@@ -166,19 +171,19 @@ export default function Navigation() {
           padding: 12px 24px;
           border-radius: 8px;
           text-decoration: none;
-          background: #dc2626;
+          background: #7acc00;
           color: #fff;
-          transition: all 0.2s;
+          transition: all 0.25s ease;
           border: none;
           cursor: pointer;
           display: inline-block;
           letter-spacing: 0.3px;
-          box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+          box-shadow: 0 4px 12px rgba(122, 204, 0, 0.3);
         }
 
         .book-now-btn:hover {
-          background: #b91c1c;
-          box-shadow: 0 6px 16px rgba(220, 38, 38, 0.4);
+          background: #6ab800;
+          box-shadow: 0 6px 16px rgba(122, 204, 0, 0.4);
           transform: translateY(-2px);
         }
 
@@ -262,7 +267,7 @@ export default function Navigation() {
 
           {/* Controls */}
           <div className="controls">
-            {/* Language Switcher - Modern Buttons */}
+            {/* Language Switcher - Apple-style Modern Design */}
             <div className="language-switcher">
               {['en', 'it', 'fr'].map((l) => (
                 <Link
@@ -275,7 +280,7 @@ export default function Navigation() {
               ))}
             </div>
 
-            {/* Book Now Button - Prominent Red CTA */}
+            {/* Book Now Button - Lime Green CTA */}
             <Link href="/booking" className="book-now-btn">
               Book Now
             </Link>
