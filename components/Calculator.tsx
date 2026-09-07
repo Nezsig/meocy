@@ -1,6 +1,5 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 
@@ -28,7 +27,7 @@ export default function Calculator() {
     expressDelivery: 150,
   };
 
-  const { breakdown, total, minPrice, maxPrice } = useMemo(() => {
+  const { breakdown, minPrice, maxPrice } = useMemo(() => {
     let base = basePrices[serviceType];
     let imagePrice = Math.ceil(imageCount / 5) * 20;
 

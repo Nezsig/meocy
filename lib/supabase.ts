@@ -1,13 +1,20 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+let supabase: ReturnType<typeof createClient> | null = null;
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables');
+function getSupabaseClient() {
+  if (supabase) return supabase;
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error('Missing Supabase environment variables');
+  }
+
+  supabase = createClient(supabaseUrl, supabaseAnonKey);
+  return supabase;
 }
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export interface Booking {
   id?: string;
@@ -24,18 +31,20 @@ export interface Booking {
   created_at?: string;
 }
 
-export async function saveBooking(booking: Booking) {
-  const { data, error } = await supabase
+export async function saveBooking(booking: any): Promise<any> {
+  const client: any = getSupabaseClient();
+  const { data, error } = await client
     .from('bookings')
     .insert([booking])
     .select();
 
   if (error) throw error;
-  return data?.[0];
+  return data?.[0] || {};
 }
 
 export async function getAvailableDates() {
-  const { data, error } = await supabase
+  const client = getSupabaseClient();
+  const { data, error } = await client
     .from('bookings')
     .select('preferred_date')
     .eq('payment_status', 'paid');
@@ -48,7 +57,8 @@ export async function updateBookingPaymentStatus(
   bookingId: string,
   status: string
 ) {
-  const { data, error } = await supabase
+  const client: any = getSupabaseClient();
+  const { data, error } = await client
     .from('bookings')
     .update({ payment_status: status })
     .eq('id', bookingId)
