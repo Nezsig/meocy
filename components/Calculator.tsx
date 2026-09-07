@@ -15,9 +15,9 @@ export default function Calculator() {
 
   const basePrices: Prices = {
     product: 200,
-    fashion: 300,
-    restaurant: 350,
-    model: 400,
+    fashion: 210,
+    restaurant: 220,
+    model: 230,
   };
 
   const addOnPrices: Prices = {
@@ -477,9 +477,6 @@ export default function Calculator() {
             <div className="price-card-header">Your Estimate</div>
             <div className="price-display">
               €{minPrice}
-            </div>
-            <div className="price-range">
-              All-inclusive pricing. Quotes sent within 48 hours.
             </div>
 
             <div className="price-note">
