@@ -1,6 +1,5 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -8,7 +7,6 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 export default function Navigation() {
-  const t = useTranslations();
   const locale = useLocale();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +18,6 @@ export default function Navigation() {
     { href: '/#estimate', label: 'Estimate' },
     { href: '/#packages', label: 'Packages' },
     { href: '/#faq', label: 'FAQ' },
-    { href: '/booking', label: t('nav.booking'), cta: true },
   ];
 
   const getLocalizedPath = (path: string, newLocale: string) => {
@@ -30,136 +27,128 @@ export default function Navigation() {
     return `/${newLocale}${path}`;
   };
 
+  const isActive = (href: string) => {
+    return pathname === href || pathname === `/${locale}${href}`;
+  };
+
   return (
     <>
       <style>{`
         nav {
-          background: #ffffff;
-          backdrop-filter: blur(10px);
-          border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(20px);
+          border: 1px solid rgba(0, 0, 0, 0.08);
           position: sticky;
-          top: 8px;
+          top: 12px;
           z-index: 50;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-          margin: 0 8px;
-          border-radius: 10px;
-          padding: 0 16px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+          margin: 0 auto;
+          border-radius: 16px;
+          padding: 12px 24px;
+          max-width: calc(100% - 24px);
+          left: 12px;
+          right: 12px;
         }
 
         nav .container {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          height: 75px;
+          height: auto;
           max-width: 100%;
           padding: 0;
+          gap: 32px;
         }
 
         .logo-link {
           display: flex;
           align-items: center;
-          gap: 8px;
+          gap: 10px;
           text-decoration: none;
-          font-weight: 600;
-          font-size: 0.9rem;
+          font-weight: 700;
+          font-size: 0.95rem;
           color: #000;
-          transition: opacity 0.2s;
-          margin-right: auto;
+          transition: all 0.2s;
+          flex-shrink: 0;
+          letter-spacing: -0.5px;
         }
 
         .logo-link:hover {
-          opacity: 0.8;
+          opacity: 0.7;
         }
 
         .logo-link span {
-          display: none;
-        }
-
-        @media (min-width: 1024px) {
-          .logo-link span {
-            display: inline;
-          }
+          display: inline;
         }
 
         .logo-image {
-          height: 45px;
-          width: auto;
+          height: 40px;
+          width: 40px;
+          object-fit: contain;
         }
 
         .desktop-menu {
           display: none;
+          align-items: center;
+          gap: 4px;
+          flex: 1;
+          justify-content: center;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 1024px) {
           .desktop-menu {
             display: flex;
-            gap: 20px;
-            align-items: center;
           }
 
           .desktop-menu a {
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             font-weight: 500;
-            color: #000;
+            color: rgba(0, 0, 0, 0.75);
             text-decoration: none;
             transition: all 0.2s;
+            padding: 8px 14px;
+            border-radius: 8px;
             position: relative;
-            white-space: nowrap;
-          }
-
-          .desktop-menu a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #000;
-            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           }
 
           .desktop-menu a:hover {
-            color: #666;
+            color: #000;
+            background: rgba(0, 0, 0, 0.05);
           }
 
-          .desktop-menu a:hover::after {
-            width: 100%;
+          .desktop-menu a.active {
+            color: #000;
+            font-weight: 600;
+            background: rgba(0, 0, 0, 0.1);
           }
 
           .desktop-menu a.cta {
             background: #000;
             color: #fff;
-            padding: 8px 20px;
-            border-radius: 50px;
+            padding: 10px 18px;
+            border-radius: 8px;
             font-weight: 600;
-            font-size: 0.85rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          }
-
-          .desktop-menu a.cta::after {
-            display: none;
+            margin-left: 8px;
           }
 
           .desktop-menu a.cta:hover {
             background: #333;
             color: #fff;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-            transform: translateY(-2px);
           }
         }
 
         .controls {
           display: flex;
           align-items: center;
-          gap: 8px;
+          gap: 12px;
+          flex-shrink: 0;
         }
 
         .language-switcher {
           display: flex;
-          gap: 4px;
-          background: rgba(0, 0, 0, 0.05);
-          padding: 4px 6px;
+          gap: 6px;
+          background: rgba(0, 0, 0, 0.08);
+          padding: 6px 8px;
           border-radius: 8px;
         }
 
@@ -169,7 +158,7 @@ export default function Navigation() {
           padding: 6px 12px;
           border-radius: 6px;
           text-decoration: none;
-          color: #666;
+          color: rgba(0, 0, 0, 0.6);
           transition: all 0.2s;
           letter-spacing: 0.5px;
         }
@@ -178,6 +167,10 @@ export default function Navigation() {
           background: #000;
           color: #fff;
           font-weight: 700;
+        }
+
+        .language-switcher a:hover:not(.active) {
+          color: #000;
         }
 
         .mobile-menu-button {
@@ -193,7 +186,7 @@ export default function Navigation() {
           padding: 0;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 1024px) {
           .mobile-menu-button {
             display: none;
           }
@@ -203,8 +196,9 @@ export default function Navigation() {
           display: none;
           flex-direction: column;
           gap: 0;
-          padding: 16px 0;
-          border-top: 1px solid rgba(0, 0, 0, 0.06);
+          padding: 12px 0;
+          border-top: 1px solid rgba(0, 0, 0, 0.08);
+          margin-top: 12px;
         }
 
         .mobile-menu.open {
@@ -223,7 +217,7 @@ export default function Navigation() {
           background: rgba(0, 0, 0, 0.05);
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 1024px) {
           .mobile-menu {
             display: none !important;
           }
@@ -237,19 +231,20 @@ export default function Navigation() {
               src="/logo.png"
               alt="MEOCY Studio"
               width={40}
-              height={45}
+              height={40}
               className="logo-image"
+              priority
             />
             <span>STUDIO</span>
           </Link>
 
           {/* Desktop Menu */}
           <div className="desktop-menu">
-            {links.map((link) => (
+            {links.slice(0, -1).map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={link.cta ? 'cta' : ''}
+                className={isActive(link.href) ? 'active' : ''}
               >
                 {link.label}
               </Link>
@@ -270,6 +265,15 @@ export default function Navigation() {
                 </Link>
               ))}
             </div>
+
+            {/* Book Now Button - Desktop */}
+            <Link
+              href="/booking"
+              className="desktop-menu cta"
+              style={{ margin: 0 }}
+            >
+              Book Now
+            </Link>
 
             {/* Mobile Menu Button */}
             <button
