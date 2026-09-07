@@ -9,7 +9,7 @@
   },
   "hero": {
     "title": "Photography That Sells Your Brand",
-    "subtitle": "Professional product, fashion, and content photography in Milan",
+    "subtitle": "We photograph products, food, fashion and people for brands that sell online. You send us what you sell — we hand back a full set of images your shop, your ads and your feed can use the same week.",
     "cta_book": "Book a Shoot",
     "cta_work": "See Our Work"
   },
@@ -18,8 +18,21 @@
     "response": "12-Hour Response",
     "location": "1 Location (Milan)"
   },
+  "equipment": {
+    "title": "Our Equipment",
+    "subtitle": "Professional-grade gear for every shoot — no compromises on quality.",
+    "camera": "Camera",
+    "lenses": "Lenses",
+    "lighting": "Lighting",
+    "support": "Support & Stabilization",
+    "aerial": "Aerial",
+    "storage": "Memory & Storage",
+    "power": "Power",
+    "postproduction": "Post-Production"
+  },
   "packages": {
     "title": "Our Packages",
+    "subtitle": "The part everyone asks about first. All prices shown excluding VAT. Every detail fixed in writing before we start.",
     "basic": {
       "name": "Basic",
       "subtitle": "Studio",

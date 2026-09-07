@@ -18,6 +18,18 @@
     "response": "Réponse en 12 Heures",
     "location": "1 Localisation (Milan)"
   },
+  "equipment": {
+    "title": "Notre Équipement",
+    "subtitle": "Un équipement de niveau professionnel pour chaque shooting — aucun compromis sur la qualité.",
+    "camera": "Appareil Photo",
+    "lenses": "Objectifs",
+    "lighting": "Éclairage",
+    "support": "Support et Stabilisation",
+    "aerial": "Aérien",
+    "storage": "Mémoire et Stockage",
+    "power": "Alimentation",
+    "postproduction": "Post-Production"
+  },
   "packages": {
     "title": "Nos Forfaits",
     "basic": {

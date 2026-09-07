@@ -4,13 +4,7 @@ import { Resend } from 'resend';
 
 export const dynamic = 'force-dynamic';
 
-function getResendClient() {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    throw new Error('Missing RESEND_API_KEY');
-  }
-  return new Resend(apiKey);
-}
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
   try {
@@ -58,7 +52,7 @@ export async function POST(request: NextRequest) {
       <p><strong>Booking ID:</strong> ${savedBooking.id}</p>
     `;
 
-    await getResendClient().emails.send({
+    await resend.emails.send({
       from: 'bookings@meocy.com',
       to: 'meocystudio@gmail.com',
       subject: `New Booking Inquiry from ${body.name}`,
@@ -75,7 +69,7 @@ export async function POST(request: NextRequest) {
       <p>Best regards,<br>MEOCY Studio Team</p>
     `;
 
-    await getResendClient().emails.send({
+    await resend.emails.send({
       from: 'bookings@meocy.com',
       to: body.email,
       subject: 'Booking Confirmation - MEOCY Studio',

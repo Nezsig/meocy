@@ -2,28 +2,25 @@
 
 import { useTranslations } from 'next-intl';
 import { useState, useMemo } from 'react';
+import Link from 'next/link';
 
 interface Prices {
   [key: string]: number;
 }
 
 export default function Calculator() {
-  const t = useTranslations();
-
   const [serviceType, setServiceType] = useState('product');
-  const [imageCount, setImageCount] = useState(50);
+  const [imageCount, setImageCount] = useState(20);
   const [location, setLocation] = useState('studio');
   const [addOns, setAddOns] = useState<string[]>([]);
 
-  // Base prices per service type (per hour or per shoot)
   const basePrices: Prices = {
-    product: 50,
-    fashion: 75,
-    restaurant: 100,
-    model: 120,
+    product: 200,
+    fashion: 300,
+    restaurant: 350,
+    model: 400,
   };
 
-  // Add-on prices
   const addOnPrices: Prices = {
     modelCasting: 100,
     styling: 75,
@@ -31,24 +28,33 @@ export default function Calculator() {
     expressDelivery: 150,
   };
 
-  // Calculate price
-  const { total, breakdown } = useMemo(() => {
-    let base = basePrices[serviceType] * Math.ceil(imageCount / 10);
-    if (location === 'onLocation') base += 150;
+  const { breakdown, total, minPrice, maxPrice } = useMemo(() => {
+    let base = basePrices[serviceType];
+    let imagePrice = Math.ceil(imageCount / 5) * 20;
+
+    if (location === 'onLocation') {
+      base += 150;
+    }
 
     let addOnTotal = 0;
     addOns.forEach((addon) => {
       addOnTotal += addOnPrices[addon] || 0;
     });
 
+    const subtotal = base + imagePrice + addOnTotal;
+    const min = Math.round(subtotal * 0.9);
+    const max = Math.round(subtotal * 1.1);
+
     return {
-      basePrice: base,
-      total: base + addOnTotal,
       breakdown: {
-        base,
+        service: base,
+        images: imagePrice,
         location: location === 'onLocation' ? 150 : 0,
         addOns: addOnTotal,
       },
+      total: subtotal,
+      minPrice: min,
+      maxPrice: max,
     };
   }, [serviceType, imageCount, location, addOns]);
 
@@ -59,126 +65,451 @@ export default function Calculator() {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      <div>
-        <h2 className="text-3xl font-bold mb-6">{t('calculator.title')}</h2>
+    <section className="calculator-section">
+      <style>{`
+        .calculator-section {
+          background: var(--bg);
+          padding: 100px 0;
+        }
 
-        {/* Service Type */}
-        <div className="mb-6">
-          <label className="block text-lg font-semibold mb-3">
-            {t('calculator.serviceType')}
-          </label>
-          <div className="space-y-2">
-            {['product', 'fashion', 'restaurant', 'model'].map((type) => (
-              <label key={type} className="flex items-center">
-                <input
-                  type="radio"
-                  name="serviceType"
-                  value={type}
-                  checked={serviceType === type}
-                  onChange={(e) => setServiceType(e.target.value)}
-                  className="mr-3"
-                />
-                <span className="capitalize">{type}</span>
-              </label>
-            ))}
+        .calculator-header {
+          margin-bottom: 60px;
+        }
+
+        .calculator-header span.eyebrow {
+          display: inline-block;
+          background: var(--accent-soft);
+          color: var(--accent);
+          font-size: 0.75rem;
+          font-weight: 700;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          padding: 8px 16px;
+          border-radius: 20px;
+          margin-bottom: 16px;
+        }
+
+        .calculator-header h2 {
+          font-family: 'Playfair Display', serif;
+          font-size: clamp(1.75rem, 5vw, 2.75rem);
+          margin-bottom: 24px;
+          color: var(--text-dark);
+        }
+
+        .calculator-header p {
+          font-size: 1rem;
+          color: var(--text-light);
+          max-width: 600px;
+          line-height: 1.7;
+        }
+
+        .calculator-container {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 60px;
+          align-items: start;
+        }
+
+        .calculator-controls h3 {
+          font-family: 'Inter', sans-serif;
+          font-size: 0.85rem;
+          font-weight: 700;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          color: var(--text-dark);
+          margin-bottom: 16px;
+          margin-top: 32px;
+        }
+
+        .calculator-controls h3:first-of-type {
+          margin-top: 0;
+        }
+
+        .button-group {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          margin-bottom: 20px;
+        }
+
+        .button-group button {
+          padding: 12px 20px;
+          border: 1px solid var(--border);
+          border-radius: var(--r-sm);
+          background: var(--bg);
+          color: var(--text-dark);
+          font-weight: 600;
+          font-size: 0.9rem;
+          cursor: pointer;
+          transition: all 0.3s var(--ease);
+        }
+
+        .button-group button:hover {
+          border-color: var(--text-dark);
+          background: var(--bg-light);
+        }
+
+        .button-group button.active {
+          background: var(--dark);
+          color: var(--bg);
+          border-color: var(--dark);
+        }
+
+        .location-buttons {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+        }
+
+        .location-buttons button {
+          width: 100%;
+          padding: 16px;
+          text-align: left;
+        }
+
+        .location-buttons button.active {
+          border: 2px solid var(--dark);
+        }
+
+        .slider-container {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          margin-bottom: 20px;
+        }
+
+        .slider-container input[type="range"] {
+          flex: 1;
+        }
+
+        .slider-value {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: var(--accent);
+          min-width: 40px;
+          text-align: right;
+        }
+
+        .slider-labels {
+          display: flex;
+          justify-content: space-between;
+          font-size: 0.85rem;
+          color: var(--text-light);
+          margin-top: 8px;
+        }
+
+        .addons-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+        }
+
+        .addon-card {
+          border: 1px solid var(--border);
+          border-radius: var(--r-md);
+          padding: 16px;
+          cursor: pointer;
+          transition: all 0.3s var(--ease);
+        }
+
+        .addon-card:hover {
+          border-color: var(--text-dark);
+          background: var(--bg-light);
+        }
+
+        .addon-card input[type="checkbox"] {
+          margin-right: 12px;
+        }
+
+        .addon-label {
+          font-weight: 600;
+          font-size: 0.95rem;
+          color: var(--text-dark);
+        }
+
+        .addon-desc {
+          font-size: 0.8rem;
+          color: var(--text-light);
+          margin-top: 4px;
+        }
+
+        /* Price Card */
+        .price-card {
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          border-radius: var(--r-lg);
+          background: var(--dark);
+          color: var(--text-on-dark);
+          padding: 40px;
+          position: sticky;
+          top: 100px;
+        }
+
+        .price-card-header {
+          font-size: 0.85rem;
+          font-weight: 700;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          color: var(--accent);
+          margin-bottom: 16px;
+        }
+
+        .price-display {
+          font-size: clamp(2rem, 5vw, 2.5rem);
+          font-weight: 800;
+          margin-bottom: 8px;
+          line-height: 1;
+        }
+
+        .price-range {
+          font-size: 0.9rem;
+          color: var(--text-on-dark-dim);
+          margin-bottom: 24px;
+        }
+
+        .price-note {
+          font-size: 0.85rem;
+          color: var(--text-on-dark-dim);
+          line-height: 1.6;
+          margin-bottom: 24px;
+          padding-bottom: 24px;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .breakdown-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 0.95rem;
+          margin-bottom: 16px;
+        }
+
+        .breakdown-item-label {
+          color: var(--text-on-dark-dim);
+        }
+
+        .breakdown-item-value {
+          font-weight: 600;
+          color: var(--text-on-dark);
+        }
+
+        .price-features {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 16px;
+          margin-bottom: 24px;
+          padding-bottom: 24px;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .feature {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .feature-icon {
+          font-size: 1.5rem;
+          margin-bottom: 4px;
+        }
+
+        .feature-value {
+          font-weight: 700;
+          font-size: 1rem;
+          color: var(--text-on-dark);
+        }
+
+        .feature-label {
+          font-size: 0.8rem;
+          color: var(--text-on-dark-dim);
+        }
+
+        .price-cta {
+          background: var(--accent);
+          color: var(--dark);
+          border: none;
+          padding: 16px 24px;
+          border-radius: var(--r-pill);
+          font-weight: 700;
+          font-size: 1rem;
+          cursor: pointer;
+          width: 100%;
+          transition: all 0.3s var(--ease);
+        }
+
+        .price-cta:hover {
+          background: #6ab800;
+          transform: scale(1.02);
+        }
+
+        @media (max-width: 1024px) {
+          .calculator-container {
+            grid-template-columns: 1fr;
+            gap: 40px;
+          }
+
+          .price-card {
+            position: static;
+            top: auto;
+          }
+
+          .addons-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .location-buttons {
+            grid-template-columns: 1fr;
+          }
+        }
+      `}</style>
+
+      <div className="container">
+        <div className="calculator-header">
+          <span className="eyebrow">The Part Everyone Asks About First</span>
+          <h2>See your price before you talk to anyone.</h2>
+          <p>
+            Move the controls and watch the number change. This is the same
+            calculation behind every quote we send — nothing hidden underneath it.
+          </p>
+        </div>
+
+        <div className="calculator-container">
+          {/* Left: Controls */}
+          <div className="calculator-controls">
+            {/* Service Type */}
+            <h3>What are we photographing?</h3>
+            <div className="button-group">
+              {['product', 'fashion', 'restaurant', 'model'].map((type) => (
+                <button
+                  key={type}
+                  className={`capitalize ${serviceType === type ? 'active' : ''}`}
+                  onClick={() => setServiceType(type)}
+                >
+                  {type.charAt(0).toUpperCase() + type.slice(1)}
+                </button>
+              ))}
+            </div>
+
+            {/* Image Count */}
+            <h3>How many final images?</h3>
+            <div className="slider-container">
+              <input
+                type="range"
+                min="5"
+                max="80"
+                step="1"
+                value={imageCount}
+                onChange={(e) => setImageCount(Number(e.target.value))}
+                className="w-full"
+              />
+              <div className="slider-value">{imageCount}</div>
+            </div>
+            <div className="slider-labels">
+              <span>5 — a small drop</span>
+              <span>80 — a full catalogue</span>
+            </div>
+
+            {/* Location */}
+            <h3>Where?</h3>
+            <div className="location-buttons">
+              <button
+                className={location === 'studio' ? 'active' : ''}
+                onClick={() => setLocation('studio')}
+              >
+                <div style={{ fontWeight: 600 }}>Our Milan studio</div>
+                <div style={{ fontSize: '0.85rem', marginTop: '4px', color: 'var(--text-light)' }}>
+                  Full control of the light
+                </div>
+              </button>
+              <button
+                className={location === 'onLocation' ? 'active' : ''}
+                onClick={() => setLocation('onLocation')}
+              >
+                <div style={{ fontWeight: 600 }}>Your location</div>
+                <div style={{ fontSize: '0.85rem', marginTop: '4px', color: 'var(--text-light)' }}>
+                  We pack the studio into a van
+                </div>
+              </button>
+            </div>
+
+            {/* Add-ons */}
+            <h3>Anything else?</h3>
+            <div className="addons-grid">
+              {[
+                { id: 'modelCasting', label: 'Model casting', desc: 'We cast, book and pay the talent.' },
+                { id: 'styling', label: 'Styling & set build', desc: 'Props, surfaces, wardrobe.' },
+                { id: 'videoClips', label: 'Vertical video clips', desc: '6–10 short clips from the same set.' },
+                { id: 'expressDelivery', label: 'Express delivery', desc: 'Retouched files back in 48 hours.' },
+              ].map((addon) => (
+                <div
+                  key={addon.id}
+                  className="addon-card"
+                  onClick={() => toggleAddOn(addon.id)}
+                >
+                  <input
+                    type="checkbox"
+                    checked={addOns.includes(addon.id)}
+                    onChange={() => {}}
+                  />
+                  <label className="addon-label">{addon.label}</label>
+                  <div className="addon-desc">{addon.desc}</div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Image Count */}
-        <div className="mb-6">
-          <label className="block text-lg font-semibold mb-3">
-            {t('calculator.imageCount')}: {imageCount}
-          </label>
-          <input
-            type="range"
-            min="5"
-            max="150"
-            step="5"
-            value={imageCount}
-            onChange={(e) => setImageCount(Number(e.target.value))}
-            className="w-full"
-          />
-          <div className="flex justify-between text-sm text-gray-600 mt-2">
-            <span>5</span>
-            <span>150</span>
-          </div>
-        </div>
+          {/* Right: Price Card */}
+          <div className="price-card">
+            <div className="price-card-header">Your Estimate</div>
+            <div className="price-display">
+              €{minPrice} – €{maxPrice}
+            </div>
+            <div className="price-range">
+              Excluding VAT. Fixed in writing before we start.
+            </div>
 
-        {/* Location */}
-        <div className="mb-6">
-          <label className="block text-lg font-semibold mb-3">
-            {t('calculator.location')}
-          </label>
-          <select
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            className="w-full p-2 border rounded"
-          >
-            <option value="studio">{t('calculator.studio')}</option>
-            <option value="onLocation">{t('calculator.onLocation')}</option>
-          </select>
-        </div>
+            <div className="price-note">
+              <strong>{serviceType.charAt(0).toUpperCase() + serviceType.slice(1)} shoot</strong>
+              — studio time & lighting
+            </div>
 
-        {/* Add-ons */}
-        <div className="mb-6">
-          <label className="block text-lg font-semibold mb-3">
-            {t('calculator.addOns')}
-          </label>
-          <div className="space-y-2">
-            {['modelCasting', 'styling', 'videoClips', 'expressDelivery'].map((addon) => (
-              <label key={addon} className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={addOns.includes(addon)}
-                  onChange={() => toggleAddOn(addon)}
-                  className="mr-3"
-                />
-                <span>{t(`calculator.${addon}`)}</span>
-              </label>
-            ))}
+            <div className="breakdown-item">
+              <span className="breakdown-item-label">{imageCount} final retouched images</span>
+              <span className="breakdown-item-value">€{breakdown.images}</span>
+            </div>
+
+            {breakdown.location > 0 && (
+              <div className="breakdown-item">
+                <span className="breakdown-item-label">On-location travel</span>
+                <span className="breakdown-item-value">€{breakdown.location}</span>
+              </div>
+            )}
+
+            {breakdown.addOns > 0 && (
+              <div className="breakdown-item">
+                <span className="breakdown-item-label">Add-ons</span>
+                <span className="breakdown-item-value">€{breakdown.addOns}</span>
+              </div>
+            )}
+
+            <div className="price-features">
+              <div className="feature">
+                <div className="feature-icon">⏱️</div>
+                <div className="feature-value">4 working days</div>
+                <div className="feature-label">Files delivered</div>
+              </div>
+              <div className="feature">
+                <div className="feature-icon">✨</div>
+                <div className="feature-value">Essential</div>
+                <div className="feature-label">One studio day</div>
+              </div>
+            </div>
+
+            <Link href="/booking" className="price-cta" style={{ display: 'inline-block', textAlign: 'center', textDecoration: 'none' }}>
+              Hold a date with this brief
+            </Link>
           </div>
         </div>
       </div>
-
-      {/* Price Breakdown */}
-      <div className="bg-gray-100 rounded-lg p-8 h-fit">
-        <h3 className="text-2xl font-bold mb-6">{t('calculator.estimatedPrice')}</h3>
-
-        <div className="space-y-4 mb-6">
-          <div className="flex justify-between">
-            <span className="text-gray-700">Service & Images:</span>
-            <span className="font-semibold">€{breakdown.base}</span>
-          </div>
-
-          {breakdown.location > 0 && (
-            <div className="flex justify-between">
-              <span className="text-gray-700">On-location:</span>
-              <span className="font-semibold">€{breakdown.location}</span>
-            </div>
-          )}
-
-          {breakdown.addOns > 0 && (
-            <div className="flex justify-between">
-              <span className="text-gray-700">Add-ons:</span>
-              <span className="font-semibold">€{breakdown.addOns}</span>
-            </div>
-          )}
-
-          <div className="border-t pt-4 flex justify-between text-xl font-bold">
-            <span>Total:</span>
-            <span className="text-2xl">€{total}</span>
-          </div>
-        </div>
-
-        <p className="text-sm text-gray-600 mb-6">
-          25% deposit required to confirm booking
-        </p>
-
-        <button className="btn btn-secondary w-full">
-          Proceed to Booking
-        </button>
-      </div>
-    </div>
+    </section>
   );
 }

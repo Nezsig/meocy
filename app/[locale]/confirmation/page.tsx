@@ -1,13 +1,12 @@
-'use client';
-
 import { useTranslations } from 'next-intl';
-import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
-export default function ConfirmationPage() {
+export const dynamic = 'force-dynamic';
+
+export default async function ConfirmationPage({ searchParams }: { searchParams: Promise<{ id?: string }> }) {
   const t = useTranslations();
-  const searchParams = useSearchParams();
-  const bookingId = searchParams.get('id');
+  const params = await searchParams;
+  const bookingId = params?.id;
 
   return (
     <div className="py-16 min-h-screen bg-gray-50 flex items-center justify-center">

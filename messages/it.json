@@ -18,6 +18,18 @@
     "response": "Risposta in 12 Ore",
     "location": "1 Ubicazione (Milano)"
   },
+  "equipment": {
+    "title": "La Nostra Attrezzatura",
+    "subtitle": "Attrezzatura di livello professionale per ogni shooting — nessun compromesso sulla qualità.",
+    "camera": "Fotocamera",
+    "lenses": "Obiettivi",
+    "lighting": "Illuminazione",
+    "support": "Supporto e Stabilizzazione",
+    "aerial": "Aereo",
+    "storage": "Memoria e Archiviazione",
+    "power": "Alimentazione",
+    "postproduction": "Post-Produzione"
+  },
   "packages": {
     "title": "I Nostri Pacchetti",
     "basic": {
