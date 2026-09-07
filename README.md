@@ -1,75 +1,199 @@
-# MEOCY Studio — Photography Booking
+# MEOCY Studio - Next.js 15 Rebuild
 
-A professional photography studio booking website for MEOCY Studio in Milan.
+A modern, multilingual photography studio booking system built with Next.js 15, featuring online payment integration and real-time availability management.
+
+## Project Overview
+
+**Branch:** `feature/next-rebuild-payment`  
+**Status:** Development (Skeleton payment - real bank integration TBD)  
+**Live Site:** https://meocy.com (Express version - DO NOT MODIFY)
+
+This is a complete rebuild of the MEOCY Studio website with:
+- Next.js 15 (App Router)
+- TypeScript
+- Tailwind CSS
+- Multilingual support (EN / IT / FR)
+- Supabase integration for bookings
+- Resend email notifications
+- Payment processing skeleton (bank details to be added)
+
+## Tech Stack
+
+- **Framework:** Next.js 15
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Database:** Supabase (PostgreSQL)
+- **Email:** Resend
+- **Internationalization:** next-intl
+- **Deployment:** Vercel
+
+## Environment Variables
+
+Create a `.env.local` file with the following variables:
+
+```env
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=https://sqwwlfppzgkylloywzkc.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+# Resend
+RESEND_API_KEY=your_resend_api_key
+
+# Site Configuration
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
+
+## Installation & Setup
+
+### Prerequisites
+- Node.js 22+
+- npm or yarn
+
+### Local Development
+
+```bash
+# Install dependencies
+npm install
+
+# Create .env.local with API keys
+cp .env.example .env.local
+# Edit .env.local and add real API keys
+
+# Run development server
+npm run dev
+
+# Open http://localhost:3000 in your browser
+```
+
+### Build & Deploy
+
+```bash
+# Build for production
+npm run build
+
+# Start production server locally
+npm start
+```
 
 ## Features
 
-### Simple Booking Form
-- Customer booking requests with date/time selection
-- Multiple package options (Basic, Silver, Gold, Platinum)
-- Date conflict prevention (books display availability)
-- Email submission via mailto:
+### 1. Homepage
+- Hero section with brand messaging
+- Package showcase (Basic, Silver, Gold, Platinum)
+- Interactive price calculator
+- FAQ section
+- Call-to-action banner
 
-### Booking Workflow
-1. Customer fills out booking form on homepage
-2. Selects their preferred date, time, and package
-3. Form prevents double-booking of dates
-4. Clicking "Book" opens default email client with pre-filled booking request
-5. Email is sent to hello@meocy.com
-6. Studio receives request and confirms via email/WhatsApp within 24 hours
+### 2. Booking System
+- Full booking form with date/time selection
+- Date picker shows booked dates (disabled)
+- Automatic email to studio: `meocystudio@gmail.com`
+- Confirmation email to customer
+- Redirects to payment page after submission
 
-## Setup
+### 3. Payment Processing
+- 25% deposit requirement display
+- Skeleton payment gateway (real bank integration TBD)
+- Payment callback endpoint for bank integration
+- Status tracking in database
 
-This is a static website with no backend server or database required.
+### 4. Multilingual Support
+- English (EN), Italian (IT), French (FR)
+- Language switcher in navigation
+- All content translated via `next-intl`
 
-### Deployment
+## API Endpoints
 
-The site is deployed to Vercel and serves as a static HTML/CSS/JavaScript website.
+### POST /api/bookings
+Creates a new booking and sends emails.
 
-Simply push changes to the repository and Vercel will automatically deploy them.
+### GET /api/available-dates
+Fetches booked dates for the date picker.
 
+### POST/GET /api/payment/callback
+Handles payment gateway redirects.
 
-## How It Works
+## Testing Checklist
 
-### Customer Booking Process
-1. Customer visits meocy.vercel.app
-2. Selects their preferred date, time, and package
-3. Fills in contact information (name, email, phone)
-4. Clicks "Book Now"
-5. Default email client opens with pre-filled booking request
-6. Email is sent to hello@meocy.com
+- [ ] Homepage loads in all languages
+- [ ] Booking form submits successfully
+- [ ] Booking saved to Supabase
+- [ ] Email sent to meocystudio@gmail.com
+- [ ] Booked dates appear disabled
+- [ ] Price calculator works
+- [ ] Payment page processes correctly
+- [ ] Mobile responsive on all screens
 
-### Date Management
-- Each booked date is stored in the browser's localStorage
-- Users cannot select a date that's already booked
-- Prevents double-booking without requiring a backend database
+## Deployment to Vercel
 
-### Studio Workflow
-- Studio receives booking email
-- Contacts customer within 24 hours via email or WhatsApp
-- Confirms availability and discusses details
-- Sends payment information if needed
+```bash
+# Install Vercel CLI
+npm i -g vercel
 
-## Files Structure
+# Deploy
+vercel --prod
+
+# Add environment variables in Vercel dashboard
+```
+
+## Project Structure
 
 ```
-meocy/
-├── public/
-│   ├── index.html        # Homepage with booking form
-│   ├── work.html         # Portfolio page
-│   ├── privacy.html      # Privacy policy
-│   ├── terms.html        # Terms of service
-│   ├── styles.css        # Global styles
-│   └── assets/           # Images and logos
-└── README.md            # This file
+/app                      # Next.js App Router
+  /[locale]/              # Localized pages
+    /page.tsx             # Homepage
+    /booking/page.tsx     # Booking form
+    /payment/page.tsx     # Payment processing
+    /confirmation/page.tsx # Confirmation
+    /layout.tsx           # Locale layout with provider
+  /api/                   # API routes
+    /bookings/route.ts    # Booking creation
+    /available-dates/route.ts
+    /payment/callback/route.ts
+
+/components               # React components
+  /Navigation.tsx         # Header
+  /Hero.tsx              # Hero section
+  /Packages.tsx          # Pricing
+  /Calculator.tsx        # Price calculator
+  /BookingForm.tsx       # Main form
+  /Footer.tsx            # Footer
+
+/lib
+  /supabase.ts           # Database functions
+
+/messages                # Translation files
+  /en.json
+  /it.json
+  /fr.json
 ```
 
-## Language Support
+## Payment Gateway Integration (Future)
 
-The website supports English, Italian, and French with a language switcher in the navigation.
+Currently, the payment flow is a skeleton. To integrate a real bank gateway:
 
-## Contact
+1. Get bank API docs from your payment provider
+2. Update `/api/payment/callback` to verify payments
+3. Update payment page to redirect to bank gateway
+4. Test with test transactions
 
-For technical questions or support:
-- Email: hello@meocy.com
-- Phone: +39 379 105 1000
+## Support
+
+For issues or questions:
+- Email: meocystudio@gmail.com
+- Review the comprehensive setup guide above
+
+## Git Workflow
+
+```bash
+# Work on feature/next-rebuild-payment branch
+git add .
+git commit -m "Description"
+git push origin feature/next-rebuild-payment
+
+# Create PR, test, merge to main
+```
+
+## License
+
+MEOCY Studio - 2024. All rights reserved.

@@ -1,6 +1,13 @@
 {
   "/_not-found/page": "/_not-found",
-  "/[locale]/privacy/page": "/[locale]/privacy",
+  "/api/available-dates/route": "/api/available-dates",
+  "/api/payment/callback/route": "/api/payment/callback",
+  "/api/bookings/route": "/api/bookings",
+  "/[locale]/contact/page": "/[locale]/contact",
   "/[locale]/terms/page": "/[locale]/terms",
-  "/[locale]/page": "/[locale]"
+  "/[locale]/confirmation/page": "/[locale]/confirmation",
+  "/[locale]/payment/page": "/[locale]/payment",
+  "/[locale]/page": "/[locale]",
+  "/[locale]/privacy/page": "/[locale]/privacy",
+  "/[locale]/booking/page": "/[locale]/booking"
 }

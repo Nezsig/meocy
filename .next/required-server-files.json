@@ -2,7 +2,6 @@
   "version": 1,
   "config": {
     "env": {},
-    "webpack": null,
     "eslint": {
       "ignoreDuringBuilds": false
     },
@@ -60,8 +59,13 @@
       "dangerouslyAllowSVG": false,
       "contentSecurityPolicy": "script-src 'none'; frame-src 'none'; sandbox;",
       "contentDispositionType": "attachment",
-      "remotePatterns": [],
-      "unoptimized": true
+      "remotePatterns": [
+        {
+          "protocol": "https",
+          "hostname": "**"
+        }
+      ],
+      "unoptimized": false
     },
     "devIndicators": {
       "position": "bottom-left"
@@ -82,7 +86,7 @@
     "serverRuntimeConfig": {},
     "publicRuntimeConfig": {},
     "reactProductionProfiling": false,
-    "reactStrictMode": null,
+    "reactStrictMode": true,
     "reactMaxHeadersLength": 6000,
     "httpAgentOptions": {
       "keepAlive": true
@@ -99,14 +103,14 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "/Users/chamilaprasanna/Desktop/MEOCY",
+    "outputFileTracingRoot": "/Users/chamilaprasanna/Desktop/MEOCY/meocy",
     "experimental": {
       "useSkewCookie": false,
       "cacheLife": {
         "default": {
-          "stale": 300,
-          "revalidate": 900,
-          "expire": 4294967294
+          "revalidate": 0,
+          "stale": 60,
+          "expire": 31536000
         },
         "seconds": {
           "stale": 30,
@@ -205,7 +209,6 @@
       "optimizeRouterScrolling": false,
       "middlewareClientMaxBodySize": 10485760,
       "optimizePackageImports": [
-        "@radix-ui/react-toast",
         "lucide-react",
         "date-fns",
         "lodash-es",
@@ -289,11 +292,11 @@
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.js",
     "turbopack": {
-      "root": "/Users/chamilaprasanna/Desktop/MEOCY"
+      "root": "/Users/chamilaprasanna/Desktop/MEOCY/meocy"
     }
   },
   "appDir": "/Users/chamilaprasanna/Desktop/MEOCY/meocy",
-  "relativeAppDir": "meocy",
+  "relativeAppDir": "",
   "files": [
     ".next/routes-manifest.json",
     ".next/server/pages-manifest.json",
