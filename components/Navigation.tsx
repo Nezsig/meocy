@@ -44,7 +44,7 @@ export default function Navigation() {
           box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
           margin: 0 auto;
           border-radius: 16px;
-          padding: 16px 28px;
+          padding: 12px 24px;
           max-width: calc(100% - 24px);
           left: 12px;
           right: 12px;
@@ -57,16 +57,16 @@ export default function Navigation() {
           height: auto;
           max-width: 100%;
           padding: 0;
-          gap: 40px;
+          gap: 32px;
         }
 
         .logo-link {
           display: flex;
           align-items: center;
-          gap: 12px;
+          gap: 2px;
           text-decoration: none;
           font-weight: 700;
-          font-size: 1rem;
+          font-size: 0.95rem;
           color: #000;
           transition: all 0.2s;
           flex-shrink: 0;
@@ -82,8 +82,8 @@ export default function Navigation() {
         }
 
         .logo-image {
-          height: 60px;
-          width: 60px;
+          height: 40px;
+          width: 40px;
           object-fit: contain;
         }
 
@@ -126,23 +126,23 @@ export default function Navigation() {
         .controls {
           display: flex;
           align-items: center;
-          gap: 24px;
+          gap: 20px;
           flex-shrink: 0;
         }
 
         .language-switcher {
           display: flex;
-          gap: 8px;
+          gap: 12px;
         }
 
         .language-switcher a {
           font-size: 0.8rem;
           font-weight: 600;
-          padding: 8px 16px;
-          border-radius: 8px;
+          padding: 6px 12px;
+          border-radius: 6px;
           text-decoration: none;
-          color: rgba(0, 0, 0, 0.8);
-          background: rgba(0, 0, 0, 0.05);
+          color: rgba(0, 0, 0, 0.7);
+          background: transparent;
           transition: all 0.25s ease;
           letter-spacing: 0.3px;
           border: none;
@@ -150,14 +150,14 @@ export default function Navigation() {
         }
 
         .language-switcher a:hover {
-          background: rgba(0, 0, 0, 0.1);
           color: #000;
+          background: rgba(0, 0, 0, 0.06);
         }
 
         .language-switcher a.active {
-          background: rgba(0, 0, 0, 0.15);
           color: #000;
           font-weight: 700;
+          background: rgba(0, 0, 0, 0.1);
         }
 
         .book-now-btn {
@@ -239,8 +239,8 @@ export default function Navigation() {
             <Image
               src="/MEOCY Logo.png"
               alt="MEOCY Studio"
-              width={60}
-              height={60}
+              width={40}
+              height={40}
               className="logo-image"
               priority
             />
@@ -262,7 +262,7 @@ export default function Navigation() {
 
           {/* Controls */}
           <div className="controls">
-            {/* Language Switcher - Clean Minimal Design */}
+            {/* Language Switcher - Clean Minimal */}
             <div className="language-switcher">
               {['en', 'it', 'fr'].map((l) => (
                 <Link
