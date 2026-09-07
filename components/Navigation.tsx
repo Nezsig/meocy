@@ -62,15 +62,16 @@ export default function Navigation() {
 
         .logo-link {
           display: flex;
+          flex-direction: column;
           align-items: center;
-          gap: 2px;
+          gap: 0;
           text-decoration: none;
           font-weight: 700;
-          font-size: 0.95rem;
+          font-size: 0.7rem;
           color: #000;
           transition: all 0.2s;
           flex-shrink: 0;
-          letter-spacing: -0.5px;
+          letter-spacing: 0.5px;
         }
 
         .logo-link:hover {
@@ -79,12 +80,14 @@ export default function Navigation() {
 
         .logo-link span {
           display: inline;
+          text-transform: uppercase;
         }
 
         .logo-image {
           height: 40px;
           width: 40px;
           object-fit: contain;
+          margin-bottom: 4px;
         }
 
         .desktop-menu {
