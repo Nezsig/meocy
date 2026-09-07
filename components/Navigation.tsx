@@ -44,7 +44,7 @@ export default function Navigation() {
           box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
           margin: 0 auto;
           border-radius: 16px;
-          padding: 12px 24px;
+          padding: 16px 28px;
           max-width: calc(100% - 24px);
           left: 12px;
           right: 12px;
@@ -57,16 +57,16 @@ export default function Navigation() {
           height: auto;
           max-width: 100%;
           padding: 0;
-          gap: 32px;
+          gap: 40px;
         }
 
         .logo-link {
           display: flex;
           align-items: center;
-          gap: 10px;
+          gap: 12px;
           text-decoration: none;
           font-weight: 700;
-          font-size: 0.95rem;
+          font-size: 1rem;
           color: #000;
           transition: all 0.2s;
           flex-shrink: 0;
@@ -82,8 +82,8 @@ export default function Navigation() {
         }
 
         .logo-image {
-          height: 40px;
-          width: 40px;
+          height: 60px;
+          width: 60px;
           object-fit: contain;
         }
 
@@ -126,64 +126,59 @@ export default function Navigation() {
         .controls {
           display: flex;
           align-items: center;
-          gap: 16px;
+          gap: 24px;
           flex-shrink: 0;
         }
 
         .language-switcher {
           display: flex;
-          gap: 6px;
-          background: rgba(0, 0, 0, 0.04);
-          padding: 6px;
-          border-radius: 10px;
-          border: 1px solid rgba(0, 0, 0, 0.08);
+          gap: 8px;
         }
 
         .language-switcher a {
-          font-size: 0.75rem;
-          font-weight: 700;
-          padding: 8px 14px;
+          font-size: 0.8rem;
+          font-weight: 600;
+          padding: 8px 16px;
           border-radius: 8px;
           text-decoration: none;
-          color: rgba(0, 0, 0, 0.7);
-          background: transparent;
+          color: rgba(0, 0, 0, 0.8);
+          background: rgba(0, 0, 0, 0.05);
           transition: all 0.25s ease;
-          letter-spacing: 0.5px;
+          letter-spacing: 0.3px;
           border: none;
           cursor: pointer;
         }
 
         .language-switcher a:hover {
+          background: rgba(0, 0, 0, 0.1);
           color: #000;
-          background: rgba(0, 0, 0, 0.06);
         }
 
         .language-switcher a.active {
-          background: #7acc00;
-          color: #fff;
+          background: rgba(0, 0, 0, 0.15);
+          color: #000;
           font-weight: 700;
-          box-shadow: 0 2px 8px rgba(122, 204, 0, 0.25);
         }
 
         .book-now-btn {
           font-size: 0.95rem;
           font-weight: 700;
-          padding: 12px 24px;
-          border-radius: 8px;
+          padding: 12px 28px;
+          border-radius: 10px;
           text-decoration: none;
-          background: #7acc00;
+          background: #000;
           color: #fff;
           transition: all 0.25s ease;
           border: none;
           cursor: pointer;
           display: inline-block;
           letter-spacing: 0.3px;
-          box-shadow: 0 4px 12px rgba(122, 204, 0, 0.3);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         .book-now-btn:hover {
-          background: #6ab800;
-          box-shadow: 0 6px 16px rgba(122, 204, 0, 0.4);
+          background: #1a1a1a;
+          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
           transform: translateY(-2px);
         }
 
@@ -244,8 +239,8 @@ export default function Navigation() {
             <Image
               src="/MEOCY Logo.png"
               alt="MEOCY Studio"
-              width={40}
-              height={40}
+              width={60}
+              height={60}
               className="logo-image"
               priority
             />
@@ -267,7 +262,7 @@ export default function Navigation() {
 
           {/* Controls */}
           <div className="controls">
-            {/* Language Switcher - Apple-style Modern Design */}
+            {/* Language Switcher - Clean Minimal Design */}
             <div className="language-switcher">
               {['en', 'it', 'fr'].map((l) => (
                 <Link
@@ -280,7 +275,7 @@ export default function Navigation() {
               ))}
             </div>
 
-            {/* Book Now Button - Lime Green CTA */}
+            {/* Book Now Button - Black CTA */}
             <Link href="/booking" className="book-now-btn">
               Book Now
             </Link>
