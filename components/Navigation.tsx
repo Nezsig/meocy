@@ -89,7 +89,7 @@ export default function Navigation() {
         }
 
         .logo-image {
-          height: 60px;
+          height: 35px;
           width: auto;
           object-fit: contain;
         }
@@ -247,8 +247,8 @@ export default function Navigation() {
             <Image
               src="/assets/meocy-wordmark-black.png"
               alt="MEOCY Studio"
-              width={120}
-              height={60}
+              width={100}
+              height={35}
               className="logo-image"
               priority
             />
