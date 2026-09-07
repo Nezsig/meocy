@@ -21,10 +21,25 @@ export default function Navigation() {
   ];
 
   const getLocalizedPath = (path: string, newLocale: string) => {
-    if (path.startsWith(`/${locale}`)) {
-      return path.replace(`/${locale}`, `/${newLocale}`);
+    const defaultLocale = 'en';
+    let cleanPath = path;
+
+    // Remove current locale prefix if it exists
+    if (path.startsWith(`/${locale}/`) || path === `/${locale}`) {
+      cleanPath = path.replace(`/${locale}`, '') || '/';
+    } else if (path.startsWith(`/en/`) || path === `/en`) {
+      cleanPath = path.replace(`/en`, '') || '/';
+    } else if (path.startsWith(`/it/`) || path === `/it`) {
+      cleanPath = path.replace(`/it`, '') || '/';
+    } else if (path.startsWith(`/fr/`) || path === `/fr`) {
+      cleanPath = path.replace(`/fr`, '') || '/';
     }
-    return `/${newLocale}${path}`;
+
+    // Add new locale prefix if not default locale
+    if (newLocale === defaultLocale) {
+      return cleanPath;
+    }
+    return `/${newLocale}${cleanPath}`;
   };
 
   const isActive = (href: string) => {
@@ -256,15 +271,18 @@ export default function Navigation() {
           <div className="controls">
             {/* Language Switcher - Clean Minimal */}
             <div className="language-switcher">
-              {['en', 'it', 'fr'].map((l) => (
-                <Link
-                  key={l}
-                  href={getLocalizedPath(pathname, l)}
-                  className={locale === l ? 'active' : ''}
-                >
-                  {l.toUpperCase()}
-                </Link>
-              ))}
+              {['en', 'it', 'fr'].map((l) => {
+                const isCurrentLocale = locale === l;
+                return (
+                  <Link
+                    key={l}
+                    href={getLocalizedPath(pathname, l)}
+                    className={isCurrentLocale ? 'active' : ''}
+                  >
+                    {l.toUpperCase()}
+                  </Link>
+                );
+              })}
             </div>
 
             {/* Book Now Button - Black CTA */}
