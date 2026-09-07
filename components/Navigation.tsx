@@ -62,32 +62,22 @@ export default function Navigation() {
 
         .logo-link {
           display: flex;
-          flex-direction: column;
           align-items: center;
           gap: 0;
           text-decoration: none;
-          font-weight: 700;
-          font-size: 0.7rem;
           color: #000;
           transition: all 0.2s;
           flex-shrink: 0;
-          letter-spacing: 0.5px;
         }
 
         .logo-link:hover {
           opacity: 0.7;
         }
 
-        .logo-link span {
-          display: inline;
-          text-transform: uppercase;
-        }
-
         .logo-image {
           height: 40px;
-          width: 40px;
+          width: auto;
           object-fit: contain;
-          margin-bottom: 4px;
         }
 
         .desktop-menu {
@@ -240,14 +230,13 @@ export default function Navigation() {
         <div className="container">
           <Link href="/" className="logo-link">
             <Image
-              src="/MEOCY Logo.png"
+              src="/MEOCY/meocy-wordmark-black.png"
               alt="MEOCY Studio"
-              width={40}
+              width={80}
               height={40}
               className="logo-image"
               priority
             />
-            <span>STUDIO</span>
           </Link>
 
           {/* Desktop Menu */}
