@@ -89,7 +89,7 @@ export default function Navigation() {
         }
 
         .logo-image {
-          height: 60px;
+          height: 35px;
           width: auto;
           object-fit: contain;
         }
@@ -148,7 +148,7 @@ export default function Navigation() {
           padding: 6px 12px;
           border-radius: 6px;
           text-decoration: none;
-          color: rgba(0, 0, 0, 0.7);
+          color: rgba(0, 0, 0, 0.5);
           background: transparent;
           transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
           letter-spacing: 0.3px;
@@ -158,14 +158,13 @@ export default function Navigation() {
         }
 
         .language-switcher a:hover {
-          color: #000;
-          background: rgba(0, 0, 0, 0.06);
+          color: rgba(0, 0, 0, 0.8);
         }
 
         .language-switcher a.active {
           color: #000;
           font-weight: 700;
-          background: rgba(0, 0, 0, 0.08);
+          background: rgba(0, 0, 0, 0.12);
         }
 
         .book-now-btn {
@@ -247,8 +246,8 @@ export default function Navigation() {
             <Image
               src="/assets/meocy-wordmark-black.png"
               alt="MEOCY Studio"
-              width={120}
-              height={60}
+              width={100}
+              height={35}
               className="logo-image"
               priority
             />
