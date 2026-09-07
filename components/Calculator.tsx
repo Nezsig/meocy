@@ -15,9 +15,9 @@ export default function Calculator() {
 
   const basePrices: Prices = {
     product: 200,
-    fashion: 300,
-    restaurant: 350,
-    model: 400,
+    fashion: 210,
+    restaurant: 220,
+    model: 230,
   };
 
   const addOnPrices: Prices = {
@@ -410,7 +410,7 @@ export default function Calculator() {
               <input
                 type="range"
                 min="5"
-                max="80"
+                max="100"
                 step="1"
                 value={imageCount}
                 onChange={(e) => setImageCount(Number(e.target.value))}
@@ -420,7 +420,7 @@ export default function Calculator() {
             </div>
             <div className="slider-labels">
               <span>5 — a small drop</span>
-              <span>80 — a full catalogue</span>
+              <span>100 — a full catalogue</span>
             </div>
 
             {/* Location */}
@@ -476,10 +476,7 @@ export default function Calculator() {
           <div className="price-card">
             <div className="price-card-header">Your Estimate</div>
             <div className="price-display">
-              €{minPrice} – €{maxPrice}
-            </div>
-            <div className="price-range">
-              Excluding VAT. Fixed in writing before we start.
+              €{minPrice}
             </div>
 
             <div className="price-note">
