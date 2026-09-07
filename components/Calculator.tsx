@@ -410,7 +410,7 @@ export default function Calculator() {
               <input
                 type="range"
                 min="5"
-                max="100"
+                max="80"
                 step="1"
                 value={imageCount}
                 onChange={(e) => setImageCount(Number(e.target.value))}
@@ -420,7 +420,7 @@ export default function Calculator() {
             </div>
             <div className="slider-labels">
               <span>5 — a small drop</span>
-              <span>100 — a full catalogue</span>
+              <span>80 — a full catalogue</span>
             </div>
 
             {/* Location */}
@@ -476,10 +476,10 @@ export default function Calculator() {
           <div className="price-card">
             <div className="price-card-header">Your Estimate</div>
             <div className="price-display">
-              €{minPrice}
+              €{minPrice} – €{maxPrice}
             </div>
             <div className="price-range">
-              All-inclusive pricing. Quotes sent within 48 hours.
+              Excluding VAT. Fixed in writing before we start.
             </div>
 
             <div className="price-note">
