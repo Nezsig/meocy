@@ -72,13 +72,12 @@ export default function Navigation() {
           height: auto;
           max-width: 100%;
           padding: 0;
-          gap: 32px;
+          gap: 40px;
         }
 
         .logo-link {
           display: flex;
           align-items: center;
-          gap: 0;
           text-decoration: none;
           color: #000;
           transition: all 0.2s;
@@ -86,11 +85,11 @@ export default function Navigation() {
         }
 
         .logo-link:hover {
-          opacity: 0.7;
+          opacity: 0.8;
         }
 
         .logo-image {
-          height: 40px;
+          height: 60px;
           width: auto;
           object-fit: contain;
         }
@@ -140,7 +139,7 @@ export default function Navigation() {
 
         .language-switcher {
           display: flex;
-          gap: 12px;
+          gap: 10px;
         }
 
         .language-switcher a {
@@ -151,10 +150,11 @@ export default function Navigation() {
           text-decoration: none;
           color: rgba(0, 0, 0, 0.7);
           background: transparent;
-          transition: all 0.25s ease;
+          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
           letter-spacing: 0.3px;
           border: none;
           cursor: pointer;
+          position: relative;
         }
 
         .language-switcher a:hover {
@@ -165,7 +165,7 @@ export default function Navigation() {
         .language-switcher a.active {
           color: #000;
           font-weight: 700;
-          background: rgba(0, 0, 0, 0.1);
+          background: rgba(0, 0, 0, 0.08);
         }
 
         .book-now-btn {
@@ -176,7 +176,7 @@ export default function Navigation() {
           text-decoration: none;
           background: #000;
           color: #fff;
-          transition: all 0.25s ease;
+          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
           border: none;
           cursor: pointer;
           display: inline-block;
@@ -245,10 +245,10 @@ export default function Navigation() {
         <div className="container">
           <Link href="/" className="logo-link">
             <Image
-              src="/MEOCY/meocy-wordmark-black.png"
+              src="/assets/meocy-wordmark-black.png"
               alt="MEOCY Studio"
-              width={80}
-              height={40}
+              width={120}
+              height={60}
               className="logo-image"
               priority
             />
@@ -269,7 +269,7 @@ export default function Navigation() {
 
           {/* Controls */}
           <div className="controls">
-            {/* Language Switcher - Clean Minimal */}
+            {/* Language Switcher - Apple-style Clean Design */}
             <div className="language-switcher">
               {['en', 'it', 'fr'].map((l) => {
                 const isCurrentLocale = locale === l;
@@ -285,7 +285,7 @@ export default function Navigation() {
               })}
             </div>
 
-            {/* Book Now Button - Black CTA */}
+            {/* Book Now Button - Prominent Black CTA */}
             <Link href="/booking" className="book-now-btn">
               Book Now
             </Link>
