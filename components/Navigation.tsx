@@ -121,20 +121,6 @@ export default function Navigation() {
             font-weight: 600;
             background: rgba(0, 0, 0, 0.1);
           }
-
-          .desktop-menu a.cta {
-            background: #000;
-            color: #fff;
-            padding: 10px 18px;
-            border-radius: 8px;
-            font-weight: 600;
-            margin-left: 8px;
-          }
-
-          .desktop-menu a.cta:hover {
-            background: #333;
-            color: #fff;
-          }
         }
 
         .controls {
@@ -146,31 +132,54 @@ export default function Navigation() {
 
         .language-switcher {
           display: flex;
-          gap: 6px;
-          background: rgba(0, 0, 0, 0.08);
-          padding: 6px 8px;
-          border-radius: 8px;
+          gap: 8px;
         }
 
         .language-switcher a {
-          font-size: 0.8rem;
-          font-weight: 600;
-          padding: 6px 12px;
-          border-radius: 6px;
+          font-size: 0.75rem;
+          font-weight: 700;
+          padding: 8px 14px;
+          border-radius: 8px;
           text-decoration: none;
-          color: rgba(0, 0, 0, 0.6);
+          color: #000;
+          background: rgba(0, 0, 0, 0.06);
           transition: all 0.2s;
           letter-spacing: 0.5px;
+          border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .language-switcher a.active {
           background: #000;
           color: #fff;
           font-weight: 700;
+          border-color: #000;
         }
 
         .language-switcher a:hover:not(.active) {
-          color: #000;
+          background: rgba(0, 0, 0, 0.1);
+          border-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .book-now-btn {
+          font-size: 0.95rem;
+          font-weight: 700;
+          padding: 12px 24px;
+          border-radius: 8px;
+          text-decoration: none;
+          background: #dc2626;
+          color: #fff;
+          transition: all 0.2s;
+          border: none;
+          cursor: pointer;
+          display: inline-block;
+          letter-spacing: 0.3px;
+          box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+        }
+
+        .book-now-btn:hover {
+          background: #b91c1c;
+          box-shadow: 0 6px 16px rgba(220, 38, 38, 0.4);
+          transform: translateY(-2px);
         }
 
         .mobile-menu-button {
@@ -228,7 +237,7 @@ export default function Navigation() {
         <div className="container">
           <Link href="/" className="logo-link">
             <Image
-              src="/logo.png"
+              src="/MEOCY Logo.png"
               alt="MEOCY Studio"
               width={40}
               height={40}
@@ -253,7 +262,7 @@ export default function Navigation() {
 
           {/* Controls */}
           <div className="controls">
-            {/* Language Switcher */}
+            {/* Language Switcher - Modern Buttons */}
             <div className="language-switcher">
               {['en', 'it', 'fr'].map((l) => (
                 <Link
@@ -266,12 +275,8 @@ export default function Navigation() {
               ))}
             </div>
 
-            {/* Book Now Button - Desktop */}
-            <Link
-              href="/booking"
-              className="desktop-menu cta"
-              style={{ margin: 0 }}
-            >
+            {/* Book Now Button - Prominent Red CTA */}
+            <Link href="/booking" className="book-now-btn">
               Book Now
             </Link>
 
