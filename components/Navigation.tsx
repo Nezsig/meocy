@@ -163,8 +163,9 @@ export default function Navigation() {
 
         .language-switcher a.active {
           color: #000;
-          font-weight: 700;
-          background: rgba(0, 0, 0, 0.12);
+          font-weight: 800;
+          background: rgba(0, 0, 0, 0.18);
+          box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
         }
 
         .book-now-btn {
