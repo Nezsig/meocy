@@ -343,9 +343,6 @@ export default function Packages() {
               <div className="package-price">
                 {t(`packages.${pkg.key}.price`)}
               </div>
-              <div className="package-price-note">
-                Excluding VAT
-              </div>
             </div>
 
             <div className="package-info">
