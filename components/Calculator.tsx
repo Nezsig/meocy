@@ -27,7 +27,7 @@ export default function Calculator() {
     expressDelivery: 150,
   };
 
-  const { breakdown, minPrice, maxPrice } = useMemo(() => {
+  const { breakdown, minPrice } = useMemo(() => {
     let base = basePrices[serviceType];
     let imagePrice = Math.ceil(imageCount / 5) * 20;
 
@@ -42,7 +42,6 @@ export default function Calculator() {
 
     const subtotal = base + imagePrice + addOnTotal;
     const min = Math.round(subtotal * 0.9);
-    const max = Math.round(subtotal * 1.1);
 
     return {
       breakdown: {
@@ -53,7 +52,6 @@ export default function Calculator() {
       },
       total: subtotal,
       minPrice: min,
-      maxPrice: max,
     };
   }, [serviceType, imageCount, location, addOns]);
 

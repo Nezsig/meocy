@@ -1,10 +1,8 @@
-import { useTranslations } from 'next-intl';
 import BookingForm from '@/components/BookingForm';
 
 export const dynamic = 'force-dynamic';
 
 export default function BookingPage() {
-  const t = useTranslations();
 
   return (
     <div className="py-20 min-h-screen" style={{ background: '#f9fafb' }}>

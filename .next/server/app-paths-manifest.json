@@ -3,11 +3,11 @@
   "/api/available-dates/route": "app/api/available-dates/route.js",
   "/api/payment/callback/route": "app/api/payment/callback/route.js",
   "/api/bookings/route": "app/api/bookings/route.js",
-  "/[locale]/contact/page": "app/[locale]/contact/page.js",
-  "/[locale]/terms/page": "app/[locale]/terms/page.js",
-  "/[locale]/confirmation/page": "app/[locale]/confirmation/page.js",
-  "/[locale]/payment/page": "app/[locale]/payment/page.js",
   "/[locale]/page": "app/[locale]/page.js",
+  "/[locale]/terms/page": "app/[locale]/terms/page.js",
   "/[locale]/privacy/page": "app/[locale]/privacy/page.js",
+  "/[locale]/payment/page": "app/[locale]/payment/page.js",
+  "/[locale]/contact/page": "app/[locale]/contact/page.js",
+  "/[locale]/confirmation/page": "app/[locale]/confirmation/page.js",
   "/[locale]/booking/page": "app/[locale]/booking/page.js"
 }
