@@ -137,22 +137,23 @@ export default function Navigation() {
         }
 
         .language-switcher a {
-          font-size: 0.8rem;
-          font-weight: 600;
-          padding: 6px 12px;
+          font-size: 0.85rem;
+          font-weight: 700;
+          padding: 8px 14px;
           border-radius: 6px;
           text-decoration: none;
-          color: rgba(0, 0, 0, 0.5);
+          color: rgba(0, 0, 0, 0.7);
           background: transparent;
           transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-          letter-spacing: 0.3px;
+          letter-spacing: 0.5px;
           border: none;
           cursor: pointer;
           position: relative;
         }
 
         .language-switcher a:hover {
-          color: rgba(0, 0, 0, 0.8);
+          color: #000;
+          background: rgba(0, 0, 0, 0.08);
         }
 
         .language-switcher a.active {
