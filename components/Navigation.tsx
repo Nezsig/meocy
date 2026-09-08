@@ -21,22 +21,16 @@ export default function Navigation() {
   ];
 
   const getLocalizedPath = (path: string, newLocale: string) => {
-    const defaultLocale = 'en';
+    // Remove any locale prefix from current path
     let cleanPath = path;
+    ['en', 'it', 'fr'].forEach(l => {
+      if (path.startsWith(`/${l}/`) || path === `/${l}`) {
+        cleanPath = path.replace(`/${l}`, '') || '/';
+      }
+    });
 
-    // Remove current locale prefix if it exists
-    if (path.startsWith(`/${locale}/`) || path === `/${locale}`) {
-      cleanPath = path.replace(`/${locale}`, '') || '/';
-    } else if (path.startsWith(`/en/`) || path === `/en`) {
-      cleanPath = path.replace(`/en`, '') || '/';
-    } else if (path.startsWith(`/it/`) || path === `/it`) {
-      cleanPath = path.replace(`/it`, '') || '/';
-    } else if (path.startsWith(`/fr/`) || path === `/fr`) {
-      cleanPath = path.replace(`/fr`, '') || '/';
-    }
-
-    // Add new locale prefix if not default locale
-    if (newLocale === defaultLocale) {
+    // Add new locale prefix (en doesn't need prefix)
+    if (newLocale === 'en') {
       return cleanPath;
     }
     return `/${newLocale}${cleanPath}`;
