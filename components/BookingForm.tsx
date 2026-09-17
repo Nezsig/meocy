@@ -97,8 +97,8 @@ export default function BookingForm() {
 
       setSuccess(true);
       setTimeout(() => {
-        router.push(`/payment?bookingId=${data.booking.id}`);
-      }, 2000);
+        router.push(`/success?bookingId=${data.booking.id}`);
+      }, 1000);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {

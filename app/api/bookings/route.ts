@@ -1,15 +1,41 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { saveBooking, Booking } from '@/lib/supabase';
-import { Resend } from 'resend';
 
 export const dynamic = 'force-dynamic';
 
-function getResendClient() {
+async function sendEmail(to: string, subject: string, html: string) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    throw new Error('Missing RESEND_API_KEY');
+    console.warn('⚠️ RESEND_API_KEY not configured - email not sent');
+    return { success: false, reason: 'Email service not configured' };
   }
-  return new Resend(apiKey);
+
+  try {
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'bookings@meocy.com',
+        to,
+        subject,
+        html,
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      console.error('Resend API error:', error);
+      return { success: false, reason: 'Email service error' };
+    }
+
+    return { success: true };
+  } catch (err) {
+    console.error('Email send error:', err);
+    return { success: false, reason: 'Email send failed' };
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -27,7 +53,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Save booking to Supabase
+    // Save booking to database
     const booking: Booking = {
       name: body.name,
       email: body.email,
@@ -43,8 +69,8 @@ export async function POST(request: NextRequest) {
 
     const savedBooking = await saveBooking(booking);
 
-    // Send confirmation email to studio
-    const emailHtml = `
+    // Send notification email to studio (hello@meocy.com)
+    const studioEmailHtml = `
       <h2>New Booking Inquiry</h2>
       <p><strong>Name:</strong> ${body.name}</p>
       <p><strong>Email:</strong> ${body.email}</p>
@@ -58,14 +84,9 @@ export async function POST(request: NextRequest) {
       <p><strong>Booking ID:</strong> ${savedBooking.id}</p>
     `;
 
-    await getResendClient().emails.send({
-      from: 'bookings@meocy.com',
-      to: 'meocystudio@gmail.com',
-      subject: `New Booking Inquiry from ${body.name}`,
-      html: emailHtml,
-    });
+    await sendEmail('hello@meocy.com', `New Booking Inquiry from ${body.name}`, studioEmailHtml);
 
-    // Send confirmation email to client
+    // Send confirmation email to customer
     const clientEmailHtml = `
       <h2>Booking Confirmation</h2>
       <p>Thank you for your booking inquiry!</p>
@@ -75,12 +96,7 @@ export async function POST(request: NextRequest) {
       <p>Best regards,<br>MEOCY Studio Team</p>
     `;
 
-    await getResendClient().emails.send({
-      from: 'bookings@meocy.com',
-      to: body.email,
-      subject: 'Booking Confirmation - MEOCY Studio',
-      html: clientEmailHtml,
-    });
+    await sendEmail(body.email, 'Booking Confirmation - MEOCY Studio', clientEmailHtml);
 
     return NextResponse.json(
       {
