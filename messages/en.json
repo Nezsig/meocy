@@ -1,0 +1,47 @@
+{
+  "nav": {
+    "home": "Home",
+    "packages": "Packages",
+    "contact": "Contact",
+    "bookNow": "Book Now"
+  },
+  "home": {
+    "title": "Professional Photography Studio",
+    "subtitle": "High-quality photography for your brand",
+    "cta": "Book Your Session"
+  },
+  "packages": {
+    "title": "Photography Packages",
+    "product": {
+      "name": "Product",
+      "price": "€200"
+    },
+    "fashion": {
+      "name": "Fashion",
+      "price": "€210"
+    },
+    "restaurant": {
+      "name": "Restaurant",
+      "price": "€220"
+    },
+    "model": {
+      "name": "Model",
+      "price": "€230"
+    }
+  },
+  "booking": {
+    "title": "Book Your Session",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "package": "Package",
+    "date": "Preferred Date",
+    "submit": "Book Now",
+    "success": "Booking submitted! We'll contact you soon."
+  },
+  "contact": {
+    "email": "hello@meocy.com",
+    "phone": "+39 (XX) XXX-XXXX",
+    "location": "Milan, Italy"
+  }
+}

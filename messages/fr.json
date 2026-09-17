@@ -1,0 +1,47 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "packages": "Forfaits",
+    "contact": "Contact",
+    "bookNow": "Réserver Maintenant"
+  },
+  "home": {
+    "title": "Studio Photographique Professionnel",
+    "subtitle": "Photographie de haute qualité pour votre marque",
+    "cta": "Réservez Votre Session"
+  },
+  "packages": {
+    "title": "Forfaits Photographiques",
+    "product": {
+      "name": "Produit",
+      "price": "€200"
+    },
+    "fashion": {
+      "name": "Mode",
+      "price": "€210"
+    },
+    "restaurant": {
+      "name": "Restaurant",
+      "price": "€220"
+    },
+    "model": {
+      "name": "Modèle",
+      "price": "€230"
+    }
+  },
+  "booking": {
+    "title": "Réservez Votre Session",
+    "name": "Nom",
+    "email": "Email",
+    "phone": "Téléphone",
+    "package": "Forfait",
+    "date": "Date Préférée",
+    "submit": "Réserver Maintenant",
+    "success": "Réservation soumise ! Nous vous contacterons bientôt."
+  },
+  "contact": {
+    "email": "hello@meocy.com",
+    "phone": "+39 (XX) XXX-XXXX",
+    "location": "Milan, Italie"
+  }
+}

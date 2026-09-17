@@ -1,0 +1,47 @@
+{
+  "nav": {
+    "home": "Home",
+    "packages": "Pacchetti",
+    "contact": "Contatti",
+    "bookNow": "Prenota Ora"
+  },
+  "home": {
+    "title": "Studio Fotografico Professionale",
+    "subtitle": "Fotografia di alta qualità per il tuo brand",
+    "cta": "Prenota la Tua Sessione"
+  },
+  "packages": {
+    "title": "Pacchetti Fotografici",
+    "product": {
+      "name": "Prodotto",
+      "price": "€200"
+    },
+    "fashion": {
+      "name": "Moda",
+      "price": "€210"
+    },
+    "restaurant": {
+      "name": "Ristorazione",
+      "price": "€220"
+    },
+    "model": {
+      "name": "Modello",
+      "price": "€230"
+    }
+  },
+  "booking": {
+    "title": "Prenota la Tua Sessione",
+    "name": "Nome",
+    "email": "Email",
+    "phone": "Telefono",
+    "package": "Pacchetto",
+    "date": "Data Preferita",
+    "submit": "Prenota Ora",
+    "success": "Prenotazione inviata! Ti contatteremo presto."
+  },
+  "contact": {
+    "email": "hello@meocy.com",
+    "phone": "+39 (XX) XXX-XXXX",
+    "location": "Milano, Italia"
+  }
+}
