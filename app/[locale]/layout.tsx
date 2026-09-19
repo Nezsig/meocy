@@ -25,13 +25,19 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  // Providing all messages to the client
+  // Load messages for the current locale
   let messages: any = {};
   try {
-    messages = await getMessages();
+    messages = (await import(`@/messages/${locale}.json`)).default;
   } catch (err) {
-    // Fallback if getMessages fails during build
-    console.warn('Failed to get messages, using empty object');
+    console.error(`Failed to load messages for locale: ${locale}`, err);
+    try {
+      // Fallback to English
+      messages = (await import('@/messages/en.json')).default;
+    } catch (fallbackErr) {
+      console.warn('Failed to load any messages');
+      messages = {};
+    }
   }
 
   return (
