@@ -41,13 +41,19 @@ export default function BookingForm() {
   useEffect(() => {
     const fetchBookedDates = async () => {
       try {
-        const response = await fetch('/api/available-dates');
-        const data = await response.json();
-        if (data.bookedDates) {
-          setBookedDates(data.bookedDates);
+        const response = await fetch('/api/available-dates', {
+          cache: 'no-store',
+        });
+        if (response.ok) {
+          const data = await response.json();
+          if (data.bookedDates && Array.isArray(data.bookedDates)) {
+            setBookedDates(data.bookedDates);
+          }
         }
       } catch (err) {
         console.error('Failed to fetch booked dates:', err);
+        // Silently fail - dates are optional
+        setBookedDates([]);
       }
     };
 
