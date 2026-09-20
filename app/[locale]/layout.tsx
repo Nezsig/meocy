@@ -4,7 +4,6 @@ import { NextIntlClientProvider } from 'next-intl';
 import { routing } from '@/i18n/routing';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import { LocaleProvider } from '@/components/LocaleProvider';
 
 export const dynamic = 'force-dynamic';
 
@@ -38,12 +37,10 @@ export default async function LocaleLayout({
   }
 
   return (
-    <LocaleProvider>
-      <NextIntlClientProvider messages={messages}>
-        <Navigation />
-        <main>{children}</main>
-        <Footer />
-      </NextIntlClientProvider>
-    </LocaleProvider>
+    <NextIntlClientProvider messages={messages}>
+      <Navigation />
+      <main>{children}</main>
+      <Footer />
+    </NextIntlClientProvider>
   );
 }
