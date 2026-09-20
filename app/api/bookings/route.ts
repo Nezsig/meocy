@@ -84,7 +84,9 @@ export async function POST(request: NextRequest) {
       <p><strong>Booking ID:</strong> ${savedBooking.id}</p>
     `;
 
-    await sendEmail('hello@meocy.com', `New Booking Inquiry from ${body.name}`, studioEmailHtml);
+    // Send emails and capture results
+    const studioEmailResult = await sendEmail('hello@meocy.com', `New Booking Inquiry from ${body.name}`, studioEmailHtml);
+    console.log('Studio email result:', studioEmailResult);
 
     // Send confirmation email to customer
     const clientEmailHtml = `
@@ -96,13 +98,18 @@ export async function POST(request: NextRequest) {
       <p>Best regards,<br>MEOCY Studio Team</p>
     `;
 
-    await sendEmail(body.email, 'Booking Confirmation - MEOCY Studio', clientEmailHtml);
+    const clientEmailResult = await sendEmail(body.email, 'Booking Confirmation - MEOCY Studio', clientEmailHtml);
+    console.log('Client email result:', clientEmailResult);
 
     return NextResponse.json(
       {
         success: true,
         booking: savedBooking,
         message: 'Booking created successfully',
+        emailStatus: {
+          studioEmail: studioEmailResult.success ? 'sent' : `failed: ${studioEmailResult.reason}`,
+          customerEmail: clientEmailResult.success ? 'sent' : `failed: ${clientEmailResult.reason}`,
+        },
       },
       { status: 201 }
     );
