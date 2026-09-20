@@ -1,7 +1,7 @@
+'use client';
+
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-
-export const dynamic = 'force-dynamic';
 
 export default function Hero() {
   const t = useTranslations();

@@ -1,6 +1,6 @@
-import { useTranslations } from 'next-intl';
+'use client';
 
-export const dynamic = 'force-dynamic';
+import { useTranslations } from 'next-intl';
 
 export default function Equipment() {
   const t = useTranslations();
