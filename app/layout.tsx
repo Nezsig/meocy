@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   description: 'Professional product, fashion, and content photography services in Milan. Book your shoot today.',
 };
 
+export const dynamic = 'force-dynamic';
+
 export default function RootLayout({
   children,
 }: {
