@@ -1,4 +1,12 @@
 {
   "version": 2,
-  "buildCommand": "echo 'Skip build - serving static HTML only'"
+  "name": "meocy-static",
+  "public": true,
+  "builds": [],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1"
+    }
+  ]
 }
