@@ -1,0 +1,4 @@
+{
+  "version": 2,
+  "buildCommand": "echo 'Skip build - serving static HTML only'"
+}
