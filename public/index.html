@@ -909,12 +909,40 @@
             setLanguage(savedLang);
         });
 
-        function handleBooking(event) {
+        async function handleBooking(event) {
             event.preventDefault();
-            const formData = new FormData(event.target);
-            const message = `New booking request!\n\n${Array.from(formData).map(([k, v]) => `${k}: ${v}`).join('\n')}`;
-            
-            window.location.href = `mailto:hello@meocy.com?subject=Booking Request&body=${encodeURIComponent(message)}`;
+            const form = event.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+
+            try {
+                const response = await fetch('/api/send-booking-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                });
+
+                if (response.ok) {
+                    submitBtn.textContent = '✓ Booking sent! We\'ll contact you soon.';
+                    form.reset();
+                    setTimeout(() => {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
+                    }, 3000);
+                } else {
+                    submitBtn.textContent = 'Error sending booking. Please try again.';
+                    submitBtn.disabled = false;
+                }
+            } catch (error) {
+                console.error('Booking error:', error);
+                submitBtn.textContent = 'Error sending booking. Please try again.';
+                submitBtn.disabled = false;
+            }
         }
     </script>
 </body>
