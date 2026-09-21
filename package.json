@@ -3,9 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "build": "echo 'Serving static HTML only - no build needed'"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.0",
